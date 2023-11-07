@@ -1,0 +1,74 @@
+.vertical-div {
+    background-color: grey;
+    color: #fff;
+    writing-mode:vertical-rl;
+    font-size: 50px;
+    font-weight: bolder;
+    width: 18%;
+    height: 70%;
+    margin: auto 2px;
+    border-radius: 18px;
+    transition: all 0.5s;
+    filter:brightness(0.5)
+}
+
+.vertical-div:hover{
+    scale: 1.1;
+    filter:brightness(1)
+}
+
+.vertical-div-container{
+    height: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+}
+
+  
+.text-container{
+    text-align: end;
+    margin-top: 150%;
+}
+
+#img1,#img2,#img3,#img4,#img5{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  #img1{
+    background-image: url(/images/smashMain.png);
+  }
+  
+  #img2{
+    background-image: url(/images/braw.jpeg);
+  }
+  #img3{
+    background-image: url(/images/scorpion.jpg);
+  }
+  #img4{
+    background-image: url(/images/tekken.jpg);
+  }
+  #img5{
+    background-image: url(/images/Thumbnail-3.png);
+  }
+  
+  #colorContainer1 {
+    background-color: red;
+  }
+  
+  #colorContainer2 {
+    background-color: blue;
+  }
+  
+  #colorContainer3 {
+    background-color: yellow;
+  }
+  
+  #colorContainer4 {
+    background-color: green;
+  }
+  
+  #colorContainer5 {
+    background-color: purple;
+  }
+  

@@ -1,0 +1,58 @@
+#loginForm{
+    position: inherit;
+    height: 65%;
+    width: 50%;
+}
+
+#loginFormContainer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+#title{
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+#loginButton{
+    background-color: blue;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#formUsername,#formPassword,#loginButton{
+    margin-top: 15%;
+    border: 3px solid;
+}
+
+#centerContainer{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding: 5px;
+}
+
+#rememberMe{
+    margin-top: 10%;
+}
+
+#formUsername{
+    border-color: transparent transparent red transparent;
+    background-image: url("../../../public/email.svg");
+    background-size: 1.3em 1.3em;
+    background-position: 0cm 50%;
+    background-repeat: no-repeat;
+    padding-left:1.7em;
+}
+
+#formPassword{
+    border-color: transparent transparent yellow transparent;
+    background-image: url("../../../public/lock.svg");
+    background-size: 1.5em 1.5em;
+    background-position: 0cm 50%;
+    background-repeat: no-repeat;
+    padding-left:1.7em;
+}

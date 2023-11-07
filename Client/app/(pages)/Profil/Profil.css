@@ -1,0 +1,168 @@
+#mainProfil{
+    margin: 0;
+    padding: 0;
+    height: 180vh;
+}
+
+#profilPicture{
+    position: absolute;
+    margin: auto;
+    top: 18%;
+    left: 8%;
+    height: 170px;
+    width: 170px;
+    scale: 1.2;
+    z-index: 1;
+}
+
+#ImgProfil{
+  transition: all 1s;
+  scale: 1.1;
+  background-color: black;
+}
+
+#ImgProfil:hover{
+  scale:1.3;
+}
+
+#BackgroundImage{
+  object-fit: cover;
+  position: absolute;
+  top: 8%;
+  left: 0;
+  height: 18%;
+  width: 100%;
+  background-color: black;
+  display: block;
+}
+
+#ContactInfoContainer{
+  position: absolute;
+  top: 25%;
+  left: 0;
+  height: 10%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+#Pseudo{
+  position: absolute;
+  font-weight: bold;
+  left: 25%;
+  font-size: 300%;
+  color: white;
+}
+
+#Details{
+  position: absolute;
+  top: 67%;
+  right: 10%;
+  left: 10%;
+  width: 80%;
+  height: 48%;
+  background-color: rgb(18, 15, 15);
+  border: 2px solid black;
+  border-radius: 30px;
+}
+
+#Title{
+  position: absolute;
+  top: 5%;
+  left: 2%;
+  color: white;
+  font-size: 150%;
+  font-weight: bold;
+  text-decoration: underline 3px #FF6619;
+}
+
+#BiographyContainer{
+  position: absolute;
+  top: 47%;
+  left: 10%;
+  right: 10%;
+  height: 20%;
+  width: 80%;
+  color: white;
+}
+
+#Biography{
+  position: absolute;
+  top: 30%;
+  left: 2%;
+  color: white;
+  font-size: 100%;
+}
+
+#Match_History_container{
+  position: absolute;
+  top: 122%;
+  left: 10%;
+  right: 10%;
+  height: 50%;
+  width: 80%;
+  color: white;
+  border-left: 12px solid #FF6619;
+}
+
+
+
+tr:first-child td:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+tr:first-child td { border-top-style: solid; }
+tr td:first-child { border-left-style: solid; }
+
+th{
+  color: white;
+  font-size: 100%;
+  font-weight: bold;
+  text-decoration: underline 3px #FF6619; 
+}
+
+table{
+  text-align: center;
+  width: 90%;
+  margin-left: 5%;
+  border-collapse: separate;
+  border-spacing: 0 15px;
+  overflow: scroll;
+}
+
+
+#match{
+  background-color: rgb(18, 15, 15);
+}
+
+thead {
+  border-bottom: 20px solid #191919; 
+}
+
+tr{
+  height: 60px;
+}
+
+#Graph{
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 0;
+}
+
+#rankingPerGames{
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  right: 0;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+#RankingpergameCells{
+  background-color: #1919198d ;
+}
