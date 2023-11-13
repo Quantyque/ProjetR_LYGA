@@ -3,6 +3,12 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+Lib/
+Scripts/
+pyvenv.cfg
+share/
+.next/
+
 # User-specific files
 *.rsuser
 *.suo
@@ -28,9 +34,7 @@ x86/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
-[Oo]bj/
-[Ll]og/
-[Ll]ogs/
+[Oo]bj//
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
