@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { GameElo } from '@/model/elo';
+import { GameElo } from '@/model/logic/elo';
 import {
   Chart as ChartJS,
   CategoryScale,

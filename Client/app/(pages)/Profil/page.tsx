@@ -2,11 +2,13 @@
 import React from "react";
 import "./profil.css";
 import RankingChart from "@/app/(pages)/profil/rankingChart";
-import { Player } from "@/model/player";
-import { Elo } from "@/model/elo";
+import { Player } from "@/model/logic/player";
+import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
-import { Set } from "@/model/set";
-import { fetchEloHistoryByPlayerID, fetchPlayerByID, fetchSetsByIdPlayer } from "@/model/ImportDatas";
+import { Set } from "@/model/logic/set";
+import { fetchEloHistoryByPlayerID } from "@/model/data/elo/EloDao";
+import { fetchPlayerByID } from "@/model/data/player/PlayerDao";
+import { fetchSetsByIdPlayer } from "@/model/data/set/SetDao";
 
 export default function Profil() {
 
@@ -24,7 +26,7 @@ export default function Profil() {
     <>
    
       <div id="mainProfil">
-      {playerData && playerSet && (
+      {playerData && playerSet && playerEloHistory && (
         <>
           <div id="profilPicture" className="avatar">
           <div className="w-52 rounded-full ring ring-black ring-offset-black ring-offset-8">

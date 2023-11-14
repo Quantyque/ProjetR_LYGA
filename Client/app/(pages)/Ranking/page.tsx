@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { fetchVideoGames, fetchPlayers } from '@/model/ImportDatas'
+import { fetchVideoGames } from '@/model/data/videgame/VideogameDao'
+import { fetchPlayers } from '@/model/data/player/PlayerDao'
 import Rank from '@/app/components/Rank'
 import './ranking.css'
 
