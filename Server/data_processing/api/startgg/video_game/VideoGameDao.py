@@ -50,3 +50,38 @@ class VideoGameDao(IVideoGameDao):
                 video_games.append(video_game)
 
         return video_games 
+    
+    def get_video_game_by_id(self, id: int) -> Videogame:
+        """
+        Récupère un jeu vidéo par son id.
+
+        Args:
+            id (int): L'id du jeu vidéo.
+    
+        Returns:
+            VideoGame: Le jeu vidéo.
+
+        Raises:
+            GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
+        """
+        
+        graphql_query = """
+            query Videogames($id: ID!) {
+                videogame(id : $id){
+                    id,
+                    name,
+                    images{
+                    url
+                    }
+                }
+                }
+        """
+
+        params = {
+            "id": id
+        }
+        
+        response = self.__api.request_api(graphql_query, params)
+        videogame = Videogame()
+        videogame.hydrate(response["data"]["videogame"])
+        return videogame

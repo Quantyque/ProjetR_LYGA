@@ -100,40 +100,5 @@ class VideoGameDao(IVideoGameDao):
             self.__db.exec_request("DELETE FROM Games WHERE idGame = ?", (game.Id,))
         
         return jsonify({"message": "Game deleted successfully."})
-    
-    def get_video_game_by_id(self, id: int) -> Videogame:
-        """
-        Récupère un jeu vidéo par son id.
-
-        Args:
-            id (int): L'id du jeu vidéo.
-    
-        Returns:
-            VideoGame: Le jeu vidéo.
-
-        Raises:
-            GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
-        """
-        
-        graphql_query = """
-            query Videogames($id: ID!) {
-                videogame(id : $id){
-                    id,
-                    name,
-                    images{
-                    url
-                    }
-                }
-                }
-        """
-
-        params = {
-            "id": id
-        }
-        
-        response = super().request_api(graphql_query, params)
-        videogame = Videogame()
-        videogame.hydrate(response["data"]["videogame"])
-        return videogame
 
     #endregion
