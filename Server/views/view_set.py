@@ -20,40 +20,44 @@ class ViewSet(FlaskView):
     @route('/player/', methods=['POST'])
     def get_last_sets_by_player(self) -> dict:
         """
-        Returns the last sets of a player
+        Renvoie les derniers sets d'un joueur
 
         Returns:
-            dict: list of sets
+            dict: liste des derniers sets d'un joueur
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             idPlayer = request.get_json().get('player_id')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(idPlayer)
 
-            # Sending the request
+            # Envoi de la requête
             result = self.__set_manager.get_last_sets_by_player(idPlayer)
 
+            #Récupération du résultat sous forme de JSON
             json = []
             for set in result:
                 json.append(set.toJSON())
 
-            return json, 200
+            res = json, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
-        
-        except BadRequestException as e :
-            log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
+        
+        except BadRequestException as e :
+            log_info(str(e))
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
 

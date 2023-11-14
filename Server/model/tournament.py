@@ -17,52 +17,91 @@ class Tournament(Entity):
     @property
     def Id(self) -> int:
         """
-        Id du tournoi
+        Getter de l'id du tournoi
+
+        Returns:
+            int: Id du tournoi
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id du tournoi
+
+        Args:
+            id (int): Nouvel id du tournoi
+        """
         self.__id = id
 
     @property
     def Name(self):
         """
-        Nom du tournoi
+        Getter du nom du tournoi
+
+        Returns:
+            str: Nom du tournoi
         """
         return self.__name
     
     @Name.setter
     def Name(self, name : str) -> None:
+        """
+        Setter du nom du tournoi
+
+        Args:
+            name (str): Nouveau nom du tournoi
+        """
         self.__name = name
 
     @property
     def Owner(self):
         """
-        Propriétaire du tournoi
+        Getter du propriétaire du tournoi
+
+        Returns:
+            str: Propriétaire du tournoi
         """
         return self.__owner
     
     @Owner.setter
     def Owner(self, owner : str) -> None:
+        """
+        Setter du propriétaire du tournoi
+
+        Args:
+            owner (str): Nouveau propriétaire du tournoi
+        """
         self.__owner = owner
 
     @property
     def Location(self):
         """
-        Localisation du tournoi
+        Getter de la localisation du tournoi
+
+        Returns:
+            str: Localisation du tournoi
         """
         return "(" + str(self.__lat) + "," + str(self.__lng) + ")"
 
     @property
     def Events(self):
         """
-        Evenements aillant lieu dans le tournoi
+        Getter des évenements aillant lieu dans le tournoi
+
+        Returns:
+            [Event]: Evenements aillant lieu dans le tournoi
         """
         return self.__events
     
     @Events.setter
     def Events(self, events : [Event]) -> None:
+        """
+        Setter des évenements aillant lieu dans le tournoi
+
+        Args:
+            events ([Event]): Nouveaux évenements aillant lieu dans le tournoi
+        """
         self.__events = events
 
     # endregion

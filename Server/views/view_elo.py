@@ -10,7 +10,7 @@ from exceptions import BadRequestException, InvalidInput
 
 class ViewElo(FlaskView):
     """
-    Controller for linking HTTP requests to managers for elos
+    Controleur permettant de lier les requêtes HTTP aux managers des elos
     """
 
     def __init__(self) -> None:
@@ -19,115 +19,127 @@ class ViewElo(FlaskView):
     @route('/default', methods=['POST'])
     def get_default_elo(self) -> str():
         """
-        Returns a player's default elo based on his id and the video game id
+        Renvoit l'elo par défaut d'un joueur en fonction de son id et de l'id du jeu vidéo
 
         Returns:
-            str: player's default elo
+            str: elo par défaut du joueur
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             player_id = request.get_json().get('player_id')
             videogame_id = request.get_json().get('videogame_id')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(player_id, videogame_id)
 
-            # Sending the request
+            # Envoi de la requête
             result = self.__elo_manager.get_default_elo(player_id, videogame_id)
 
-            return str(result), 200
+            #Récupération du résultat
+            res = str(result), 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except BadRequestException as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
         
     @route('/add-default', methods=['POST'])
     def add_default_elo(self) -> str():
         """
-        Adds a default elo to a player
+        Ajoute un elo par défaut à un joueur
 
         Returns:
-            str: default elo added
+            str: elo par défaut ajouté
         """
         try:
 
-            # Variable initialization
+            # Initialisation des variables
             player_id = request.get_json().get('player_id')
             videogame_id = request.get_json().get('videogame_id')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(player_id, videogame_id)
 
-            # Sending the request
+            # Envoi de la requête
             self.__elo_manager.add_default_elo(player_id, videogame_id)
 
-            return "Elo par défaut ajouté", 200
+            res = "Elo par défaut ajouté", 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except BadRequestException as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
         
     @route('/edit-default', methods=['POST'])
     def edit_elo(self) -> str():
         """
-        Modifies a player's elo
+        Modifie l'elo d'un joueur
 
         Returns:
-            str: elo modified
+            str: elo modifié
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             player_id = request.get_json().get('player_id')
             videogame_id = request.get_json().get('videogame_id')
             elo = request.get_json().get('elo')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(player_id, videogame_id, elo)
 
-            # Sending the request
+            # Envoi de la requête
             self.__elo_manager.edit_elo(player_id, videogame_id, elo)
 
-            return "Elo modifié", 200
+            res = "Elo modifié", 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except BadRequestException as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
+        
+
         
     @route('/delete-default', methods=['DELETE'])
     def delete_default_elo(self) -> str():
@@ -138,71 +150,78 @@ class ViewElo(FlaskView):
             str: default elo deleted
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             player_id = request.get_json().get('player_id')
             videogame_id = request.get_json().get('videogame_id')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(player_id, videogame_id)
 
-            # Sending the request
+            # Envoi de la requête
             self.__elo_manager.delete_default_elo(player_id, videogame_id)
 
-            return "Elo par défaut supprimé", 200
+            res = "Elo par défaut supprimé", 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except BadRequestException as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
         
     @route('/get-history', methods=['POST'])
     def get_history(self) -> str():
         """
-        Returns a player's elo history
+        Renvoi l'historique des elos d'un joueur
 
         Returns:
-            str: player's elo history
+            str: historique des elos du joueur
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             player_id = request.get_json().get('player_id')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(player_id)
 
-            # Sending the request
+            # Envoi de la requête
             result = self.__elo_manager.get_history_elos(player_id)
 
+            #Récupération du résultat sous forme de json
             json = []
             for elo in result:
                 json.append(elo.toJSON())
 
-            return json, 200
+            res = json, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except BadRequestException as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
         

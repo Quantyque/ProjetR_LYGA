@@ -17,44 +17,49 @@ class ViewTournament(FlaskView):
     @route('/location/', methods=['POST'])
     def tournament_by_location(self) -> dict:
         """
-        Returns a list of tournaments by date, game and location
+        Renvoi une liste de tournois par date, jeu et lieu
 
         Returns:
-            dict: list of tournaments
+            dict: liste de tournois
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             date = request.get_json().get('date')
             videogameId = request.get_json().get('videogameId')
             coordonnees = request.get_json().get('coordonnees')
             distance = request.get_json().get('distance')
 
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(date, videogameId, coordonnees, distance)
 
-            # Retrieving the selected video game
+            # Récupération du jeu vidéo selectionné
             videogame = VideoGameManager().get_video_game_by_id(videogameId)
 
-            # Sending the request
+            # Envoi de la requête
             result = self.__tournament_manager.get_tournaments_by_location(date, videogame, coordonnees, distance)
 
+            # Récupération du résultat sous forme de JSON
             json = []
             for tournament in result:
                 json.append(tournament.toJSON())
 
-            return json, 200
+            res = json, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
-        
-        except BadRequestException as e :
-            log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
+        
+        except BadRequestException as e :
+            log_info(str(e))
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res

@@ -17,45 +17,57 @@ class Elo(Entity):
     @property
     def Id(self) -> int:
         """
-        Id de l'elo
+        Getter de l'id de l'elo
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id de l'elo
+        """
         self.__id = id
 
     @property
     def Score(self) -> int:
         """
-        Score de l'élo
+        Getter du score de l'élo
         """
         return self.__score
     
     @Score.setter
     def Score(self, score : int) -> None:
+        """
+        Setter du score de l'élo
+        """
         self.__score = score
 
     @property
     def Videogame(self):
         """
-        Jeu vidéo lié à l'élo
+        Getter du jeu vidéo lié à l'élo
         """
         return self.__videogame
     
     @Videogame.setter
     def Videogame(self, videogame) -> None:
+        """
+        Setter du jeu vidéo lié à l'élo
+        """
         self.__videogame = videogame
 
     @property
     def Date(self):
         """
-        Date de l'élo
+        Getter de la date de l'élo
         """
         return self.__date
     
     @Date.setter
     def Date(self, date) -> None:
+        """
+        Setter de la date de l'élo
+        """
         self.__date = date
 
     # endregion

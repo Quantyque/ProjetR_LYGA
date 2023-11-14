@@ -22,12 +22,21 @@ class Ranking():
     @property
     def Players(self) -> [Player]:
         """
-        Liste des joueurs avec en clé leur id
+        Getter de la liste des joueurs avec en clé leur id
+
+        Returns:
+            [Player]: Liste des joueurs avec en clé leur id
         """
         return self.__players
     
     @Players.setter
     def Players(self, players : [Player]) -> None:
+        """
+        Setter de la liste des joueurs avec en clé leur id
+
+        Args:
+            players ([Player]): Nouvelle liste des joueurs avec en clé leur id
+        """
         self.__players = players
 
     # endregion
@@ -47,6 +56,7 @@ class Ranking():
         Returns:
             Player: Joueur initialisé
         """
+        #Création du joueur s'il n'est pas encore dans le dictionnaire des joueurs
         if player.Id not in self.Players:
             default_elo = self.__elo_manager.get_default_elo(player.Id, videogame.Id)
             data_elo = {"score" : default_elo}
@@ -55,6 +65,7 @@ class Ranking():
             elo.Videogame = videogame
             player.Elos[videogame.Id] = elo
             self.Players[player.Id] = player
+        #Récupération du joueur s'il est déjà dans le dictionnaire des joueurs
         else:
             player = self.Players[player.Id]
         return player
@@ -86,12 +97,14 @@ class Ranking():
         Returns:
             (float, float): Nouvel elo du gagnant puis du perdant
         """
+        #Initialisation des variables pour le calcul de l'élo
         expected_a = self.get_expected_score(winner, looser, videogameId)
         expected_b = self.get_expected_score(looser, winner, videogameId)
         facteur_round = 1
         facteur_k = set.EventNbEntrants
         if set.Round <0:
             facteur_round = LOSER_RUN_FACTOR
+        #Calcul de l'élo
         return winner.Elos[videogameId].Score + (facteur_k * (1 - expected_a))*facteur_round, looser.Elos[videogameId].Score + (facteur_k * (0 - expected_b))*facteur_round
 
     def update_ranking(self, sets : [Set], videogame : Videogame) -> None:

@@ -23,89 +23,161 @@ class Set(Entity):
     @property
     def Id(self) -> int:
         """
-        Id du set
+        Getter de l'id du set
+
+        Returns:
+            int: Id du set
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id du set
+
+        Args:
+            id (int): Nouvel id du set
+        """
         self.__id = id
 
     @property
     def Round(self) -> int:
         """
-        Round du set dans le tournoi (négatif si le set est en loser bracket)
+        Getter du round du set dans le tournoi (négatif si le set est en loser bracket)
+
+        Returns:
+            int: Round du set
         """
         return self.__round
     
     @Round.setter
     def Round(self, round : int) -> None:
+        """
+        Setter du round du set dans le tournoi (négatif si le set est en loser bracket)
+
+        Args:
+            round (int): Nouveau round du set
+        """
         self.__round = round
 
     @property
     def WinnerId(self) -> int:
         """
-        Id du gagnant du set
+        Getter de l'id du gagnant du set
+
+        Returns:
+            int: Id du gagnant du set
         """
         return self.__winner_id
     
     @WinnerId.setter
     def WinnerId(self, winner_id : int) -> None:
+        """
+        Setter de l'id du gagnant du set
+
+        Args:
+            winner_id (int): Nouvel id du gagnant du set
+        """
         self.__winner_id = winner_id
 
     @property
     def Players(self) -> [Player]:
         """
-        Liste des joueurs ayant participé au set
+        Getter de la liste des joueurs ayant participé au set
+
+        Returns:
+            [Player]: Liste des joueurs ayant participé au set
         """
         return self.__players
     
     @Players.setter
     def Players(self, players : [Player]) -> None:
+        """
+        Setter de la liste des joueurs ayant participé au set
+
+        Args:
+            players ([Player]): Nouvelle liste des joueurs ayant participé au set
+        """
         self.__players = players
 
     @property
     def EventNbEntrants(self) -> int:
         """
-        Nombre d'entrants à l'événement auquel appartient le set
+        Getter du nombre d'entrants à l'événement auquel appartient le set
+
+        Returns:
+            int: Nombre d'entrants à l'événement auquel appartient le set
         """
         return self.__event_nb_entrants
     
     @EventNbEntrants.setter
     def EventNbEntrants(self, event_nb_entrants : int) -> None:
+        """
+        Setter du nombre d'entrants à l'événement auquel appartient le set
+
+        Args:
+            event_nb_entrants (int): Nouveau nombre d'entrants à l'événement auquel appartient le set
+        """
         self.__event_nb_entrants = event_nb_entrants
 
     @property
     def Date(self) -> int:
         """
-        Date du set
+        Getter de la date du set
+
+        Returns:
+            int: Date du set
         """
         return self.__date
     
     @Date.setter
     def Date(self, date : int) -> None:
+        """
+        Setter de la date du set
+
+        Args:
+            date (int): Nouvelle date du set
+        """
         self.__date = date
 
     @property
     def Games(self) -> [Game]:
         """
-        Liste des matchs du set
+        Getter de la liste des matchs du set
+
+        Returns:
+            [Game]: Liste des matchs du set
         """
         return self.__games
     
     @Games.setter
     def Games(self, games : [Game]) -> None:
+        """
+        Setter de la liste des matchs du set
+
+        Args:
+            games ([Game]): Nouvelle liste des matchs du set
+        """
         self.__games = games
 
     @property
     def Videogame(self) -> Videogame:
         """
-        Jeu-vidéo du set
+        Getter du jeu-vidéo du set
+
+        Returns:
+            Videogame: Jeu-vidéo du set
         """
         return self.__videogame
     
     @Videogame.setter
     def Videogame(self, videogame : Videogame) -> None:
+        """
+        Setter du jeu-vidéo du set
+
+        Args:
+            videogame (Videogame): Nouveau jeu-vidéo du set
+        """
         self.__videogame = videogame
 
     # endregion

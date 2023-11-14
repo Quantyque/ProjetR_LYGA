@@ -17,34 +17,61 @@ class Game(Entity):
     @property
     def Id(self) -> int:
         """
-        Id de la partie
+        Getter de l'id de la partie
+
+        Returns:
+            int: Id de la partie
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id de la partie
+
+        Args:
+            id (int): Nouvel id de la partie
+        """
         self.__id = id
 
     @property
     def Players(self) -> [Player]:
         """
-        Liste des joueurs de la partie
+        Getter de la liste des joueurs de la partie
+
+        Returns:
+            [Player]: Liste des joueurs de la partie
         """
         return self.__players
     
     @Players.setter
     def Players(self, players : [Player]) -> None:
+        """
+        Setter de la liste des joueurs de la partie
+
+        Args:
+            players ([Player]): Nouvelle liste des joueurs de la partie
+        """
         self.__players = players
 
     @property
     def WinnerId(self) -> int:
         """
-        Id du joueur gagnant
+        Getter de l'id du joueur gagnant
+
+        Returns:
+            int: Id du joueur gagnant
         """
         return self.__winnerId
     
     @WinnerId.setter  
     def WinnerId(self, winnerId : int) -> None:
+        """
+        Setter de l'id du joueur gagnant
+
+        Args:
+            winnerId (int): Nouvel id du joueur gagnant
+        """
         self.__winnerId = winnerId
 
     # endregion
