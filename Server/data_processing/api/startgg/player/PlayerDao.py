@@ -2,6 +2,7 @@ from data_processing.api.startgg.player.IPlayerDao import IPlayerDao as IPlayerD
 from data_processing.api.startgg.StartGGDao import StartGGDao
 from data_processing.api.IApiDao import IApiDao
 from model.player import Player
+from exceptions import BadRequestException
 
 class PlayerDao(IPlayerDaoAPI):
 
@@ -72,6 +73,10 @@ class PlayerDao(IPlayerDaoAPI):
                     }
                     """,
                     {"idPlayer" : id})
+        
+        if response["errors"]:
+            raise BadRequestException(response["errors"][0]["message"])
+        
         player.hydrate(response["data"]["player"])
 
         return player

@@ -2,6 +2,7 @@ from data_processing.api.startgg.set.ISetDao import ISetDao
 from model.set import Set
 from data_processing.api.startgg.StartGGDao import StartGGDao
 from data_processing.api.IApiDao import IApiDao
+from exceptions import BadRequestException
 
 class SetDao(ISetDao):
 
@@ -87,6 +88,10 @@ class SetDao(ISetDao):
                     """, {
                         "idPlayer": idPlayer
                     })
+        
+        if response["errors"]:
+            raise BadRequestException(response["errors"][0]["message"])
+        
         sets = []
         if "data" in response:
             for data_set in response['data']['player']['sets']['nodes']:

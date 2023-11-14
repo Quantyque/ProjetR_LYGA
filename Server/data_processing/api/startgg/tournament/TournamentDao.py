@@ -3,6 +3,7 @@ from model.tournament import Tournament
 from model.videogame import Videogame
 from data_processing.api.startgg.StartGGDao import StartGGDao
 from data_processing.api.IApiDao import IApiDao
+from exceptions import BadRequestException
 
 class TournamentDao(ITournamentDao):
 
@@ -58,6 +59,12 @@ class TournamentDao(ITournamentDao):
                             "coordonnees" : coordonnees,
                             "distance" : distance
                         })
+        
+        if response["errors"]:
+            raise BadRequestException(response["errors"][0]["message"])
+        
+        print(response)
+
         tournaments = []
         for data_tournament in response['data']['tournaments']['nodes']:
             tournament = Tournament()

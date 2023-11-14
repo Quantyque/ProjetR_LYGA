@@ -2,6 +2,7 @@ from data_processing.api.startgg.video_game.IVideoGameDao import IVideoGameDao
 from model.videogame import Videogame
 from data_processing.api.startgg.StartGGDao import StartGGDao
 from data_processing.api.IApiDao import IApiDao
+from exceptions import BadRequestException
 
 class VideoGameDao(IVideoGameDao):
 
@@ -40,6 +41,9 @@ class VideoGameDao(IVideoGameDao):
             }
         }
         """)
+
+        if response["errors"]:
+            raise BadRequestException(response["errors"][0]["message"])
 
         video_games = []
 
@@ -80,6 +84,9 @@ class VideoGameDao(IVideoGameDao):
         params = {
             "id": id
         }
+
+        if response["errors"]:
+            raise BadRequestException(response["errors"][0]["message"])
         
         response = self.__api.request_api(graphql_query, params)
         videogame = Videogame()

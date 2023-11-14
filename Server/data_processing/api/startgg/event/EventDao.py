@@ -2,6 +2,7 @@ from data_processing.api.startgg.event.IEventDao import IEventDao
 from model.event import Event
 from data_processing.api.startgg.StartGGDao import StartGGDao
 from data_processing.api.IApiDao import IApiDao
+from exceptions import BadRequestException
 
 class EventDao(IEventDao):
         
@@ -82,6 +83,10 @@ class EventDao(IEventDao):
                         "idEvent": id,
                         "page": page
                     })
+        
+        if response["errors"]:
+            raise BadRequestException(response["errors"][0]["message"])
+        
         data_event : dict = response["data"]["event"]
         event.hydrate(data_event)
         return event
