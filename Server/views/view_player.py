@@ -34,7 +34,7 @@ class ViewPlayer(FlaskView):
             # Envoi de la requête
             result = self.__player_manager.get_player_by_id(player_id)
 
-            return result.toJSON(), 200
+            res = result.toJSON(), 200
         
         except ValueError as e :
             log_info(str(e))

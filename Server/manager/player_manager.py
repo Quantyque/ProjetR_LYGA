@@ -73,12 +73,19 @@ class PlayerManager(Manager):
         player.hydrate(response["data"]["player"])
 
         #Récupération des elos depuis la base de données
-        res = super().Database.exec_request("Select idElo, max(score), idPlayer, idGame, name, imageUrl from elos natural join games group by idPlayer having (idPlayer = ?)", (id,))
+        res = super().Database.exec_request("""Select idElo, score, p.idPlayer, idGame, name from players p natural join elos e join 
+                (SELECT
+                idPlayer,
+                MAX(date) AS date_max FROM
+                elos
+            GROUP BY
+                idPlayer having (idPlayer = ?)) sub
+                on e.idPlayer = sub.idPlayer
+                AND e.date = sub.date_max""", (id,))
         for row in res:
             data_video_game = {
                 "id": row[3],
-                "name": row[4],
-                "images": [{ "url" : row[5], "type" : "profile" }]
+                "name": row[4]
             }
             elo = Elo()
             dataElo = {
@@ -94,6 +101,9 @@ class PlayerManager(Manager):
     def get_all_players(self) -> [Player]:
         """
         Récupère tous les joueurs de la base de données
+
+        Returns:
+            [Player]: Liste de tous les joueurs de la base de données
         """
         players = {}
         res = super().Database.exec_request("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix from players p natural join elos e join 

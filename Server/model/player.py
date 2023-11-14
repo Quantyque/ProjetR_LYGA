@@ -126,22 +126,22 @@ class Player(Entity):
         self.__elos = elos
 
     @property
-    def Images(self) -> dict(str, str):
+    def Images(self) -> dict:
         """
         Getter du dictionnaire des urls des images du joueur contenants les clés "profile" et "banner"
 
         Returns:
-            dict(str, str): Dictionnaire des urls des images du joueur
+            dict: Dictionnaire des urls des images du joueur
         """
         return self.__images
     
     @Images.setter
-    def Images(self, images : dict(str, str)) -> None:
+    def Images(self, images : dict) -> None:
         """
         Setter du dictionnaire des urls des images du joueur contenants les clés "profile" et "banner"
 
         Args:
-            images (dict(str, str)): Nouveau dictionnaire des urls des images du joueur
+            images (dict): Nouveau dictionnaire des urls des images du joueur
         """
         self.__images = images
 
