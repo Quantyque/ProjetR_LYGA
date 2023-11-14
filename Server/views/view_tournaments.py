@@ -14,7 +14,7 @@ class ViewTournament(FlaskView):
     def __init__(self) -> None:
         self.__tournament_manager = TournamentManager()
 
-    @route('/location/', methods=['POST'])
+    @route('/location', methods=['POST'])
     def tournament_by_location(self) -> dict:
         """
         Renvoi une liste de tournois par date, jeu et lieu

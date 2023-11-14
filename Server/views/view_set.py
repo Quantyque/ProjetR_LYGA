@@ -17,7 +17,7 @@ class ViewSet(FlaskView):
     def __init__(self) -> None:
         self.__set_manager = SetManager()
 
-    @route('/player/', methods=['POST'])
+    @route('/player', methods=['POST'])
     def get_last_sets_by_player(self) -> dict:
         """
         Renvoie les derniers sets d'un joueur

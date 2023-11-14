@@ -14,7 +14,7 @@ class ViewUser(FlaskView):
     def __init__(self):
         self.__user_manager: UserManager = UserManager()
 
-    @route('/register/', methods=['POST'])
+    @route('/register', methods=['POST'])
     def create(self) -> str():
         """
         Ajoute un utilisateur dans la base de données
