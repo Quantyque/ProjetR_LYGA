@@ -1,57 +1,35 @@
 from model.tournament import Tournament
-from manager.manager import Manager
 from model.videogame import Videogame
+from data_processing.api.startgg.tournament.ITournamentDao import ITournamentDao as ITournamentDaoAPI
+from data_processing.api.startgg.tournament.TournamentDao import TournamentDao as TournamentDaoAPI
 
-class TournamentManager(Manager):
+class TournamentManager():
     """
     Classe permettant de gérer les tournois
     """
+
     def __init__(self):
-        super().__init__()
+        self.__sg: ITournamentDaoAPI = TournamentDaoAPI()
 
     # region Operations
 
     def get_tournaments_by_location(self, date : int, videogame : Videogame, coordonnees : str, distance : str) -> [Tournament]:
-        response = super().request_api("""
-                    query TournamentsAtLocation($afterDate : Timestamp!, $videogameId: ID!, $coordonnees : String!, $distance : String!) {
-                        tournaments(
-                            query: {filter: {past: true, videogameIds: [$videogameId], afterDate : $afterDate, location: {distanceFrom: $coordonnees, distance: $distance}}}
-                        ) {
-                            nodes {
-                            id
-                            name
-                            owner{
-                                name
-                            }
-                            lat
-                            lng
-                            events(filter: {}) {
-                                id
-                                name
-                                numEntrants
-                                tournament {
-                                    id
-                                    name
-                                }
-                                videogame{
-                                    id
-                                    name
-                                }
-                            }
-                            }
-                        }
-                        }
-                        """, {
-                            "afterDate": date,
-                            "videogameId": videogame.Id,
-                            "coordonnees" : coordonnees,
-                            "distance" : distance
-                        })
-        tournaments = []
-        for data_tournament in response['data']['tournaments']['nodes']:
-            tournament = Tournament()
-            tournament.hydrate(data_tournament)
-            tournaments.append(tournament)
-        return tournaments
+        """
+        Récupère les tournois par localisation.
+
+        Args:
+            date (int): La date.
+            videogame (Videogame): Le jeu vidéo.
+            coordonnees (str): Les coordonnées.
+            distance (str): La distance.
+
+        Returns:
+            [Tournament]: Les tournois.
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+        
+        return self.__sg.get_tournaments_by_location(date, videogame, coordonnees, distance)
 
     #endregion

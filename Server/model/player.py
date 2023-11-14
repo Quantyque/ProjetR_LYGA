@@ -2,6 +2,7 @@ from model.entity import Entity
 from model.videogame import Videogame
 from model.character import Character
 from model.elo import Elo
+from typing import Dict
 
 class Player(Entity):
     """
@@ -106,7 +107,7 @@ class Player(Entity):
         self.__characters = characters
 
     @property
-    def Elos(self) -> dict[int, Elo]:
+    def Elos(self) -> Dict[int, Elo]:
         """
         Getter de la liste des elos du joueur en fonction des jeux
 
@@ -116,7 +117,7 @@ class Player(Entity):
         return self.__elos
     
     @Elos.setter
-    def Elos(self, elos : dict[int, Elo]) -> None:
+    def Elos(self, elos : Dict[int, Elo]) -> None:
         """
         Setter de la liste des elos du joueur en fonction des jeux
 
@@ -126,7 +127,7 @@ class Player(Entity):
         self.__elos = elos
 
     @property
-    def Images(self) -> dict:
+    def Images(self) -> Dict[str, str]:
         """
         Getter du dictionnaire des urls des images du joueur contenants les clés "profile" et "banner"
 

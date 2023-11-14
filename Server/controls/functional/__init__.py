@@ -11,13 +11,13 @@ class FunctionalControls:
     @staticmethod        
     def check_json_arguments_not_null(*args):
         """
-        Check if the arguments provided are not null
+        Vériier que les arguments fournis ne sont pas nuls
 
         Args:
-            *args: Values to check
-        
+            *args: Valeurs à vérifier
+
         Raises:
-            BadRequestException: If the value is null
+            BadRequestException: Si la valeur est nulle
 
         Returns:
             None
@@ -29,13 +29,13 @@ class FunctionalControls:
     @staticmethod
     def check_forbidden_chars(*args):
         """
-        Check if the arguments provided contains forbidden chars
+        Vérifier que les arguments fournis ne contiennent pas de caractères interdits
 
         Args:
-            *args: Values to check
+            *args: Valeurs à vérifier
 
         Raises:
-            InvalidInput: If the value contains forbidden chars
+            InvalidInput: Si la valeur contient des caractères interdits
 
         Returns:
             None
@@ -47,14 +47,14 @@ class FunctionalControls:
     @staticmethod
     def check_password_match(password: str, confirm_password: str) -> None:
         """
-        Check if the passwords provided match
+        Vérifier que les mots de passe fournis correspondent
 
         Args:
-            password (str): Password
-            confirm_password (str): Password confirmation
+            password (str): Mot de passe
+            confirm_password (str): Confirmation du mot de passe
 
         Raises:
-            InvalidInput: If the passwords doesn't match
+            InvalidInput: Si les mots de passe ne correspondent pas
 
         Returns:
             None

@@ -5,13 +5,16 @@ class IDatabase:
 
     def exec_request(self, req : str, params : tuple = None):
         """
-        Exécute une requête sur la base de données
+        Exécute une requête SQL.
 
         Args:
-            req (str): La requête à exécuter
-            params (tuple, optional): Les paramètres de la requête.
+            req (str): La requête SQL.
+            params (tuple, optional): Les paramètres de la requête. Defaults to None.
 
         Returns:
-            list: Liste des résultats de la requête
+            list, optional: La liste des résultats de la requête.
+
+        Raises:
+            Exception: Si la requête échoue.
         """ 
         pass

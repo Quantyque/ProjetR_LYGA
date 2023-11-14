@@ -1,102 +1,33 @@
-from model.ranking import Ranking
-from manager.manager import Manager
-from manager.tournament_manager import TournamentManager
-from manager.event_manager import EventManager
-from manager.video_game_manager import VideoGameManager
-from manager.player_manager import PlayerManager
-from manager.elo_manager import EloManager
-import datetime
+from data_processing.sql.ranking.IRankingDao import IRankingDao as IRankingDaoSQL
+from data_processing.sql.ranking.RankingDao import RankingDao as RankingDaoSQL
+from typing import Dict
 
-class RankingManager(Manager):
+class RankingManager():
     """
-    Classe permettant de gérer le ranking
+    Classe permettant de gérer les classements
     """
 
     def __init__(self):
-        super().__init__()
+        self.__db: IRankingDaoSQL = RankingDaoSQL()
 
     # region Operations
 
-    def update_ranking(self, date : int, videogame_id : int, coordonnees : str, distance : str) -> dict[int, str]:
+    def update_ranking(self, date : int, videogame_id : int, coordonnees : str, distance : str) -> Dict[int, str]:
         """
-        Met à jour le ranking
+        Mise à jour du classement d'un jeu vidéo.
 
         Args:
-            date (int): la date à partir de laquelle on veut récupérer les tournois
-            videogame_id (int): l'id du jeu-vidéo
-            coordonnees (str): les coordonnées de la ville
-            distance (str): la distance autour de la ville
+            date (int): La date.
+            videogame_id (int): L'id du jeu vidéo.
+            coordonnees (str): Les coordonnées.
+            distance (str): La distance.
 
         Returns:
-            dict[int, str]: en clé l'id du joueur et en valeur le joueur en lui-même
+            Dict[int, str]: Le classement.
+
+        Raises:
+            HTTPError: Si la requête échoue.
         """
-        #Initialisation des variables
-        tournament_manager = TournamentManager()
-        event_manager = EventManager()
-        videogame_manager = VideoGameManager()
-        player_manager = PlayerManager()
-        elo_manager = EloManager()
-
-        #Récupération du jeu-vidéo selectionné
-        videogame = videogame_manager.get_video_game_by_id(videogame_id)
-
-        #Envoi de la requête pour obtenir les tournois en fonction de la date et du jeu
-        result = tournament_manager.get_tournaments_by_location(date, videogame, coordonnees, distance)
-
-        #Tri des tournois événements des tournois pour obtenir que les brackets principaux
-        events = []
-        for tournament in result:
-            current_event_max_entrant = tournament.Events[0]
-            for event in tournament.Events:
-                if (event.NumEntrants > current_event_max_entrant.NumEntrants):
-                    current_event_max_entrant = event
-            events.append(current_event_max_entrant)
-
-        #Récupération des sets de chaque tournoi pour les inverser et obtenir les sets dans l'ordre joué
-        complete_events = []
-        sets = []
-        for event in events:
-            page_courante = 0
-            res = event_manager.get_event_by_id(event.Id, page_courante)
-            complete_events.append(res)
-            print(page_courante)
-            while len(res.Sets) > 0:
-                for set in res.Sets:
-                    set.EventNbEntrants = event.NumEntrants
-                    sets.append(set)
-                page_courante += 1
-                res = event_manager.get_event_by_id(event.Id, page_courante)
-                if page_courante == 0:
-                    complete_events.append(res)
-                print(page_courante)
-
-        #Mise à jour de l'élo en fonction des sets récupérés
-        players = player_manager.get_all_players()
-        ranking = Ranking(players.values())
-        ranking.update_ranking(sets, videogame) 
-
-        #Récupération des élos des joueurs
-        player_ranking = ranking.Players
-
-        #Mise à jour du nombre de tournois joués par les joueurs
-        for event in complete_events:
-            for player in event.Players:
-                if (player.Id in player_ranking):
-                    player_ranking[player.Id].NbTournaments += 1
-
-        #Mise à jour de la base de données en fonction des résultats
-        #Joueurs
-        player_manager.remove_all_players()
-        player_manager.add_players(player_ranking.values())
-
-        #Elos
-        date = datetime.datetime.today().strftime('%d-%m-%Y')
-        elo_manager.add_elos(player_ranking, videogame_id, date)
-
-        #Jeu-vidéo
-        videogame_manager.delete_audited_game(videogame)
-        videogame_manager.add_audited_game(videogame)
-
-        return player_ranking
+        return self.__db.update_ranking(date, videogame_id, coordonnees, distance)
 
     #endregion

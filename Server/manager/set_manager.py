@@ -1,91 +1,31 @@
-from manager.manager import Manager
 from model.set import Set
+from data_processing.api.startgg.set.ISetDao import ISetDao as ISetDaoAPI
+from data_processing.api.startgg.set.SetDao import SetDao as SetDaoAPI
 
-class SetManager(Manager):
+class SetManager():
     """
-    Classe permettant de gérer les matchs
+    Classe permettant de gérer les sets
     """
 
     def __init__(self):
-        super().__init__()
+        self.__sg: ISetDaoAPI = SetDaoAPI()
 
     # region Operations
 
     def get_last_sets_by_player(self, idPlayer : int) -> [Set]:
         """
-        Renvoie la liste des derniers sets joués par un joueur
+        Récupère les derniers sets d'un joueur.
+
+        Args:
+            idPlayer (int): L'id du joueur.
+        
+        Returns:
+            [Set]: Les sets.
+
+        Raises:
+            HTTPError: Si la requête échoue.
         """
-        response = super().request_api("""
-                            query SetsByPlayer($idPlayer : ID!) {
-                                                player(id: $idPlayer) {
-                                                    sets(perPage: 3) {
-                                                    nodes {
-                                                        id
-                                                        round
-                                                        winnerId
-                                                        completedAt
-                                                        event{
-                                                            videogame{
-                                                                id
-                                                                name
-                                                            }
-                                                        }
-                                                        games{
-                                                            id
-                                                            winnerId
-                                                            selections{
-                                                                entrant{
-                                                                    id
-                                                                    standing{
-                                                                        player{
-                                                                            id
-                                                                            gamerTag
-                                                                        }
-                                                                    }
-                                                                }
-                                                                character{
-                                                                    id
-                                                                    name
-                                                                    images{
-                                                                        url
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                        slots{
-                                                            entrant{
-                                                                id
-                                                                name
-                                                                isDisqualified
-                                                                standing{
-                                                                    player{
-                                                                        id
-                                                                        prefix
-                                                                        gamerTag
-                                                                        user{
-                                                                            images{
-                                                                                url
-                                                                                type
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                    """, {
-                        "idPlayer": idPlayer
-                    })
-        sets = []
-        if "data" in response:
-            for data_set in response['data']['player']['sets']['nodes']:
-                set = Set()
-                set.hydrate(data_set)
-                sets.append(set)
-        return sets
+        return self.__sg.get_last_sets_by_player(idPlayer)
 
     
     #endregion

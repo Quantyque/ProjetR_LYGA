@@ -1,0 +1,172 @@
+from model.elo import Elo
+from model.videogame import Videogame
+from data_processing.sql.elo.IEloDao import IEloDao
+from data_processing.sql.idatabase import IDatabase
+from data_processing.sql.sqlite_database import SQLiteDatabase
+
+class EloDao(IEloDao):
+
+    def __init__(self):
+        self.__db : IDatabase = SQLiteDatabase()
+
+    def get_default_elo(self, id_player : int, id_videogame : int) -> int:
+        """
+        Retourne l'elo par défaut d'un joueur
+
+        Args:
+            id_player (int): Id du joueur
+            id_videogame (int): Id du jeu vidéo
+
+        Returns:
+            int: Elo par défaut du joueur
+        """
+        
+        res = [[]]
+        res = self.__db.exec_request("SELECT defaultElo FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player,id_videogame))
+
+        if len(res) == 0:
+            res.append([])
+            res[0].append(1000)
+            self.__db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
+
+        return res[0][0]
+    
+    def add_default_elo(self, id_player : int, id_videogame : int) -> None:
+        """
+        Ajoute un elo par défaut à un joueur
+
+        Args:
+            id_player (int): Id du joueur
+            id_videogame (int): Id du jeu vidéo
+
+        Returns:
+            None
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+        self.__db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
+
+    def edit_elo(self, id_player : int, id_videogame : int, elo : int) -> None:
+        """
+        Met à jour l'elo d'un joueur
+
+        Args:
+            id_player (int): Id du joueur
+            id_videogame (int): Id du jeu vidéo
+            elo (int): Nouvel elo
+
+        Returns:
+            None
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+
+        self.__db.exec_request("UPDATE defaultPlayerElos SET score = ? WHERE idPlayer = ? and idGame = ?", (elo, id_player, id_videogame))
+
+    def delete_default_elo(self, id_player : int, id_videogame : int) -> None:
+        """
+        Supprime l'elo par défaut d'un joueur
+
+        Args:
+            id_player (int): Id du joueur
+            id_videogame (int): Id du jeu vidéo
+
+        Returns:
+            None
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+
+        self.__db.exec_request("DELETE FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player, id_videogame))
+
+    def add_elos(self, players : dict, videogame_id : int, date : int):
+        """
+        Ajoute les elos d'une partie à la base de données
+
+        Args:
+            players (dict): Dictionnaire des joueurs
+            videogame_id (int): Id du jeu vidéo
+            date (int): Date de la partie
+
+        Returns:
+            None
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+
+        # Add elos to the database if the elo does not exist or if the elo has changed
+        players_to_add = []
+
+        for player_id in players:
+            res = self.__db.exec_request("SELECT idPlayer, idGame, score, date FROM elos WHERE idGame = ? and idPlayer = ? order by date limit 1", [videogame_id, player_id])
+            if len(res) == 0 or res[0][2] != players[player_id].Elos[videogame_id].Score:
+                players_to_add.append(player_id)
+
+        # Create the elo addition request
+        req_elos = "INSERT INTO elos VALUES"
+        params_elos = []
+
+        for player_id in players_to_add:
+            # Manage the addition in the Elos table
+            req_elos += " (null,?, ?, ?, ?),"
+            params_elos.append(players[player_id].Elos[videogame_id].Score)
+            params_elos.append(player_id)
+            params_elos.append(videogame_id)
+            params_elos.append(date)
+                
+        # Insert elo data
+        if len(players_to_add) > 0:
+            req_elos = req_elos[:-1]
+            self.__db.exec_request(req_elos, params_elos)
+
+    def delete_all_elos_from_videogame(self, videogame_id : int):
+        """
+        Supprime tous les elos d'un jeu vidéo
+
+        Args:
+            videogame_id (int): Id du jeu vidéo
+
+        Returns:
+            None
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+        
+        self.__db.exec_request("DELETE from elos where idGame = ?", [videogame_id])
+
+    def get_history_elos(self, player_id : int) -> [Elo]:
+        """
+        Retournes l'historique des elos d'un joueur
+
+        Args:
+            player_id (int): Id du joueur
+
+        Returns:
+            [Elo]: Liste des elos
+    
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+
+        res = self.__db.exec_request("SELECT score, date, idGame, name FROM elos natural join games WHERE idPlayer = ? ORDER BY date", (player_id,))
+        elos = []
+
+        for row in res:
+            videogame = Videogame()
+            videogame.Id = row[2]
+            videogame.Name = row[3]
+            elo = Elo()
+            data_elo = {
+                "score": row[0],
+                "date": row[1],
+                "videogame": videogame.toJSON()
+            }
+            elo.hydrate(data_elo)
+            elos.append(elo)
+
+        return elos

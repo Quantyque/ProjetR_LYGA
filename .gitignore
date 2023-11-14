@@ -8,6 +8,8 @@ Scripts/
 pyvenv.cfg
 share/
 .next/
+*.env
+*.env.*
 
 # User-specific files
 *.rsuser
