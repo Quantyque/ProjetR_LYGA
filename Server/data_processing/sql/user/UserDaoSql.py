@@ -1,5 +1,5 @@
 from data_processing.sql.user.IUserDaoSql import IUserDaoSql
-from exceptions import InvalidCredentials
+from exceptions import InvalidCredentials, UserNotFound
 from datetime import timedelta, datetime
 from model.user import User
 from model.role import Role
@@ -69,7 +69,9 @@ class UserDaoSql(IUserDaoSql, Dao):
             payload = user.toJSON()
             payload["exp"] = exp.timestamp()   
             jwt_encoded = jwt.encode(payload, os.getenv('JWT_SECRET'), algorithm=os.getenv('JWT_ALGO'))
-            result = json.dumps({"id" : user.Id, "username" : user.Username, "role": user.Role, "userPP": user.UserPP, "accessToken": jwt_encoded})
+            user_json = user.toJSON()
+            user_json["accessToken"] = jwt_encoded
+            result = json.dumps(user_json)
 
         else:
             raise InvalidCredentials("Invalid credentials.")
@@ -78,21 +80,99 @@ class UserDaoSql(IUserDaoSql, Dao):
             
 
     def get_all_users(self):
-        self.db.exec_request("SELECT * FROM User")
-        pass
+        """
+        Retourne tous les utilisateurs
 
-    def get_user_by_id(self, user: User):
-        self.db.exec_request("SELECT * FROM User WHERE id = ?", (user.Id,))
-        pass
+        Returns:
+            list(User): La liste des utilisateurs
 
-    def add_user(self, user: User):
-        self.db.exec_request("INSERT INTO User(id, username, password, role) VALUES (?, ?, ?)", (user.Id, user.Username, user.Password, user.Role))
-        pass
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
 
-    def update_user(self, user: User):
-        pass
+        users = self.db.exec_request("SELECT * FROM Users")
 
-    def delete_user(self, id: int):
-        pass
+        if users is not None:
+            users = [User(user[0], user[1], user[3], None, user[4]) for user in users]
+            json_users = [user.toJSON() for user in users]
+            
+        else:
+            raise Exception("Invalid credentials.")
+        
+        return json_users
+        
+
+    def get_user_by_id(self, id: int):
+        """
+        Retourne un utilisateur en fonction de son id
+
+        Args:
+            user (User): L'utilisateur à récupérer
+
+        Returns:
+            User: L'utilisateur correspondant à l'id
+
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+        """
+
+        data = self.db.exec_request("SELECT * FROM Users WHERE id = ?", (id,))
+
+        if data:
+            user = data[0]
+            user = User(user[0], user[1], user[3], None, user[4])
+            json_user = user.toJSON()
+
+        else:
+            raise UserNotFound("User not found.")
+        
+        return json_user
+
+    def update_user(self, user: User) -> None:
+        """
+        Met à jour un utilisateur.
+
+        Args:
+            user (User): L'utilisateur à mettre à jour.
+
+        Returns:
+            None
+
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+        """
+
+        user_infos = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (user.Id,), True)
+
+        if user_infos is None:
+            raise UserNotFound("User not found.")
+
+        if user.Password is not None:
+            password = bcrypt.hashpw(user.Password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            self.db.exec_request("UPDATE Users SET username = ?, password = ?, role = ?, userPP = ? WHERE id = ?", (user.Username, password, user.Role, user.UserPP, user.Id))
+
+        else:
+            self.db.exec_request("UPDATE Users SET username = ?, role = ?, userPP = ? WHERE id = ?", (user.Username, user.Role, user.UserPP, user.Id))
+
+    def delete_user(self, id: int) -> None:
+        """
+        Supprime un utilisateur.
+
+        Args:
+            id (int): L'id de l'utilisateur.
+
+        Returns:
+            None
+
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+        """
+        
+        user_infos = self.db.exec_request("SELECT * FROM Users WHERE id = ?", (id,), True)
+
+        if user_infos is None:
+            raise UserNotFound("User not found.")
+
+        self.db.exec_request("DELETE FROM Users WHERE id = ?", (id,))
 
     # endregion

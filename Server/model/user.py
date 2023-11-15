@@ -134,7 +134,6 @@ class User(Entity):
             "id": self.Id,
             "username": self.Username,
             "role": self.Role,
-            "password": self.Password,
             "userPP": self.UserPP
         }
 

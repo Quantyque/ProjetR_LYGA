@@ -24,3 +24,6 @@ class GameNotAudited(Exception):
 
 class TokenExpired(Exception):
     pass
+
+class UserNotFound(Exception):
+    pass
