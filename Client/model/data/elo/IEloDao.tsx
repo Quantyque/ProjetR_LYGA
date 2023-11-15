@@ -2,7 +2,7 @@ import { Elo } from "@/model/logic/elo";
 
 interface IEloDao {
 
-    fetchEloHistoryByPlayerID(id: string): Elo | null;
+    fetchEloHistoryByPlayerID(id: string): Promise<Elo | null> ;
     
 }
 

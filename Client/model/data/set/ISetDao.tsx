@@ -2,7 +2,7 @@ import { Set } from "@/model/logic/set";
 
 interface ISetDao {
 
-    fetchSetsByIdPlayer(id: string): Set | null;
+    fetchSetsByIdPlayer(id: string): Promise<Set | null>;
     
 }
 

@@ -1,9 +1,11 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { VideogameDao } from '@/model/data/videgame/VideogameDao'
 import { PlayerDao } from '@/model/data/player/PlayerDao'
 import Rank from '@/app/components/Rank'
 import './ranking.css'
+import { Player } from '@/model/logic/player'
+import { Videogame } from '@/model/logic/videogame'
 
 export default function Ranking() {
 
@@ -18,11 +20,29 @@ export default function Ranking() {
     setSelectedValue(parseInt(selectElement.options[selectElement.selectedIndex].value));
   });
   })*/
-
+  
   const playerDao : PlayerDao = new PlayerDao();
   const videogameDao : VideogameDao = new VideogameDao();
-  var videoGames = videogameDao.fetchVideoGames();
-  var players = playerDao.fetchPlayers();
+
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [videoGames, setVideoGame] = useState<Videogame[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const players = await playerDao.fetchPlayers();
+        const games = await videogameDao.fetchVideoGames();
+
+        setPlayers(players);
+        setVideoGame(games);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
 
   return (
     <main>

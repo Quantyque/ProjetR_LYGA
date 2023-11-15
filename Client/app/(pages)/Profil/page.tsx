@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import "./profil.css";
 import RankingChart from "@/app/(pages)/profil/rankingChart";
-import { Player } from "@/model/logic/player";
 import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
-import { Set } from "@/model/logic/set";
 import { PlayerDao } from "@/model/data/player/PlayerDao";
 import { SetDao } from "@/model/data/set/SetDao";
 import { EloDao } from "@/model/data/elo/EloDao";
+import { Player } from "@/model/logic/player";
+import { Set } from "@/model/logic/set";
 
 export default function Profil() {
   
@@ -16,15 +16,34 @@ export default function Profil() {
   const playerId = searchParams.get('playerId')
   const dataToSend = { player_id: playerId };
 
-  
-
   const eloDao : EloDao = new EloDao();
   const playerDao : PlayerDao = new PlayerDao();
   const setDao : SetDao = new SetDao();
 
-  const playerEloHistory = eloDao.fetchEloHistoryByPlayerID(dataToSend);
-  const playerData = playerDao.fetchPlayerByID(dataToSend);
-  const playerSet = setDao.fetchSetsByIdPlayer(dataToSend);
+  const [playerData, setPlayers] = useState<Player | null>(null);
+  const [playerEloHistory, setElo] = useState<Elo | null>(null);
+  const [playerSet, setSet] = useState<Set | null>(null);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const eloHistory = await eloDao.fetchEloHistoryByPlayerID(dataToSend);
+        const player = await playerDao.fetchPlayerByID(dataToSend);
+        const sets = await setDao.fetchSetsByIdPlayer(dataToSend);
+  
+        setElo(eloHistory);
+        setPlayers(player);
+        setSet(sets);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+
 
   return (
     <>
