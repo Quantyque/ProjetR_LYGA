@@ -1,14 +1,13 @@
-from data_processing.api.startgg.tournament.ITournamentDao import ITournamentDao
+from data_processing.api.startgg.tournament.ITournamentDaoApi import ITournamentDaoApi
 from model.tournament import Tournament
 from model.videogame import Videogame
-from data_processing.api.startgg.StartGGDao import StartGGDao
-from data_processing.api.IApiDao import IApiDao
 from exceptions import BadRequestException
+from data_processing.api.api import Api
 
-class TournamentDao(ITournamentDao):
+class TournamentDaoApi(ITournamentDaoApi, Api):
 
     def __init__(self) -> None:
-        self.__api: IApiDao = StartGGDao()
+        super().__init__()
 
     def get_tournaments_by_location(self, date : int, videogame : Videogame, coordonnees : str, distance : str) -> [Tournament]:
         """
@@ -24,7 +23,7 @@ class TournamentDao(ITournamentDao):
         Raises:
             Exception: Si la requête échoue.
         """
-        response = self.__api.request_api("""
+        response = self.sg.request_api("""
                     query TournamentsAtLocation($afterDate : Timestamp!, $videogameId: ID!, $coordonnees : String!, $distance : String!) {
                         tournaments(
                             query: {filter: {past: true, videogameIds: [$videogameId], afterDate : $afterDate, location: {distanceFrom: $coordonnees, distance: $distance}}}
@@ -60,10 +59,8 @@ class TournamentDao(ITournamentDao):
                             "distance" : distance
                         })
         
-        if response["errors"]:
+        if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
-        
-        print(response)
 
         tournaments = []
         for data_tournament in response['data']['tournaments']['nodes']:

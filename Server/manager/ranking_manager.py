@@ -1,5 +1,5 @@
-from data_processing.sql.ranking.IRankingDao import IRankingDao as IRankingDaoSQL
-from data_processing.sql.ranking.RankingDao import RankingDao as RankingDaoSQL
+from data_processing.sql.ranking.IRankingDaoSql import IRankingDaoSql
+from data_processing.sql.ranking.RankingDaoSql import RankingDaoSql
 from typing import Dict
 
 class RankingManager():
@@ -8,7 +8,7 @@ class RankingManager():
     """
 
     def __init__(self):
-        self.__db: IRankingDaoSQL = RankingDaoSQL()
+        self.__db: IRankingDaoSql = RankingDaoSql()
 
     # region Operations
 

@@ -1,7 +1,7 @@
 from model.user import User
 from abc import ABC, abstractmethod
 
-class IUserDao(ABC):
+class IUserDaoSql(ABC):
 
     @abstractmethod
     def register(self, username: str, password: str) -> None:

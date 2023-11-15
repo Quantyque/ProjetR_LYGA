@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from model.player import Player
 
-class IPlayerDao(ABC):
+class IPlayerDaoSql(ABC):
 
     @abstractmethod
     def get_player_by_id(self, id : int) -> Player:

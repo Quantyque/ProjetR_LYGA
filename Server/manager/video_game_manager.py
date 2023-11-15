@@ -1,8 +1,8 @@
 from model.videogame import Videogame
-from data_processing.api.startgg.video_game.IVideoGameDao import IVideoGameDao as IVideoGameDaoAPI
-from data_processing.api.startgg.video_game.VideoGameDao import VideoGameDao as VideoGameDaoAPI
-from data_processing.sql.video_game.IVideoGameDao import IVideoGameDao as IVideoGameDaoSQL
-from data_processing.sql.video_game.VideoGame import VideoGameDao as VideoGameDaoSQL  
+from data_processing.api.startgg.video_game.IVideoGameDaoApi import IVideoGameDaoApi
+from data_processing.api.startgg.video_game.VideoGameDaoApi import VideoGameDaoApi
+from data_processing.sql.video_game.IVideoGameDaoSql import IVideoGameDaoSql
+from data_processing.sql.video_game.VideoGameSql import VideoGameDaoSql
 
 
 class VideoGameManager():
@@ -11,8 +11,8 @@ class VideoGameManager():
     """
 
     def __init__(self):
-        self.__sg: IVideoGameDaoAPI = VideoGameDaoAPI()
-        self.__db: IVideoGameDaoSQL = VideoGameDaoSQL()
+        self.__sg: IVideoGameDaoApi = VideoGameDaoApi()
+        self.__db: IVideoGameDaoSql = VideoGameDaoSql()
 
     # region Operations
     def get_all_video_game(self):

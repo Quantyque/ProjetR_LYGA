@@ -1,13 +1,12 @@
-from data_processing.api.startgg.set.ISetDao import ISetDao
+from data_processing.api.startgg.set.ISetDaoApi import ISetDaoApi
 from model.set import Set
-from data_processing.api.startgg.StartGGDao import StartGGDao
-from data_processing.api.IApiDao import IApiDao
 from exceptions import BadRequestException
+from data_processing.api.api import Api
 
-class SetDao(ISetDao):
+class SetDaoApi(ISetDaoApi, Api):
 
     def __init__(self) -> None:
-        self.__api: IApiDao = StartGGDao()
+        super().__init__()
 
     # region : Operations
     def get_last_sets_by_player(self, idPlayer : int) -> [Set]:
@@ -24,7 +23,7 @@ class SetDao(ISetDao):
             Exception: Si la requête échoue.
         """
 
-        response = self.__api.request_api("""
+        response = self.sg.request_api("""
                             query SetsByPlayer($idPlayer : ID!) {
                                                 player(id: $idPlayer) {
                                                     sets(perPage: 3) {
@@ -89,7 +88,7 @@ class SetDao(ISetDao):
                         "idPlayer": idPlayer
                     })
         
-        if response["errors"]:
+        if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
         
         sets = []

@@ -1,7 +1,7 @@
 from model.videogame import Videogame
 from abc import ABC, abstractmethod
 
-class IVideoGameDao(ABC):
+class IVideoGameDaoSql(ABC):
 
     @abstractmethod
     def add_audited_game(self, game: Videogame) -> str():

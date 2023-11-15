@@ -1,6 +1,6 @@
 from model.elo import Elo
-from data_processing.sql.elo.IEloDao import IEloDao as IEloDaoSQL
-from data_processing.sql.elo.EloDao import EloDao as EloDaoSQL
+from data_processing.sql.elo.IEloDaoSql import IEloDaoSql
+from data_processing.sql.elo.EloDaoSql import EloDaoSql
 
 
 class EloManager():
@@ -9,7 +9,7 @@ class EloManager():
     """
 
     def __init__(self):
-        self.__db: IEloDaoSQL = EloDaoSQL()
+        self.__db: IEloDaoSql = EloDaoSql()
 
     def get_default_elo(self, id_player : int, id_videogame : int) -> int:
         """

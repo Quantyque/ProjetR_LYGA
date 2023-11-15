@@ -1,7 +1,7 @@
 from model.videogame import Videogame
 from abc import ABC, abstractmethod
 
-class IVideoGameDao(ABC):
+class IVideoGameDaoApi(ABC):
 
     @abstractmethod
     def get_all_video_games(self):

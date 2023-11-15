@@ -2,7 +2,7 @@ from model.tournament import Tournament
 from model.videogame import Videogame
 from abc import ABC, abstractmethod
 
-class ITournamentDao(ABC):
+class ITournamentDaoApi(ABC):
 
     @abstractmethod
     def get_tournaments_by_location(self, date : int, videogame : Videogame, coordonnees : str, distance : str) -> [Tournament]:

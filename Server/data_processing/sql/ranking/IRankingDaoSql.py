@@ -2,7 +2,7 @@ from model.ranking import Ranking
 from abc import ABC, abstractmethod
 from typing import Dict
 
-class IRankingDao(ABC):
+class IRankingDaoSql(ABC):
 
     @abstractmethod
     def update_ranking(self, date : int, videogame_id : int, coordonnees : str, distance : str) -> Dict[int, str]:

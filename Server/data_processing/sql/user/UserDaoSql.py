@@ -1,16 +1,15 @@
-from data_processing.sql.user.IUserDao import IUserDao
+from data_processing.sql.user.IUserDaoSql import IUserDaoSql
 from exceptions import InvalidCredentials
 from datetime import timedelta, datetime
 from model.user import User
 from model.role import Role
-from data_processing.sql.idatabase import IDatabase
-from data_processing.sql.sqlite_database import SQLiteDatabase
+from data_processing.sql.dao import Dao
 import jwt, bcrypt, os, json, bcrypt, pyotp
 
-class UserDao(IUserDao):
+class UserDaoSql(IUserDaoSql, Dao):
         
     def __init__(self):
-        self.__db : IDatabase = SQLiteDatabase()
+        super().__init__()
 
     # region Operations
 
@@ -29,14 +28,14 @@ class UserDao(IUserDao):
             DuplicateUser: Si l'utilisateur existe déjà.
         """
 
-        user_infos = self.__db.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
+        user_infos = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
 
         if user_infos is not None:
             raise InvalidCredentials("Username already taken.")
 
         password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         user = User(None, username, Role.USER.value, password, None)
-        self.__db.exec_request("INSERT INTO Users(username, password, role) VALUES (?, ?, ?)", (user.Username, user.Password, user.Role))
+        self.db.exec_request("INSERT INTO Users(username, password, role) VALUES (?, ?, ?)", (user.Username, user.Password, user.Role))
 
     def login(self, username: str, password: str) -> list(str()):
         """
@@ -56,7 +55,7 @@ class UserDao(IUserDao):
 
         result: str = ""
 
-        user_infos = self.__db.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
+        user_infos = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
 
         if user_infos is not None:
             user = User(user_infos[0], user_infos[1], user_infos[3], None, user_infos[4])
@@ -79,15 +78,15 @@ class UserDao(IUserDao):
             
 
     def get_all_users(self):
-        self.__db.exec_request("SELECT * FROM User")
+        self.db.exec_request("SELECT * FROM User")
         pass
 
     def get_user_by_id(self, user: User):
-        self.__db.exec_request("SELECT * FROM User WHERE id = ?", (user.Id,))
+        self.db.exec_request("SELECT * FROM User WHERE id = ?", (user.Id,))
         pass
 
     def add_user(self, user: User):
-        self.__db.exec_request("INSERT INTO User(id, username, password, role) VALUES (?, ?, ?)", (user.Id, user.Username, user.Password, user.Role))
+        self.db.exec_request("INSERT INTO User(id, username, password, role) VALUES (?, ?, ?)", (user.Id, user.Username, user.Password, user.Role))
         pass
 
     def update_user(self, user: User):

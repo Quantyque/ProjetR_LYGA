@@ -1,7 +1,7 @@
 from model.tournament import Tournament
 from model.videogame import Videogame
-from data_processing.api.startgg.tournament.ITournamentDao import ITournamentDao as ITournamentDaoAPI
-from data_processing.api.startgg.tournament.TournamentDao import TournamentDao as TournamentDaoAPI
+from data_processing.api.startgg.tournament.ITournamentDaoApi import ITournamentDaoApi
+from data_processing.api.startgg.tournament.TournamentDaoApi import TournamentDaoApi
 
 class TournamentManager():
     """
@@ -9,7 +9,7 @@ class TournamentManager():
     """
 
     def __init__(self):
-        self.__sg: ITournamentDaoAPI = TournamentDaoAPI()
+        self.__sg: ITournamentDaoApi = TournamentDaoApi()
 
     # region Operations
 

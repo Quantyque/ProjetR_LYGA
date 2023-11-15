@@ -1,7 +1,7 @@
 from model.elo import Elo
 from abc import ABC, abstractmethod
 
-class IEloDao(ABC):
+class IEloDaoSql(ABC):
 
     @abstractmethod
     def get_default_elo(self, id_player : int, id_videogame : int) -> int:

@@ -1,6 +1,6 @@
 from model.user import User
-from data_processing.sql.user.UserDao import UserDao as UserDaoSQL
-from data_processing.sql.user.IUserDao import IUserDao as IUserDaoSQL
+from data_processing.sql.user.UserDaoSql import UserDaoSql
+from data_processing.sql.user.IUserDaoSql import IUserDaoSql
 import bcrypt, pyotp
 
 class UserManager(): 
@@ -9,7 +9,7 @@ class UserManager():
     """
 
     def __init__(self):
-        self.__db: IUserDaoSQL = UserDaoSQL()
+        self.__db: IUserDaoSql = UserDaoSql()
 
     # region Operations
 

@@ -1,13 +1,12 @@
-from data_processing.api.startgg.event.IEventDao import IEventDao
+from data_processing.api.startgg.event.IEventDaoApi import IEventDaoApi
 from model.event import Event
-from data_processing.api.startgg.StartGGDao import StartGGDao
-from data_processing.api.IApiDao import IApiDao
 from exceptions import BadRequestException
+from data_processing.api.api import Api
 
-class EventDao(IEventDao):
+class EventDaoApi(IEventDaoApi, Api):
         
     def __init__(self):
-        self.__api : IApiDao = StartGGDao()
+        super().__init__()
 
     # region Operations
 
@@ -26,7 +25,7 @@ class EventDao(IEventDao):
             Exception: Si la requête échoue.
         """
         event : Event = Event()
-        response : dict = self.__api.request_api("""
+        response : dict = self.sg.request_api("""
                     query EventById($idEvent: ID!, $page : Int!) {
                         event(id: $idEvent) {
                             id
@@ -84,7 +83,7 @@ class EventDao(IEventDao):
                         "page": page
                     })
         
-        if response["errors"]:
+        if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
         
         data_event : dict = response["data"]["event"]

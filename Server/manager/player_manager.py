@@ -1,8 +1,8 @@
 from model.player import Player
-from data_processing.api.startgg.player.IPlayerDao import IPlayerDao as IPlayerDaoAPI
-from data_processing.api.startgg.player.PlayerDao import PlayerDao as PlayerDaoAPI
-from data_processing.sql.player.IPlayerDao import IPlayerDao as IPlayerDaoSQL
-from data_processing.sql.player.PlayerDao import PlayerDao as PlayerDaoSQL
+from data_processing.api.startgg.player.IPlayerDaoApi import IPlayerDaoApi
+from data_processing.api.startgg.player.PlayerDaoApi import PlayerDaoApi
+from data_processing.sql.player.IPlayerDaoSql import IPlayerDaoSql
+from data_processing.sql.player.PlayerDaoSql import PlayerDaoSql
 
 class PlayerManager():
     """
@@ -10,8 +10,8 @@ class PlayerManager():
     """
 
     def __init__(self):
-        self.__sg: IPlayerDaoAPI = PlayerDaoAPI()
-        self.__db: IPlayerDaoSQL = PlayerDaoSQL()
+        self.__sg: IPlayerDaoApi = PlayerDaoApi()
+        self.__db: IPlayerDaoSql = PlayerDaoSql()
 
     # region Operations
 

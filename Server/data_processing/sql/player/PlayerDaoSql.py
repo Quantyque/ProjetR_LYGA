@@ -1,15 +1,13 @@
-from data_processing.sql.player.IPlayerDao import IPlayerDao
+from data_processing.sql.player.IPlayerDaoSql import IPlayerDaoSql
 from model.player import Player
 from model.elo import Elo
-from model.videogame import Videogame
 from constants import NUMBER_OF_TOURNAMENTS_TO_BE_RANKED
-from data_processing.sql.idatabase import IDatabase
-from data_processing.sql.sqlite_database import SQLiteDatabase
+from data_processing.sql.dao import Dao
 
-class PlayerDao(IPlayerDao):
+class PlayerDaoSql(IPlayerDaoSql, Dao):
 
     def __init__(self) -> None:
-        self.__db : IDatabase = SQLiteDatabase()
+        super().__init__()
 
     def get_player_by_id(self, id : int) -> Player:
         """
@@ -28,7 +26,7 @@ class PlayerDao(IPlayerDao):
         player : Player = Player()
 
         # Get player data from database
-        res = self.__db.exec_request("""Select idElo, score, p.idPlayer, idGame, name from players p natural join elos e join 
+        res = self.db.exec_request("""Select idElo, score, p.idPlayer, idGame, name from players p natural join elos e join 
                         (SELECT
                         idPlayer,
                         MAX(date) AS date_max FROM
@@ -66,7 +64,7 @@ class PlayerDao(IPlayerDao):
             HTTPError: Si la requête échoue.
         """
         players = {}
-        res = self.__db.exec_request("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix from players p natural join elos e join 
+        res = self.db.exec_request("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix from players p natural join elos e join 
                 (SELECT
             idPlayer,
             MAX(date) AS date_max FROM
@@ -116,7 +114,7 @@ class PlayerDao(IPlayerDao):
             HTTPError: Si la requête échoue.
         """
         players = {}
-        res = self.__db.exec_request("""Select e.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix from players p natural join elos e join 
+        res = self.db.exec_request("""Select e.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix from players p natural join elos e join 
                 (SELECT
             idPlayer,
             MAX(date) AS date_max FROM
@@ -179,7 +177,7 @@ class PlayerDao(IPlayerDao):
 
         # Insert players
         req_players = req_players[:-1]
-        self.__db.exec_request(req_players, params_players)
+        self.db.exec_request(req_players, params_players)
 
     def remove_all_players(self) -> None:
         """
@@ -191,4 +189,4 @@ class PlayerDao(IPlayerDao):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.__db.exec_request("DELETE from players") 
+        self.db.exec_request("DELETE from players") 

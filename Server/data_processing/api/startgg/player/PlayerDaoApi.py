@@ -1,13 +1,12 @@
-from data_processing.api.startgg.player.IPlayerDao import IPlayerDao as IPlayerDaoAPI
-from data_processing.api.startgg.StartGGDao import StartGGDao
-from data_processing.api.IApiDao import IApiDao
+from data_processing.api.startgg.player.IPlayerDaoApi import IPlayerDaoApi
 from model.player import Player
 from exceptions import BadRequestException
+from data_processing.api.api import Api
 
-class PlayerDao(IPlayerDaoAPI):
+class PlayerDaoApi(IPlayerDaoApi, Api):
 
     def __init__(self) -> None:
-        self.__api: IApiDao = StartGGDao()
+        super().__init__()
 
     def get_player_by_id(self, id : int) -> Player:
         """
@@ -23,7 +22,7 @@ class PlayerDao(IPlayerDaoAPI):
             Exception: Si la requête échoue.
         """
         player : Player = Player()
-        response = self.__api.request_api("""
+        response = self.sg.request_api("""
                 query PlayerById($idPlayer : ID!) {
                     player(id: $idPlayer) {
                         id
@@ -74,7 +73,7 @@ class PlayerDao(IPlayerDaoAPI):
                     """,
                     {"idPlayer" : id})
         
-        if response["errors"]:
+        if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
         
         player.hydrate(response["data"]["player"])

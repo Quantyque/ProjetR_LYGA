@@ -1,13 +1,12 @@
 from model.elo import Elo
 from model.videogame import Videogame
-from data_processing.sql.elo.IEloDao import IEloDao
-from data_processing.sql.idatabase import IDatabase
-from data_processing.sql.sqlite_database import SQLiteDatabase
+from data_processing.sql.elo.IEloDaoSql import IEloDaoSql
+from data_processing.sql.dao import Dao
 
-class EloDao(IEloDao):
+class EloDaoSql(IEloDaoSql, Dao):
 
     def __init__(self):
-        self.__db : IDatabase = SQLiteDatabase()
+        super().__init__()
 
     def get_default_elo(self, id_player : int, id_videogame : int) -> int:
         """
@@ -22,12 +21,12 @@ class EloDao(IEloDao):
         """
         
         res = [[]]
-        res = self.__db.exec_request("SELECT defaultElo FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player,id_videogame))
+        res = self.db.exec_request("SELECT defaultElo FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player,id_videogame))
 
         if len(res) == 0:
             res.append([])
             res[0].append(1000)
-            self.__db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
+            self.db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
 
         return res[0][0]
     
@@ -45,7 +44,7 @@ class EloDao(IEloDao):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.__db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
+        self.db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
 
     def edit_elo(self, id_player : int, id_videogame : int, elo : int) -> None:
         """
@@ -63,7 +62,7 @@ class EloDao(IEloDao):
             HTTPError: Si la requête échoue.
         """
 
-        self.__db.exec_request("UPDATE defaultPlayerElos SET score = ? WHERE idPlayer = ? and idGame = ?", (elo, id_player, id_videogame))
+        self.db.exec_request("UPDATE defaultPlayerElos SET score = ? WHERE idPlayer = ? and idGame = ?", (elo, id_player, id_videogame))
 
     def delete_default_elo(self, id_player : int, id_videogame : int) -> None:
         """
@@ -80,7 +79,7 @@ class EloDao(IEloDao):
             HTTPError: Si la requête échoue.
         """
 
-        self.__db.exec_request("DELETE FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player, id_videogame))
+        self.db.exec_request("DELETE FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player, id_videogame))
 
     def add_elos(self, players : dict, videogame_id : int, date : int):
         """
@@ -102,7 +101,7 @@ class EloDao(IEloDao):
         players_to_add = []
 
         for player_id in players:
-            res = self.__db.exec_request("SELECT idPlayer, idGame, score, date FROM elos WHERE idGame = ? and idPlayer = ? order by date limit 1", [videogame_id, player_id])
+            res = self.db.exec_request("SELECT idPlayer, idGame, score, date FROM elos WHERE idGame = ? and idPlayer = ? order by date limit 1", [videogame_id, player_id])
             if len(res) == 0 or res[0][2] != players[player_id].Elos[videogame_id].Score:
                 players_to_add.append(player_id)
 
@@ -121,7 +120,7 @@ class EloDao(IEloDao):
         # Insert elo data
         if len(players_to_add) > 0:
             req_elos = req_elos[:-1]
-            self.__db.exec_request(req_elos, params_elos)
+            self.db.exec_request(req_elos, params_elos)
 
     def delete_all_elos_from_videogame(self, videogame_id : int):
         """
@@ -137,7 +136,7 @@ class EloDao(IEloDao):
             HTTPError: Si la requête échoue.
         """
         
-        self.__db.exec_request("DELETE from elos where idGame = ?", [videogame_id])
+        self.db.exec_request("DELETE from elos where idGame = ?", [videogame_id])
 
     def get_history_elos(self, player_id : int) -> [Elo]:
         """
@@ -153,7 +152,7 @@ class EloDao(IEloDao):
             HTTPError: Si la requête échoue.
         """
 
-        res = self.__db.exec_request("SELECT score, date, idGame, name FROM elos natural join games WHERE idPlayer = ? ORDER BY date", (player_id,))
+        res = self.db.exec_request("SELECT score, date, idGame, name FROM elos natural join games WHERE idPlayer = ? ORDER BY date", (player_id,))
         elos = []
 
         for row in res:

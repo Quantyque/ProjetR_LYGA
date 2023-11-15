@@ -1,14 +1,18 @@
-from data_processing.sql.ranking.IRankingDao import IRankingDao
-from data_processing.api.startgg.tournament.TournamentDao import TournamentDao as TournamentDaoAPI
-from data_processing.api.startgg.event.EventDao import EventDao as EventDaoAPI
-from data_processing.sql.video_game.VideoGame import VideoGameDao as VideoGameDaoSQL
-from data_processing.api.startgg.player.PlayerDao import PlayerDao as PlayerDaoAPI
-from data_processing.sql.elo.EloDao import EloDao as EloDaoSQL
+from data_processing.sql.ranking.IRankingDaoSql import IRankingDaoSql
+from data_processing.api.startgg.tournament.TournamentDaoApi import TournamentDaoApi
+from data_processing.api.startgg.event.EventDaoApi import EventDaoApi
+from data_processing.sql.video_game.VideoGameSql import VideoGameDaoSql
+from data_processing.api.startgg.player.PlayerDaoApi import PlayerDaoApi
+from data_processing.sql.elo.EloDaoSql import EloDaoSql
 from model.ranking import Ranking
+from data_processing.sql.dao import Dao
 from typing import Dict
 import datetime
 
-class RankingDao(IRankingDao):
+class RankingDaoSql(IRankingDaoSql, Dao):
+
+    def __init__(self):
+        super().__init__()
 
     def update_ranking(self, date : int, videogame_id : int, coordonnees : str, distance : str) -> Dict[int, str]:
         """
@@ -27,11 +31,11 @@ class RankingDao(IRankingDao):
             HTTPError: Si la requête échoue.
         """
         # Initialise les DAO
-        tournament_dao = TournamentDaoAPI()
-        event_dao = EventDaoAPI()
-        videogame_dao = VideoGameDaoSQL()
-        player_dao = PlayerDaoAPI()
-        elo_dao = EloDaoSQL()
+        tournament_dao = TournamentDaoApi()
+        event_dao = EventDaoApi()
+        videogame_dao = VideoGameDaoSql()
+        player_dao = PlayerDaoApi()
+        elo_dao = EloDaoSql()
 
         # Récupère le jeu vidéo
         videogame = videogame_dao.get_video_game_by_id(videogame_id)

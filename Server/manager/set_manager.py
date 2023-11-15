@@ -1,6 +1,6 @@
 from model.set import Set
-from data_processing.api.startgg.set.ISetDao import ISetDao as ISetDaoAPI
-from data_processing.api.startgg.set.SetDao import SetDao as SetDaoAPI
+from data_processing.api.startgg.set.ISetDaoApi import ISetDaoApi
+from data_processing.api.startgg.set.SetDaoApi import SetDaoApi
 
 class SetManager():
     """
@@ -8,7 +8,7 @@ class SetManager():
     """
 
     def __init__(self):
-        self.__sg: ISetDaoAPI = SetDaoAPI()
+        self.__sg: ISetDaoApi = SetDaoApi()
 
     # region Operations
 

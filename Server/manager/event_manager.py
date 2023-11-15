@@ -1,6 +1,6 @@
 from model.event import Event
-from data_processing.api.startgg.event.IEventDao import IEventDao as IEventDaoAPI
-from data_processing.api.startgg.event.EventDao import EventDao as EventDaoAPI
+from data_processing.api.startgg.event.IEventDaoApi import IEventDaoApi
+from data_processing.api.startgg.event.EventDaoApi import EventDaoApi
 
 class EventManager():
     """
@@ -8,7 +8,7 @@ class EventManager():
     """
 
     def __init__(self):
-        self.__sg: IEventDaoAPI = EventDaoAPI()
+        self.__sg: IEventDaoApi = EventDaoApi()
 
     # region Operations
 

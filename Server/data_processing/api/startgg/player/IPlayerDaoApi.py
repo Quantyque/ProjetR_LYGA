@@ -2,7 +2,7 @@ from model.player import Player
 from abc import ABC, abstractmethod
 
 
-class IPlayerDao(ABC):
+class IPlayerDaoApi(ABC):
 
     @abstractmethod
     def get_player_by_id(self, id : int) -> Player:

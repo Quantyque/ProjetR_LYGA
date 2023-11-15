@@ -1,7 +1,7 @@
 from model.event import Event
 from abc import ABC, abstractmethod
 
-class IEventDao(ABC):
+class IEventDaoApi(ABC):
 
     @abstractmethod
     def get_event_by_id(self, id : int, page : int) -> Event:

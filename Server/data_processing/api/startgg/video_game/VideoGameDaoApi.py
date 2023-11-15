@@ -1,13 +1,12 @@
-from data_processing.api.startgg.video_game.IVideoGameDao import IVideoGameDao
+from data_processing.api.startgg.video_game.IVideoGameDaoApi import IVideoGameDaoApi
 from model.videogame import Videogame
-from data_processing.api.startgg.StartGGDao import StartGGDao
-from data_processing.api.IApiDao import IApiDao
+from data_processing.api.api import Api
 from exceptions import BadRequestException
 
-class VideoGameDao(IVideoGameDao):
+class VideoGameDaoApi(IVideoGameDaoApi, Api):
 
     def __init__(self) -> None:
-        self.__api: IApiDao = StartGGDao()
+        super().__init__()
 
     def get_all_video_games(self):
         """
@@ -21,7 +20,7 @@ class VideoGameDao(IVideoGameDao):
         """
 
         video_game: Videogame = Videogame()
-        response = self.__api.request_api("""
+        response = self.sg.request_api("""
         {
             videogames(query: {}) {
                 nodes {
@@ -42,7 +41,7 @@ class VideoGameDao(IVideoGameDao):
         }
         """)
 
-        if response["errors"]:
+        if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
 
         video_games = []
@@ -85,10 +84,10 @@ class VideoGameDao(IVideoGameDao):
             "id": id
         }
 
-        if response["errors"]:
+        if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
         
-        response = self.__api.request_api(graphql_query, params)
+        response = self.sg.request_api(graphql_query, params)
         videogame = Videogame()
         videogame.hydrate(response["data"]["videogame"])
         return videogame

@@ -1,14 +1,13 @@
-from data_processing.sql.video_game.IVideoGameDao import IVideoGameDao
-from data_processing.sql.idatabase import IDatabase
-from data_processing.sql.sqlite_database import SQLiteDatabase
+from data_processing.sql.video_game.IVideoGameDaoSql import IVideoGameDaoSql
 from flask import jsonify
 from exceptions import DuplicateGame, GameNotAudited
 from model.videogame import Videogame
+from data_processing.sql.dao import Dao
 
-class VideoGameDao(IVideoGameDao):
+class VideoGameDaoSql(IVideoGameDaoSql, Dao):
 
     def __init__(self):
-        self.__db : IDatabase = SQLiteDatabase()
+        super().__init__()
 
     #region Operation
 
@@ -26,12 +25,12 @@ class VideoGameDao(IVideoGameDao):
             GameAlreadyAudited: Si le jeu vidéo est déjà dans la liste.
         """
 
-        rows = self.__db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
+        rows = self.db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
         if len(rows) == 0:
             image = ""
             if len(game.Images) > 0:
                 image = game.Images[0]
-            self.__db.exec_request("INSERT INTO Games(idGame, name, imageUrl) VALUES (?, ?, ?)", (game.Id, game.Name, image))
+            self.db.exec_request("INSERT INTO Games(idGame, name, imageUrl) VALUES (?, ?, ?)", (game.Id, game.Name, image))
         else:
             raise DuplicateGame(f"Game with id {game.Id} already exists.")
         
@@ -48,7 +47,7 @@ class VideoGameDao(IVideoGameDao):
             NoGameAudited: Si aucun jeu vidéo n'est dans la liste.
         """
 
-        rows = self.__db.exec_request("SELECT * FROM Games")
+        rows = self.db.exec_request("SELECT * FROM Games")
 
         result = []
         for row in rows:
@@ -72,10 +71,10 @@ class VideoGameDao(IVideoGameDao):
         Raises:
             GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
         """
-        game_to_update = self.__db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
+        game_to_update = self.db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
 
         if len(game_to_update) != 0:
-            self.__db.exec_request("UPDATE Games SET name = ? WHERE idGame = ?", (game.Name, game.Id))
+            self.db.exec_request("UPDATE Games SET name = ? WHERE idGame = ?", (game.Name, game.Id))
         else:
             raise GameNotAudited(f"Game with id {game.Id} not audited.")
         
@@ -95,9 +94,9 @@ class VideoGameDao(IVideoGameDao):
             GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
         """
 
-        rows = self.__db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
+        rows = self.db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
         if len(rows) != 0:
-            self.__db.exec_request("DELETE FROM Games WHERE idGame = ?", (game.Id,))
+            self.db.exec_request("DELETE FROM Games WHERE idGame = ?", (game.Id,))
         
         return jsonify({"message": "Game deleted successfully."})
 
