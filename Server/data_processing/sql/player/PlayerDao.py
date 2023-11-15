@@ -28,7 +28,16 @@ class PlayerDao(IPlayerDao):
         player : Player = Player()
 
         # Get player data from database
-        res = self.__db.exec_request("Select idElo, max(score), idPlayer, idGame, name, imageUrl from elos natural join games group by idPlayer having (idPlayer = ?)", (id,))
+        res = self.__db.exec_request("""Select idElo, score, p.idPlayer, idGame, name from players p natural join elos e join 
+                        (SELECT
+                        idPlayer,
+                        MAX(date) AS date_max FROM
+                        elos
+                    GROUP BY
+                        idPlayer having (idPlayer = ?)) sub
+                        on e.idPlayer = sub.idPlayer
+                        AND e.date = sub.date_max""", (id,))
+
         for row in res:
             data_video_game = {
                 "id": row[3],
