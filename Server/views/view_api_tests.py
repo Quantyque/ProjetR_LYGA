@@ -13,10 +13,10 @@ class ViewApiTests(FlaskView):
     @route('/run', methods=['GET'])
     def run_unit_tests():
         """
-            Run unit tests
+            Lance les tests unitaires
 
             Returns:
-                (str, int): Unit tests result and status code
+                (str, int): Resultat des tests unitaires et code HTTP
         """
         try:
             return ApiTests.run_unit_tests(), 200

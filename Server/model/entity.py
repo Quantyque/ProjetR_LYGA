@@ -4,6 +4,7 @@ class Entity:
     """
     Classe abstraite représentant une entité de l'application
     """
+    
     def hydrate(self, data : dict) -> None:
         """
         Initialise la variable self avec les données du dictionnaire data

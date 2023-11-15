@@ -2,6 +2,7 @@ from model.entity import Entity
 from model.videogame import Videogame
 from model.character import Character
 from model.elo import Elo
+from typing import Dict
 
 class Player(Entity):
     """
@@ -28,111 +29,201 @@ class Player(Entity):
     @property
     def Id(self) -> int:
         """
-        Id du joueur
+        Getter de l'id du joueur
+
+        Returns:
+            int: Id du joueur
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id du joueur
+
+        Args:
+            id (int): Nouvel id du joueur
+        """
         self.__id = id
 
     @property
     def Name(self) -> str:
         """
-        Nom du joueur
+        Getter du nom du joueur
+
+        Returns:
+            str: Nom du joueur
         """
         return self.__name
     
     @Name.setter
     def Name(self, name : str) -> None:
+        """
+        Setter du nom du joueur
+
+        Args:
+            name (str): Nouveau nom du joueur
+        """
         self.__name = name
 
     @property
     def Prefix(self) -> str:
         """
-        Nom d'équipe du joueur
+        Getter du nom d'équipe du joueur
+
+        Returns:
+            str: Nom d'équipe du joueur
         """
         return self.__prefix
     
     @Prefix.setter
     def Prefix(self, prefix : str) -> None:
+        """
+        Setter du nom d'équipe du joueur
+
+        Args:
+            prefix (str): Nouveau nom d'équipe du joueur
+        """
         self.__prefix = prefix
 
     @property
     def Characters(self) -> [Character]:
         """
-        Liste des personnages joués par le joueur dans les derniers matchs
+        Getter de la liste des personnages joués par le joueur dans les derniers matchs
+
+        Returns:
+            [Character]: Liste des personnages joués par le joueur dans les derniers matchs
         """
         return self.__characters
     
     @Characters.setter
     def Characters(self, characters : [Character]) -> None:
+        """
+        Setter de la liste des personnages joués par le joueur dans les derniers matchs
+
+        Args:
+            characters ([Character]): Nouvelle liste des personnages joués par le joueur dans les derniers matchs
+        """
         self.__characters = characters
 
     @property
-    def Elos(self) -> dict[int, Elo]:
+    def Elos(self) -> Dict[int, Elo]:
         """
-        Liste des elos du joueur en fonction des jeux
+        Getter de la liste des elos du joueur en fonction des jeux
+
+        Returns:
+            dict[int, Elo]: Liste des elos du joueur en fonction des jeux
         """
         return self.__elos
     
     @Elos.setter
-    def Elos(self, elos : dict[int, Elo]) -> None:
+    def Elos(self, elos : Dict[int, Elo]) -> None:
+        """
+        Setter de la liste des elos du joueur en fonction des jeux
+
+        Args:
+            elos (dict[int, Elo]): Nouvelle liste des elos du joueur en fonction des jeux
+        """
         self.__elos = elos
 
     @property
-    def Images(self) -> [str]:
+    def Images(self) -> Dict[str, str]:
         """
-        Liste des images représentant le joueur
+        Getter du dictionnaire des urls des images du joueur contenants les clés "profile" et "banner"
+
+        Returns:
+            dict: Dictionnaire des urls des images du joueur
         """
         return self.__images
     
     @Images.setter
-    def Images(self, images : [str]) -> None:
+    def Images(self, images : dict) -> None:
+        """
+        Setter du dictionnaire des urls des images du joueur contenants les clés "profile" et "banner"
+
+        Args:
+            images (dict): Nouveau dictionnaire des urls des images du joueur
+        """
         self.__images = images
 
     @property
     def ExternalUrls(self) -> [str]:
         """
-        Liste des urls des réseaux sociaux du joueur
+        Getter de la liste des urls des réseaux sociaux du joueur
+
+        Returns:
+            [str]: Liste des urls des réseaux sociaux du joueur
         """
         return self.__external_urls
     
     @ExternalUrls.setter
     def ExternalUrls(self, external_urls : [str]) -> None:
+        """
+        Setter de la liste des urls des réseaux sociaux du joueur
+
+        Args:
+            external_urls ([str]): Nouvelle liste des urls des réseaux sociaux du joueur
+        """
         self.__external_urls = external_urls
 
     @property
     def IsDisqualified(self) -> bool:
         """
-        Si le joueur est disqualifié ou non du tournoi
+        Getter de si le joueur est disqualifié ou non du tournoi
+
+        Returns:
+            bool: Si le joueur est disqualifié ou non du tournoi
         """
         return self.__isDisqualified
     
     @IsDisqualified.setter
     def IsDisqualified(self, isDisqualified : bool) -> None:
+        """
+        Setter de si le joueur est disqualifié ou non du tournoi
+
+        Args:
+            isDisqualified (bool): Si le joueur est disqualifié ou non du tournoi
+        """
         self.__isDisqualified = isDisqualified
 
     @property
     def Bio(self) -> str:
         """
-        Biographie du joueur
+        Getter de la biographie du joueur
+
+        Returns:
+            str: Biographie du joueur
         """
         return self.__bio
     
     @Bio.setter
     def Bio(self, bio : str) -> None:
+        """
+        Setter de la biographie du joueur
+
+        Args:
+            bio (str): Nouvelle biographie du joueur
+        """
         self.__bio = bio
 
     @property
     def NbTournaments(self) -> int:
         """
-        Nombre de tournois auquel le joueur a participé
+        Getter du nombre de tournois auquel le joueur a participé
+
+        Returns:
+            int: Nombre de tournois auquel le joueur a participé
         """
         return self.__nb_tournaments
     
     @NbTournaments.setter
     def NbTournaments(self, nb_tournaments : int) -> None:
+        """
+        Setter du nombre de tournois auquel le joueur a participé
+
+        Args:
+            nb_tournaments (int): Nouveau nombre de tournois auquel le joueur a participé
+        """
         self.__nb_tournaments = nb_tournaments
 
     # endregion

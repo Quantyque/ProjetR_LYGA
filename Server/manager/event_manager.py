@@ -1,88 +1,32 @@
 from model.event import Event
-from manager.manager import Manager
+from data_processing.api.startgg.event.IEventDao import IEventDao as IEventDaoAPI
+from data_processing.api.startgg.event.EventDao import EventDao as EventDaoAPI
 
-class EventManager(Manager):
+class EventManager():
     """
     Classe permettant de gérer les événements
     """
 
     def __init__(self):
-        super().__init__()
+        self.__sg: IEventDaoAPI = EventDaoAPI()
 
     # region Operations
 
     def get_event_by_id(self, id : int, page : int) -> Event:
         """
-        Récupère un événement par son id
+        Récupère un événement par son id.
 
         Args:
-            id (int): l'id de l'événement
-            page (int): la page de l'événement
+            id (int): L'id de l'événement.
+            page (int): La page de l'événement.
 
         Returns:
-            Event: l'événement récupéré
+            Event: L'événement.
+
+        Raises:
+            HTTPError: Si la requête échoue.
         """
-        event : Event = Event()
-        response : dict = super().request_api("""
-                    query EventById($idEvent: ID!, $page : Int!) {
-                        event(id: $idEvent) {
-                            id
-                            name
-                            numEntrants
-                            tournament{
-                                id
-                                name
-                            }
-                            entrants(query : {perPage:500}){
-                                nodes{
-                                    standing{
-                                        player{
-                                            id
-                                            prefix
-                                            gamerTag
-                                        }
-                                    }
-                                }
-                            }
-                            sets(page: $page, perPage: 50, sortType: RECENT) {
-                            nodes {
-                                id
-                                round
-                                winnerId
-                                event{
-                                id
-                                name
-                                }
-                                slots {
-                                entrant {
-                                    id
-                                isDisqualified
-                                    standing{
-                                    player{
-                                        id
-                                        prefix
-                                        gamerTag
-                                        user{
-                                            images{
-                                                url
-                                              type
-                                            }
-                                        }
-                                    }
-                                    }
-                                }
-                                }
-                            }
-                            }
-                        }
-                        }
-                    """, {
-                        "idEvent": id,
-                        "page": page
-                    })
-        data_event : dict = response["data"]["event"]
-        event.hydrate(data_event)
-        return event
+        return self.__sg.get_event_by_id(id, page)
     
     #endregion
 

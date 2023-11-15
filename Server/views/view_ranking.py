@@ -21,21 +21,22 @@ class ViewRanking(FlaskView):
     @route('/parameters/auto-refresh', methods=['PUT'])
     def auto_ranking_refresh(self) -> str():
         """
-        Automatically refresh player rankings based on past tournaments
+        Rafraichit automatiquement le classement des joueurs en fonction des tournois passés
 
         Args:
-            activate (bool): Activate or deactivate the automatic refresh of the ranking
+            activate (bool): Active ou désactive le rafraichissement automatique du classement
         
         Returns:
-            str: Result of the request
+            str: Resultat de la requête
         """
         try:
+            # Initialisation des variables
             activate: bool = request.get_json().get('activate')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(activate)
 
-            # Initialize default values for the tournament (to be added in a config file)
+            # Initialise les valeurs par défaut du tournoi (à ajouter dans un fichier de config)
             date_temp = datetime.datetime.today() - datetime.timedelta(days=1)
             date_unix = time.mktime(date_temp.timetuple())
             date = date_unix
@@ -48,76 +49,83 @@ class ViewRanking(FlaskView):
             else:
                 result = self.__crons.stop_cron_task(self.__ranking_manager.update_ranking(date, videogameId, coordonnees, distance))
 
-            return result, 200
+            res = result, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
-        
-        except BadRequestException as e :         
-            log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
-
+            res = str(e), 400
+        
+        except BadRequestException as e :
+            log_info(str(e))
+            res = str(e), 400
+        
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
 
     @route('/update', methods=['POST'])
     def manual_update_ranking(self) -> str():
         """
-        Updates player rankings based on past tournaments since a given date manually with a query
+        Met à jour le classement des joueurs en fonction des tournois passés depuis une date donnée manuellement
 
         Args:
-            date (datetime): Date from which to update the ranking
-            videogameId (int): Id of the videogame for which to update the ranking
-            coordonnees (str): Coordinates of the tournament location
-            distance (str): Distance around the tournament location to search for players
+            date (datetime) : Date à partir de laquelle mettre à jour le classement
+            videogameId (int) : Id du jeu vidéo pour lequel mettre à jour le classement
+            coordonnees (str) : Coordonnées du lieu du tournoi
+            distance (str) : Distance autour du lieu du tournoi pour chercher les joueurs
 
         Returns:
-            str: Result of the request
+            str: Resultat de la requête
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             date = request.get_json().get('date')
             videogameId = request.get_json().get('videogameId')
             coordonnees = request.get_json().get('coordonnees')
             distance = request.get_json().get('distance')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(date, videogameId, coordonnees, distance)
 
-            # Sending the request
+            # Envoie de la requête
             result = self.__ranking_manager.update_ranking(date, videogameId, coordonnees, distance)
 
-            # Results display
+            # Affichage du résultat
             for player_id in result:
                 print(str(player_id) + " : " + result[player_id].Name + " : " + str(result[player_id].Elos[videogameId].Score))
 
+            # Récupération du résultat sous forme de JSON
             json = {}
             for player_id in result:
                 json[player_id] = result[player_id].toJSON()
 
-            return json, 200
+            res = json, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
-        
-        except BadRequestException as e :         
-            log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
+        
+        except BadRequestException as e :
+            log_info(str(e))
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
 
     
 

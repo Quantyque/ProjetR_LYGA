@@ -8,6 +8,8 @@ Scripts/
 pyvenv.cfg
 share/
 .next/
+*.env
+*.env.*
 
 # User-specific files
 *.rsuser
@@ -400,3 +402,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+.env

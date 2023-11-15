@@ -1,18 +1,23 @@
-from flask import jsonify
-from exceptions import DuplicateGame, GameNotAudited
 from model.videogame import Videogame
-from manager.manager import Manager
+from data_processing.api.startgg.video_game.IVideoGameDao import IVideoGameDao as IVideoGameDaoAPI
+from data_processing.api.startgg.video_game.VideoGameDao import VideoGameDao as VideoGameDaoAPI
+from data_processing.sql.video_game.IVideoGameDao import IVideoGameDao as IVideoGameDaoSQL
+from data_processing.sql.video_game.VideoGame import VideoGameDao as VideoGameDaoSQL  
 
 
-class VideoGameManager(Manager):
+class VideoGameManager():
+    """
+    Classe permettant de gérer les jeux vidéos
+    """
 
     def __init__(self):
-        super().__init__()
+        self.__sg: IVideoGameDaoAPI = VideoGameDaoAPI()
+        self.__db: IVideoGameDaoSQL = VideoGameDaoSQL()
 
     # region Operations
     def get_all_video_game(self):
         """
-        Get all video games from the StartGG API.
+        Réupère tous les jeux vidéos.
 
         Returns:
             list: List of video games.
@@ -20,146 +25,69 @@ class VideoGameManager(Manager):
         Raises:
             HTTPError: If the request fails.
         """
-        video_game: Videogame = Videogame()
-        response = self.request_api("""
-        {
-            videogames(query: {}) {
-                nodes {
-                    id
-                    name
-                    characters {
-                        id
-                        name
-                        images{
-                            url
-                        }
-                    }
-                    images {
-                        url
-                    }
-                }
-            }
-        }
-        """)
+        return self.__sg.get_all_video_games()
+    
+    def get_video_game_by_id(self, id: int):
+        """
+        Récupère un jeu vidéo par son id.
 
-        video_games = []
+        Args:
+            id (int): L'id du jeu vidéo.
 
-        if "data" in response and "videogames" in response["data"]:
-            for node in response["data"]["videogames"]["nodes"]:
-                video_game = Videogame()
-                video_game.hydrate(node)
-                video_games.append(video_game)
+        Returns:
+            VideoGame: Le jeu vidéo.
 
-        return video_games
+        Raises:
+            HTTPError: Si la requête échoue.
+        """     
+        return self.__sg.get_video_game_by_id(id)
 
     def add_audited_game(self, game: Videogame):
         """
-        Add a video game to the audited games.
+        Ajoute un jeu vidéo à la liste des jeux audités.
 
         Args:
-            game (VideoGame): The video game to add.
+            game (VideoGame): Le jeu vidéo à ajouter.
 
         Raises:
-            DuplicateGame: If the game already exists.
+            GameAlreadyAudited: Si le jeu vidéo existe déjà.
         """
+        return self.__db.add_audited_game(game)
         
-        rows = self.Database.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
-        if len(rows) == 0:
-            image = ""
-            if len(game.Images) > 0:
-                image = game.Images[0]
-            self.Database.exec_request("INSERT INTO Games(idGame, name, imageUrl) VALUES (?, ?, ?)", (game.Id, game.Name, image))
-        else:
-            raise DuplicateGame(f"Game with id {game.Id} already exists.")
-        
-        return jsonify({"message": "Game added successfully."})
-
     def list_audited_game(self):
         """
-        List all audited games.
+        Liste les jeux vidéos audités.
 
         Returns:
-            list: List of audited games.
+            list: liste des jeux vidéos audités.
 
         Raises:
-            GameNotAudited: If there are no audited games.
+            GameNotAudited: Si le jeu vidéo n'existe pas.
         """
-        rows = self.Database.exec_request("SELECT * FROM Games")
+        return self.__db.list_audited_game()
 
-        result = []
-        for row in rows:
-            video_game = Videogame()
-            video_game.Id = row[0]
-            video_game.Name = row[1]
-            result.append(video_game)
-
-        return jsonify([{"id": game.Id, "name": game.Name} for game in result])
-    
     def update_audited_game(self, game: Videogame):
         """
-        Update a video game from the audited games.
-        
+        Met à jour un jeu vidéo de la liste des jeux audités.
+
         Args:
-            game (VideoGame): The video game to update.
+            game (VideoGame): Le jeu vidéo à mettre à jour.
 
         Raises:
-            GameNotAudited: If the game does not exist.
+            GameNotAudited: Si le jeu vidéo n'existe pas.
         """
-
-        game_to_update = self.Database.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
-
-        if len(game_to_update) != 0:
-            self.Database.exec_request("UPDATE Games SET name = ? WHERE idGame = ?", (game.Name, game.Id))
-        else:
-            raise GameNotAudited(f"Game with id {game.Id} not audited.")
-        
-        return jsonify({"message": "Game updated successfully."})
+        return self.__db.update_audited_game(game)
 
     def delete_audited_game(self, game: Videogame):
         """
-        Delete a video game from the audited games.
-        
+        Supprime un jeu vidéo de la liste des jeux audités.
+
         Args:
-            game (VideoGame): The video game to delete.
+            game (VideoGame): Le jeu vidéo à supprimer.
 
         Raises:
-            GameNotAudited: If the game does not exist.
+            GameNotAudited: Si le jeu vidéo n'existe pas.
         """
-        rows = self.Database.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
-        if len(rows) != 0:
-            self.Database.exec_request("DELETE FROM Games WHERE idGame = ?", (game.Id,))
-        
-        return jsonify({"message": "Game deleted successfully."})
+        return self.__db.delete_audited_game(game)
     
-
-    def get_video_game_by_id(self, id: int):
-        """
-        Get a video game by its id.
-
-        Args:
-            id (int): The id of the video game.
-
-        Returns:
-            VideoGame: The video game.
-        """
-        graphql_query = """
-            query Videogames($id: ID!) {
-                videogame(id : $id){
-                    id,
-                    name,
-                    images{
-                    url
-                    }
-                }
-                }
-        """
-
-        params = {
-            "id": id
-        }
-        
-        response = super().request_api(graphql_query, params)
-        videogame = Videogame()
-        videogame.hydrate(response["data"]["videogame"])
-        return videogame
     # endregion

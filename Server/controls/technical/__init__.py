@@ -7,6 +7,20 @@ from exceptions import InvalidRole, TokenExpired
 
 class TechnicalControls:
     def is_role(required_roles):
+        """
+        Décorateur pour vérifier les permissions d'un utilisateur.
+
+        Args:
+            required_roles (list): Les permissions requises.
+
+        Returns:
+            function: La fonction décorée.
+
+        Raises:
+            InvalidRole: Si l'utilisateur n'a pas les permissions requises.
+            TokenExpired: Si le token a expiré.
+            InvalidToken: Si le token est invalide.
+        """
         def decorator(view_func):
             @wraps(view_func)
             def roleCheck(*args, **kwargs):

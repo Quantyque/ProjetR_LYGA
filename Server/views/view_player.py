@@ -10,7 +10,7 @@ from exceptions import BadRequestException, InvalidInput
 
 class ViewPlayer(FlaskView):
     """
-    Controller for linking HTTP requests to player managers
+    Controleur permettant de lier les requêtes HTTP aux managers des joueurs
     """
 
     def __init__(self) -> None:
@@ -19,106 +19,116 @@ class ViewPlayer(FlaskView):
     @route('/infos', methods=['POST'])
     def get_infos_player(self) -> str():
         """
-        Returns player information based on id
+        Renvoi les informations d'un joueur en fonction de son id
 
         Returns:
-            str: player information
+            str: informations du joueur
         """
         try:
-
-            # Variable initialization
+            # Initialisation des variables
             player_id = request.get_json().get('player_id')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(player_id)
 
-            # Sending the request
+            # Envoi de la requête
             result = self.__player_manager.get_player_by_id(player_id)
 
-            return result.toJSON(), 200
+            res = result.toJSON(), 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except BadRequestException as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
         
     @route('/all', methods=['GET'])
     def get_all_players(self) -> str():
         """
-        Returns a list of all players in the database
+        Renvoi la liste de tous les joueurs de la base de données
 
         Returns:
-            str: list of all players in the database
+            str: liste de tous les joueurs de la base de données
         """
         try:
 
-            # Sending the request
+            # Envoi de la requête
             result = self.__player_manager.get_all_players()
 
+            # Récupération du résultat sous forme de JSON
             json = []
             for idplayer in result:
                 json.append(result[idplayer].toJSON())
 
-            return json, 200
+            res = json, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
 
     @route('/all_ranked', methods=['POST']) 
     def get_ranked_players(self) -> str():
         """
-        Returns the players ranked by elo for a given game who have played the minimum number of tournaments.
+        Renoi la liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum
 
         Returns:
-            str: list of players ranked by elo for a given game who have played the minimum number of tournaments.
+            str: liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum
         """
         try:
-            # Variable initialization
+            # Initialisation des variables
             videogame_id = request.get_json().get('videogame_id')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(videogame_id)
 
-            # Sending the request
+            # Envoi de la requête
             result = self.__player_manager.get_ranked_players(videogame_id)
 
+            # Récupération du résultat sous forme de JSON
             json = []
             for idplayer in result:
                 json.append(result[idplayer].toJSON())
 
-            return json, 200
+            res = json, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except BadRequestException as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res
     
 
 

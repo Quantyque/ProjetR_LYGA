@@ -17,44 +17,80 @@ class Videogame(Entity):
     def Id(self) -> int:
         """
         Récupère l'id du jeu vidéo
+
+        Returns:
+            int: Id du jeu vidéo
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id du jeu vidéo
+
+        Args:
+            id (int): Nouvel id du jeu vidéo
+        """
         self.__id = id
 
     @property
     def Name(self) -> str:
         """
-        Nom du jeu vidéo
+        Getter du nom du jeu vidéo
+
+        Returns:
+            str: Nom du jeu vidéo
         """
         return self.__name
     
     @Name.setter
     def Name(self, name : str) -> None:
+        """
+        Setter du nom du jeu vidéo
+
+        Args:
+            name (str): Nouveau nom du jeu vidéo
+        """
         self.__name = name
 
     @property
     def Characters(self) -> [Character]:
         """
-        Liste des personnages jouables dans le jeu
+        Getter de la liste des personnages jouables dans le jeu
+
+        Returns:
+            [Character]: Liste des personnages jouables dans le jeu
         """
         return self.__characters
     
     @Characters.setter
     def Characters(self, characters : [Character]) -> None:
+        """
+        Setter de la liste des personnages jouables dans le jeu
+
+        Args:
+            characters ([Character]): Nouvelle liste des personnages jouables dans le jeu
+        """
         self.__characters = characters
 
     @property
     def Images(self) -> [str]:
         """
-        Liste des images représentant le jeu
+        Getter de la liste des images représentant le jeu
+
+        Returns:
+            [str]: Liste des images représentant le jeu
         """
         return self.__images
     
     @Images.setter
     def Images(self, images : [str]) -> None:
+        """
+        Setter de la liste des images représentant le jeu
+
+        Args:
+            images ([str]): Nouvelle liste des images représentant le jeu
+        """
         self.__images = images
 
     # endregion
