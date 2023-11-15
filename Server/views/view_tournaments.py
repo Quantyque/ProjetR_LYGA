@@ -6,8 +6,6 @@ from manager.tournament_manager import TournamentManager
 from manager.video_game_manager import VideoGameManager
 from flask_classful import FlaskView, route
 from controls.functional import FunctionalControls
-from controls.technical import TechnicalControls
-from model.role import Role
 
 class ViewTournament(FlaskView):
 

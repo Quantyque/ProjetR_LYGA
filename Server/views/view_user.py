@@ -5,8 +5,6 @@ from flask import request
 from logs import log_error, log_info
 from constants import INTERNAL_ERROR
 from flask_classful import FlaskView, route
-from controls.technical import TechnicalControls
-from model.role import Role
 
 
 class ViewUser(FlaskView):

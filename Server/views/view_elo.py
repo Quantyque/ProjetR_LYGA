@@ -58,6 +58,7 @@ class ViewElo(FlaskView):
             return res
         
     @route('/add-default', methods=['POST'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def add_default_elo(self) -> str():
         """
         Ajoute un elo par défaut à un joueur
@@ -99,6 +100,7 @@ class ViewElo(FlaskView):
             return res
         
     @route('/edit-default', methods=['POST'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def edit_elo(self) -> str():
         """
         Modifie l'elo d'un joueur
@@ -142,6 +144,7 @@ class ViewElo(FlaskView):
 
         
     @route('/delete-default', methods=['DELETE'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def delete_default_elo(self) -> str():
         """
         Deletes a player's default elo

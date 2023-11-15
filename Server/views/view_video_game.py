@@ -16,6 +16,7 @@ class ViewVideoGames(FlaskView):
         self.__video_game = Videogame()
 
     @route('/all', methods=['GET'])
+    # @TechnicalControls.is_role([Role.ADMIN])
     def all_video_games(self) -> str():
         """
         Recupere tous les jeux disponibles sur Start.gg
@@ -42,7 +43,7 @@ class ViewVideoGames(FlaskView):
             return res
     
     @route('/add-audited', methods=['POST'])
-    # @TechnicalControls.is_role([Role.ADMIN])
+    @TechnicalControls.is_role([Role.ADMIN])
     def add_audited_game(self) -> str():
         """
         Ajour d'un jeu à la liste des jeux audités
@@ -109,7 +110,7 @@ class ViewVideoGames(FlaskView):
             return res
 
     @route('/update-audited', methods=['PUT'])
-    # @TechnicalControls.is_role([Role.ADMIN])    
+    @TechnicalControls.is_role([Role.ADMIN])    
     def update_audited_game(self) -> str():
         """
         Modifie un jeu dans la liste des jeux audités
@@ -155,7 +156,7 @@ class ViewVideoGames(FlaskView):
             return res
 
     @route('/delete-audited', methods=['DELETE'])
-    # @TechnicalControls.is_role([Role.ADMIN])    
+    @TechnicalControls.is_role([Role.ADMIN])    
     def delete_audited_game(self) -> str():
         """
         Supprime un jeu de la liste des jeux audités

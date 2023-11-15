@@ -6,8 +6,6 @@ from constants import INTERNAL_ERROR
 from exceptions import BadRequestException, InvalidInput
 from flask_classful import FlaskView, route
 from controls.functional import FunctionalControls
-from controls.technical import TechnicalControls
-from model.role import Role
 
 class ViewSet(FlaskView):
     """
