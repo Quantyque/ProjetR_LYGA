@@ -4,22 +4,6 @@ from model.player import Player
 class IPlayerDaoSql(ABC):
 
     @abstractmethod
-    def get_player_by_id(self, id : int) -> Player:
-        """
-        Retourne un joueur par son id
-
-        Args:
-            id (int): Id du joueur
-
-        Returns:
-            Player: Joueur
-
-        Raises:
-            HTTPError: Si la requête échoue.
-        """
-        pass
-
-    @abstractmethod
     def get_all_players(self) -> [Player]:
         """
         Retourne tous les joueurs

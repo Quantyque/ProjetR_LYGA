@@ -19,13 +19,13 @@ class RankingDaoSql(IRankingDaoSql, Dao):
         Met à jour le classement
 
         Args:
-            date (int): date
-            videogame_id (int): videogame's id
-            coordonnees (str): coordinates
-            distance (str): distance
+            date (int): date depuis laquelle on veut récupérer les tournois
+            videogame_id (int): id du jeu vidéo à mettre à jour
+            coordonnees (str): coordonnees de la localisation des tournois à récupérer
+            distance (str): distance de la localisation des tournois à récupérer
 
         Returns:
-            dict[int, str]: in key the player's id and in value the player himself
+            dict[int, str]: en clé l'id du joueur et en valeur le rang du joueur
 
         Raises:
             HTTPError: Si la requête échoue.

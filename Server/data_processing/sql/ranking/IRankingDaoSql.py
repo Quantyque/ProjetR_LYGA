@@ -11,12 +11,12 @@ class IRankingDaoSql(ABC):
 
         Args:
             date (int): date
-            videogame_id (int): videogame's id
-            coordonnees (str): coordinates
+            videogame_id (int): id du jeu vidéo
+            coordonnees (str): coordonnees
             distance (str): distance
 
         Returns:
-            dict[int, str]: in key the player's id and in value the player himself
+            dict[int, str]: en clé l'id du joueur et en valeur le rang du joueur
 
         Raises:
             HTTPError: Si la requête échoue.

@@ -169,3 +169,45 @@ class EloDaoSql(IEloDaoSql, Dao):
             elos.append(elo)
 
         return elos
+    
+    def get_elos_by_player(self, player_id : int) -> [Elo]:
+        """
+        Retourne les elos d'un joueur
+
+        Args:
+            player_id (int): Id du joueur
+
+        Returns:
+            [Elo]: Liste des elos
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+
+        elos = []
+
+        res = self.db.exec_request("""Select idElo, score, e.idPlayer, e.idGame, name from Games g natural join elos e join 
+                        (SELECT
+                        idPlayer, idGame,
+                        MAX(date) AS date_max FROM
+                        elos
+                    GROUP BY
+                        idPlayer having (idPlayer = ?)) sub
+                        on e.idPlayer = sub.idPlayer
+                        AND e.date = sub.date_max""", (player_id,))
+        
+        for row in res:
+            data_video_game = {
+                "id": row[3],
+                "name": row[4]
+            }
+            elo = Elo()
+            dataElo = {
+                "id": row[0],
+                "score": row[1],
+                "videogame": data_video_game
+            }
+            elo.hydrate(dataElo)
+            elos.append(elo)
+
+        return elos

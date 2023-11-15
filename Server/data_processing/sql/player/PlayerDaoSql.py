@@ -8,50 +8,6 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
 
     def __init__(self) -> None:
         super().__init__()
-
-    def get_player_by_id(self, id : int) -> Player:
-        """
-        Retourne un joueur par son id
-
-        Args:
-            id (int): Id du joueur
-
-        Returns:
-            Player: Joueur
-
-        Raises:
-            HTTPError: Si la requête échoue.
-        """
-
-        player : Player = Player()
-
-        # Get player data from database
-        res = self.db.exec_request("""Select idElo, score, p.idPlayer, idGame, name from players p natural join elos e join 
-                        (SELECT
-                        idPlayer,
-                        MAX(date) AS date_max FROM
-                        elos
-                    GROUP BY
-                        idPlayer having (idPlayer = ?)) sub
-                        on e.idPlayer = sub.idPlayer
-                        AND e.date = sub.date_max""", (id,))
-
-        for row in res:
-            data_video_game = {
-                "id": row[3],
-                "name": row[4],
-                "images": [{ "url" : row[5], "type" : "profile" }]
-            }
-            elo = Elo()
-            dataElo = {
-                "id": row[0],
-                "score": row[1],
-                "videogame": data_video_game
-            }
-            elo.hydrate(dataElo)
-            player.Elos[row[3]] = elo
-        
-        return player
     
     def get_all_players(self) -> [Player]:
         """

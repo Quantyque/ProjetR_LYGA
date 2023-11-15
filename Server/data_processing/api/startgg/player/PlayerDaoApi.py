@@ -73,7 +73,7 @@ class PlayerDaoApi(IPlayerDaoApi, Api):
                     """,
                     {"idPlayer" : id})
         
-        if "errors" in response and response["errors"]:
+        if "errors" in response:
             raise BadRequestException(response["errors"][0]["message"])
         
         player.hydrate(response["data"]["player"])

@@ -118,3 +118,19 @@ class IEloDaoSql(ABC):
             HTTPError: Si la requête échoue.
         """
         pass
+
+    @abstractmethod
+    def get_elos_by_player(self, player_id : int) -> [Elo]:
+        """
+        Retourne les elos d'un joueur
+
+        Args:
+            player_id (int): Id du joueur
+
+        Returns:
+            [Elo]: Liste des elos
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+        pass
