@@ -1,5 +1,6 @@
 from model.entity import Entity
 from model.videogame import Videogame
+from model.season import Season
 
 class Elo(Entity):
     """
@@ -11,6 +12,7 @@ class Elo(Entity):
         self.__score : int = None
         self.__videogame : Videogame = None
         self.__date : int = None
+        self.__season : Season = None
 
     # region Properties
 
@@ -70,6 +72,20 @@ class Elo(Entity):
         """
         self.__date = date
 
+    @property
+    def Season(self):
+        """
+        Getter de la saison de l'élo
+        """
+        return self.__season
+    
+    @Season.setter
+    def Season(self, season) -> None:
+        """
+        Setter de la saison de l'élo
+        """
+        self.__season = season
+
     # endregion
 
     # region Operations
@@ -85,13 +101,18 @@ class Elo(Entity):
             self.Videogame = videogame
         if "date" in data:
             self.Date = data["date"]
+        if "season" in data:
+            season = Season()
+            season.hydrate(data["season"])
+            self.Season = season
 
     def toJSON(self):
         json = {
             "id": self.Id,
             "score": self.Score,
             "videogame": self.Videogame.toJSON() if self.Videogame is not None else "",
-            "date" : self.Date
+            "date" : self.Date,
+            "season" : self.Season.toJSON() if self.Season is not None else ""
         }
         return json
 

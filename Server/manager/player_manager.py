@@ -53,12 +53,13 @@ class PlayerManager():
         """
         return self.__db.get_all_players()
     
-    def get_ranked_players(self, videogame_id : int) -> [Player]:
+    def get_ranked_players(self, videogame_id : int, season_id : int) -> [Player]:
         """
         Récupère tous les joueurs classés dans un jeu vidéo.
 
         Args:
             videogame_id (int): L'id du jeu vidéo.
+            season_id (int): L'id de la saison.
 
         Returns:
             [Player]: Les joueurs.
@@ -66,7 +67,7 @@ class PlayerManager():
         Raises:
             HTTPError: Si la requête échoue.
         """
-        return self.__db.get_ranked_players(videogame_id)
+        return self.__db.get_ranked_players(videogame_id, season_id)
     
     def add_players(self, players : [Player]):
         """

@@ -12,12 +12,13 @@ class RankingManager():
 
     # region Operations
 
-    def update_ranking(self, date : int, videogame_id : int, coordonnees : str, distance : str) -> Dict[int, str]:
+    def update_ranking(self, afterDate : int, beforeDate : int, videogame_id : int, coordonnees : str, distance : str) -> Dict[int, str]:
         """
         Mise à jour du classement d'un jeu vidéo.
 
         Args:
-            date (int): La date.
+            afterDate (int): La date a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date jusqu'à laquelle rechercher les tournois.
             videogame_id (int): L'id du jeu vidéo.
             coordonnees (str): Les coordonnées.
             distance (str): La distance.
@@ -28,6 +29,6 @@ class RankingManager():
         Raises:
             HTTPError: Si la requête échoue.
         """
-        return self.__db.update_ranking(date, videogame_id, coordonnees, distance)
+        return self.__db.update_ranking(afterDate, beforeDate, videogame_id, coordonnees, distance)
 
     #endregion

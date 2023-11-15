@@ -9,13 +9,16 @@ class TournamentDaoApi(ITournamentDaoApi, Api):
     def __init__(self) -> None:
         super().__init__()
 
-    def get_tournaments_by_location(self, date : int, videogame : Videogame, coordonnees : str, distance : str) -> [Tournament]:
+    def get_tournaments_by_location(self, afterDate : int, beforeDate : int, videogame : Videogame, coordonnees : str, distance : str) -> [Tournament]:
         """
         Récupère les tournois à une date et un jeu vidéo donnés.
 
         Args:
-            date (int): La date.
+            afterDate (int): La date a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date jusqu'à laquelle rechercher les tournois.
             videogame (Videogame): Le jeu vidéo.
+            coordonnees (str): coordonnees de la localisation des tournois à récupérer
+            distance (str): distance de la localisation des tournois à récupérer
 
         Returns:
             [Tournament]: La liste des tournois.
@@ -24,9 +27,9 @@ class TournamentDaoApi(ITournamentDaoApi, Api):
             Exception: Si la requête échoue.
         """
         response = self.sg.request_api("""
-                    query TournamentsAtLocation($afterDate : Timestamp!, $videogameId: ID!, $coordonnees : String!, $distance : String!) {
+                    query TournamentsAtLocation($afterDate : Timestamp!, $beforeDate : Timestamp!, $videogameId: ID!, $coordonnees : String!, $distance : String!) {
                         tournaments(
-                            query: {filter: {past: true, videogameIds: [$videogameId], afterDate : $afterDate, location: {distanceFrom: $coordonnees, distance: $distance}}}
+                            query: {filter: {past: true, videogameIds: [$videogameId], afterDate : $afterDate, beforeDate: $beforeDate, location: {distanceFrom: $coordonnees, distance: $distance}}}
                         ) {
                             nodes {
                             id
@@ -53,7 +56,8 @@ class TournamentDaoApi(ITournamentDaoApi, Api):
                         }
                         }
                         """, {
-                            "afterDate": date,
+                            "afterDate": afterDate,
+                            "beforeDate": beforeDate,
                             "videogameId": videogame.Id,
                             "coordonnees" : coordonnees,
                             "distance" : distance

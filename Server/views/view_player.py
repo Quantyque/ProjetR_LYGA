@@ -97,12 +97,13 @@ class ViewPlayer(FlaskView):
         try:
             # Initialisation des variables
             videogame_id = request.get_json().get('videogame_id')
+            season_id = request.get_json().get('season_id')
 
             # Verification des variables
             FunctionalControls.check_json_arguments_not_null(videogame_id)
 
             # Envoi de la requête
-            result = self.__player_manager.get_ranked_players(videogame_id)
+            result = self.__player_manager.get_ranked_players(videogame_id, season_id)
 
             # Récupération du résultat sous forme de JSON
             json = []

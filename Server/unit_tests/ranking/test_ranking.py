@@ -3,6 +3,7 @@ from model.player import Player
 from model.ranking import Ranking
 from model.elo import Elo
 from model.videogame import Videogame
+from model.season import Season
 import unittest
 
 class TestRanking(unittest.TestCase):
@@ -50,7 +51,9 @@ class TestRanking(unittest.TestCase):
         ranking = Ranking([])
         videogame = Videogame()
         videogame.Id = 0
-        ranking.init_players(player_a, videogame)
+        season = Season()
+        season.Id = 1
+        ranking.init_players(player_a, videogame, season)
         self.assertTrue(player_a.Id in ranking.Players, "The player has not been initialized")
         self.assertTrue(0 in player_a.Elos, "The player has not been initialized")
         self.assertEqual(player_a.Elos[0].Score, 1000, "The player has not been initialized")
