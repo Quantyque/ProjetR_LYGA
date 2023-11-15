@@ -1,6 +1,8 @@
-interface IEloDao<elo> {
+import { Elo } from "@/model/logic/elo";
 
-    fetchEloHistoryByPlayerID(id: string): Promise<elo>;
+interface IEloDao {
+
+    fetchEloHistoryByPlayerID(id: string): Elo | null;
     
 }
 

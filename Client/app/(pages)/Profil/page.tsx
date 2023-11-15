@@ -1,26 +1,30 @@
 'use client'
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./profil.css";
 import RankingChart from "@/app/(pages)/profil/rankingChart";
 import { Player } from "@/model/logic/player";
 import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
 import { Set } from "@/model/logic/set";
-import { fetchEloHistoryByPlayerID } from "@/model/data/elo/EloDao";
-import { fetchPlayerByID } from "@/model/data/player/PlayerDao";
-import { fetchSetsByIdPlayer } from "@/model/data/set/SetDao";
+import { PlayerDao } from "@/model/data/player/PlayerDao";
+import { SetDao } from "@/model/data/set/SetDao";
+import { EloDao } from "@/model/data/elo/EloDao";
 
 export default function Profil() {
-
+  
   const searchParams = useSearchParams()
   const playerId = searchParams.get('playerId')
   const dataToSend = { player_id: playerId };
 
-  var playerData : Player = fetchPlayerByID(dataToSend)!;
-  var playerSet : Set = fetchSetsByIdPlayer(dataToSend)!;
-  var playerEloHistory : Elo = fetchEloHistoryByPlayerID(dataToSend)!;
+  
 
-  console.log(playerData);
+  const eloDao : EloDao = new EloDao();
+  const playerDao : PlayerDao = new PlayerDao();
+  const setDao : SetDao = new SetDao();
+
+  const playerEloHistory = eloDao.fetchEloHistoryByPlayerID(dataToSend);
+  const playerData = playerDao.fetchPlayerByID(dataToSend);
+  const playerSet = setDao.fetchSetsByIdPlayer(dataToSend);
 
   return (
     <>

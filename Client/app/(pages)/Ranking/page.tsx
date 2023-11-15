@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
-import { fetchVideoGames } from '@/model/data/videgame/VideogameDao'
-import { fetchPlayers } from '@/model/data/player/PlayerDao'
+import { VideogameDao } from '@/model/data/videgame/VideogameDao'
+import { PlayerDao } from '@/model/data/player/PlayerDao'
 import Rank from '@/app/components/Rank'
 import './ranking.css'
 
@@ -19,9 +19,10 @@ export default function Ranking() {
   });
   })*/
 
-  var videoGames = fetchVideoGames();
-
-  var players = fetchPlayers();
+  const playerDao : PlayerDao = new PlayerDao();
+  const videogameDao : VideogameDao = new VideogameDao();
+  var videoGames = videogameDao.fetchVideoGames();
+  var players = playerDao.fetchPlayers();
 
   return (
     <main>

@@ -1,6 +1,8 @@
-interface IVideogameDao<videogame> {
+import { Videogame } from "@/model/logic/videogame";
 
-    fetchVideoGames(): Promise<videogame[]>;
+interface IVideogameDao {
+
+    fetchVideoGames(): Videogame[];
 
 }
 

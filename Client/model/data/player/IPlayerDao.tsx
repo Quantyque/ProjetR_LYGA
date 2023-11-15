@@ -1,7 +1,9 @@
-interface IPlayerDao<player> {
+import { Player } from "@/model/logic/player";
 
-    fetchPlayerByID(id: string): Promise<player>;
-    fetchPlayers(): Promise<player[]>;
+interface IPlayerDao {
+
+    fetchPlayerByID(id: string): Player | null;
+    fetchPlayers(): Player[];
     
 }
 

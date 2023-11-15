@@ -1,6 +1,8 @@
-interface ISetDao<set> {
+import { Set } from "@/model/logic/set";
 
-    fetchSetsByIdPlayer(id: string): Promise<set>;
+interface ISetDao {
+
+    fetchSetsByIdPlayer(id: string): Set | null;
     
 }
 
