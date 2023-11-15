@@ -19,6 +19,7 @@ class ViewRanking(FlaskView):
         self.__crons: Crons = Crons()
 
     @route('/parameters/auto-refresh', methods=['PUT'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def auto_ranking_refresh(self) -> str():
         """
         Rafraichit automatiquement le classement des joueurs en fonction des tournois passés
