@@ -22,19 +22,20 @@ class ViewTournament(FlaskView):
         """
         try:
             # Initialisation des variables
-            date = request.get_json().get('date')
+            afterDate = request.get_json().get('afterDate')
+            beforeDate = request.get_json().get('beforeDate')
             videogameId = request.get_json().get('videogameId')
             coordonnees = request.get_json().get('coordonnees')
             distance = request.get_json().get('distance')
 
             # Verification des variables
-            FunctionalControls.check_json_arguments_not_null(date, videogameId, coordonnees, distance)
+            FunctionalControls.check_json_arguments_not_null(afterDate, beforeDate, videogameId, coordonnees, distance)
 
             # Récupération du jeu vidéo selectionné
             videogame = VideoGameManager().get_video_game_by_id(videogameId)
 
             # Envoi de la requête
-            result = self.__tournament_manager.get_tournaments_by_location(date, videogame, coordonnees, distance)
+            result = self.__tournament_manager.get_tournaments_by_location(afterDate, beforeDate, videogame, coordonnees, distance)
 
             # Récupération du résultat sous forme de JSON
             json = []

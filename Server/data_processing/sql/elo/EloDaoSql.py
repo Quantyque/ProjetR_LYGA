@@ -2,6 +2,7 @@ from model.elo import Elo
 from model.videogame import Videogame
 from data_processing.sql.elo.IEloDaoSql import IEloDaoSql
 from data_processing.sql.dao import Dao
+from model.season import Season
 
 class EloDaoSql(IEloDaoSql, Dao):
 
@@ -30,13 +31,14 @@ class EloDaoSql(IEloDaoSql, Dao):
 
         return res[0][0]
     
-    def add_default_elo(self, id_player : int, id_videogame : int) -> None:
+    def add_default_elo(self, id_player : int, id_videogame : int, score : int) -> None:
         """
         Ajoute un elo par défaut à un joueur
 
         Args:
             id_player (int): Id du joueur
             id_videogame (int): Id du jeu vidéo
+            score (int): Elo par défaut
 
         Returns:
             None
@@ -44,7 +46,7 @@ class EloDaoSql(IEloDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
+        self.db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (score, id_player, id_videogame))
 
     def edit_elo(self, id_player : int, id_videogame : int, elo : int) -> None:
         """
@@ -111,11 +113,12 @@ class EloDaoSql(IEloDaoSql, Dao):
 
         for player_id in players_to_add:
             # Manage the addition in the Elos table
-            req_elos += " (null,?, ?, ?, ?),"
+            req_elos += " (null,?, ?, ?, ?, ?),"
             params_elos.append(players[player_id].Elos[videogame_id].Score)
             params_elos.append(player_id)
             params_elos.append(videogame_id)
             params_elos.append(date)
+            params_elos.append(players[player_id].Elos[videogame_id].Season.Id)
                 
         # Insert elo data
         if len(players_to_add) > 0:
@@ -186,7 +189,7 @@ class EloDaoSql(IEloDaoSql, Dao):
 
         elos = []
 
-        res = self.db.exec_request("""Select idElo, score, e.idPlayer, e.idGame, name from Games g natural join elos e join 
+        res = self.db.exec_request("""Select idElo, score, e.idPlayer, e.idGame, name, idSeason from Games g natural join elos e join 
                         (SELECT
                         idPlayer, idGame,
                         MAX(date) AS date_max FROM
@@ -201,11 +204,15 @@ class EloDaoSql(IEloDaoSql, Dao):
                 "id": row[3],
                 "name": row[4]
             }
+            data_season = {
+                "id": row[5]
+            }
             elo = Elo()
             dataElo = {
                 "id": row[0],
                 "score": row[1],
-                "videogame": data_video_game
+                "videogame": data_video_game,
+                "season": data_season
             }
             elo.hydrate(dataElo)
             elos.append(elo)

@@ -87,16 +87,17 @@ class ViewRanking(FlaskView):
         """
         try:
             # Initialisation des variables
-            date = request.get_json().get('date')
+            afterDate = request.get_json().get('afterDate')
+            beforeDate = request.get_json().get('beforeDate')
             videogameId = request.get_json().get('videogameId')
             coordonnees = request.get_json().get('coordonnees')
             distance = request.get_json().get('distance')
 
             # Verification des variables
-            FunctionalControls.check_json_arguments_not_null(date, videogameId, coordonnees, distance)
+            FunctionalControls.check_json_arguments_not_null(afterDate, beforeDate, videogameId, coordonnees, distance)
 
             # Envoie de la requête
-            result = self.__ranking_manager.update_ranking(date, videogameId, coordonnees, distance)
+            result = self.__ranking_manager.update_ranking(afterDate, beforeDate, videogameId, coordonnees, distance)
 
             # Affichage du résultat
             for player_id in result:

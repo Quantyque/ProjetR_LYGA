@@ -83,11 +83,12 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
         params = {
             "id": id
         }
-
-        if "errors" in response and response["errors"]:
-            raise BadRequestException(response["errors"][0]["message"])
         
         response = self.sg.request_api(graphql_query, params)
+
+        if "errors" in response:
+            raise BadRequestException(response["errors"][0]["message"])
+    
         videogame = Videogame()
         videogame.hydrate(response["data"]["videogame"])
         return videogame
