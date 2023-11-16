@@ -51,17 +51,17 @@ class SeasonDaoSql(ISeasonDaoSql):
         """
         self.db.exec_request("""INSERT INTO seasons VALUES (null, ?, ?, ?)""", (season.Number, season.StartDate, season.EndDate))
 
-    def remove_season(self, season : Season):
+    def remove_season(self, idSeason : int):
         """
         Supprime une saison de la base de données
 
         Args:
-            season (Season): Saison à supprimer
+            idSeason (int): Id de la saison à supprimer
 
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.db.exec_request("""DELETE FROM seasons WHERE idSeason = ?""", (season.id_season,))
+        self.db.exec_request("""DELETE FROM seasons WHERE idSeason = ?""", (idSeason,))
 
     def update_season(self, season : Season):
         """
@@ -101,3 +101,29 @@ class SeasonDaoSql(ISeasonDaoSql):
             season.hydrate(data_season)
             seasons.append(season)
         return seasons
+    
+    def get_season_by_id(self, id : int) -> Season:
+        """
+        Renvoie une saison par son id.
+
+        Args:
+            id (int): L'id de la saison.
+
+        Returns:
+            Season: La saison.
+
+        Raises:
+            HTTPError: Si la requête échoue ou qu'il n'y a pas de saison avec cet id.
+        """
+        res = self.db.exec_request("""SELECT idSeason, number, startDate, endDate FROM seasons WHERE idSeason = ?""", (id,))
+        if len(res) == 0:
+            raise Exception("No season with this id")
+        season : Season = Season()
+        data_season = {
+            "id" : res[0][0],
+            "number" : res[0][1],
+            "startDate" : res[0][2],
+            "endDate" : res[0][3]
+        }
+        season.hydrate(data_season)
+        return season

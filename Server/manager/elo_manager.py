@@ -27,18 +27,19 @@ class EloManager():
         """
         return self.__db.get_default_elo(id_player, id_videogame)
     
-    def add_default_elo(self, id_player : int, id_videogame : int) -> None:
+    def add_default_elo(self, id_player : int, id_videogame : int, score : int) -> None:
         """
         Ajoute un elo par défaut à un joueur pour un jeu vidéo.
 
         Args:
             id_player (int): L'id du joueur.
             id_videogame (int): L'id du jeu vidéo.
+            score (int): L'elo par défaut.
 
         Raises:
             HTTPError: Si la requête échoue.
         """
-        return self.__db.add_default_elo(id_player, id_videogame)
+        return self.__db.add_default_elo(id_player, id_videogame, score)
 
     def edit_elo(self, id_player : int, id_videogame : int, elo : int) -> None:
         """

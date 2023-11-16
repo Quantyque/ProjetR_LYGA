@@ -37,12 +37,12 @@ class ISeasonDaoSql(ABC, Dao):
         pass
 
     @abstractmethod
-    def remove_season(self, season : Season):
+    def remove_season(self, idSeason : int):
         """
         Supprime une saison de la base de données
 
         Args:
-            season (Season): Saison à supprimer
+            idSeason (int): Id de la saison à supprimer
 
         Raises:
             HTTPError: Si la requête échoue.
@@ -75,5 +75,21 @@ class ISeasonDaoSql(ABC, Dao):
 
         Raises:
             HTTPError: Si la requête échoue.
+        """
+        pass
+
+    @abstractmethod
+    def get_season_by_id(self, id : int) -> Season:
+        """
+        Retourne une saison par son id.
+
+        Args:
+            id (int): L'id de la saison.
+
+        Returns:
+            Season: La saison.
+
+        Raises:
+            HTTPError: Si la requête échoue ou qu'il n'y a pas de saison avec cet id.
         """
         pass

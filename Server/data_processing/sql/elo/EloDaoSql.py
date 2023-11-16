@@ -31,13 +31,14 @@ class EloDaoSql(IEloDaoSql, Dao):
 
         return res[0][0]
     
-    def add_default_elo(self, id_player : int, id_videogame : int) -> None:
+    def add_default_elo(self, id_player : int, id_videogame : int, score : int) -> None:
         """
         Ajoute un elo par défaut à un joueur
 
         Args:
             id_player (int): Id du joueur
             id_videogame (int): Id du jeu vidéo
+            score (int): Elo par défaut
 
         Returns:
             None
@@ -45,7 +46,7 @@ class EloDaoSql(IEloDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (1000, id_player, id_videogame))
+        self.db.exec_request("INSERT INTO defaultPlayerElos VALUES (null, ?, ?, ?)", (score, id_player, id_videogame))
 
     def edit_elo(self, id_player : int, id_videogame : int, elo : int) -> None:
         """

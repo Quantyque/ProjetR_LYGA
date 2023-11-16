@@ -18,13 +18,14 @@ class IEloDaoSql(ABC):
         pass
 
     @abstractmethod
-    def add_default_elo(self, id_player : int, id_videogame : int) -> None:
+    def add_default_elo(self, id_player : int, id_videogame : int, score : int) -> None:
         """
         Ajoute un elo par défaut à un joueur
 
         Args:
             id_player (int): Id du joueur
             id_videogame (int): Id du jeu vidéo
+            score (int): Elo par défaut
 
         Returns:
             None

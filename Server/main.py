@@ -12,6 +12,7 @@ from views.view_set import ViewSet
 from views.view_user import ViewUser
 from views.view_api_tests import ViewApiTests
 from views.view_elo import ViewElo
+from views.view_season import ViewSeason
 
 # Initialisation de l'application Flask
 app = Flask(__name__)
@@ -36,6 +37,7 @@ ViewUser.register(app, route_base='/user', trailing_slash=False)
 ViewSet.register(app, route_base='/sets', trailing_slash=False)
 ViewElo.register(app, route_base='/elo', trailing_slash=False)
 ViewApiTests.register(app, route_base='/tests', trailing_slash=False)
+ViewSeason.register(app, route_base='/season', trailing_slash=False)
 
 # Lancement de l'application
 if __name__ == "__main__":
