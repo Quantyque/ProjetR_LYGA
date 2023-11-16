@@ -20,6 +20,11 @@ class ViewUser(FlaskView):
         """
         Ajoute un utilisateur dans la base de données
 
+        Args:
+            username (str): nom d'utilisateur
+            password (str): mot de passe
+            confirm_password (str): confirmation du mot de passe
+
         Returns:
             str: message de confirmation
         """
@@ -67,6 +72,9 @@ class ViewUser(FlaskView):
         """
         Connecte un utilisateur à l'application
 
+        Args:
+            username (str): nom d'utilisateur
+
         Returns:
             str: token de connexion
         """
@@ -112,6 +120,9 @@ class ViewUser(FlaskView):
         """
         Retourne tous les utilisateurs
 
+        Args:
+            username (str): nom d'utilisateur
+
         Returns:
             str: liste des utilisateurs
         """
@@ -132,6 +143,9 @@ class ViewUser(FlaskView):
     def get_user_by_id(self) -> str():
         """
         Retourne un utilisateur en fonction de son id
+
+        Args:
+            id (int): id de l'utilisateur
 
         Returns:
             str: utilisateur
@@ -171,6 +185,13 @@ class ViewUser(FlaskView):
     def update_user(self) -> str():
         """
         Met à jour un utilisateur
+
+        Args:
+            id (int): id de l'utilisateur
+            username (str): nom d'utilisateur
+            password (str): mot de passe
+            userPP (str): photo de profil
+            role (Role): role de l'utilisateur
 
         Returns:
             str: message de confirmation
@@ -233,6 +254,9 @@ class ViewUser(FlaskView):
     def delete_user(self) -> str():
         """
         Supprime un utilisateur
+
+        Args:
+            id (int): id de l'utilisateur
 
         Returns:
             str: message de confirmation

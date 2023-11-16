@@ -46,7 +46,7 @@ class ViewVideoGames(FlaskView):
     @TechnicalControls.is_role([Role.ADMIN])
     def add_audited_game(self) -> str():
         """
-        Ajour d'un jeu à la liste des jeux audités
+        Ajout d'un jeu à la liste des jeux audités
 
         Args:
             id (int): Id du jeu à ajouter

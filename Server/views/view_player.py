@@ -21,6 +21,9 @@ class ViewPlayer(FlaskView):
         """
         Renvoi les informations d'un joueur en fonction de son id
 
+        Args (Requested POST JSON)):
+            player_id (int): id du joueur
+
         Returns:
             str: informations du joueur
         """
@@ -60,6 +63,9 @@ class ViewPlayer(FlaskView):
         """
         Renvoi la liste de tous les joueurs de la base de données
 
+        Args (Requested GET)):
+            None
+
         Returns:
             str: liste de tous les joueurs de la base de données
         """
@@ -89,7 +95,11 @@ class ViewPlayer(FlaskView):
     @route('/all_ranked', methods=['POST']) 
     def get_ranked_players(self) -> str():
         """
-        Renoi la liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum
+        Renvoi la liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum
+
+        Args (Requested POST JSON)):
+            videogame_id (int): id du jeu
+            season_id (int): id de la saison
 
         Returns:
             str: liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum

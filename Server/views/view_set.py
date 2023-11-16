@@ -20,6 +20,9 @@ class ViewSet(FlaskView):
         """
         Renvoie les derniers sets d'un joueur
 
+        Args:
+            player_id (int): id du joueur
+
         Returns:
             dict: liste des derniers sets d'un joueur
         """

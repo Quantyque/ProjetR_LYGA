@@ -19,7 +19,11 @@ class ViewElo(FlaskView):
     @route('/default', methods=['POST'])
     def get_default_elo(self) -> str():
         """
-        Renvoit l'elo par défaut d'un joueur en fonction de son id et de l'id du jeu vidéo
+        Renvoi l'elo par défaut d'un joueur en fonction de son id et de l'id du jeu vidéo
+
+        Args (Requested POST JSON)):
+            player_id (int): id du joueur
+            videogame_id (int): id du jeu vidéo
 
         Returns:
             str: elo par défaut du joueur
@@ -62,6 +66,11 @@ class ViewElo(FlaskView):
     def add_default_elo(self) -> str():
         """
         Ajoute un elo par défaut à un joueur
+
+        Args (Requested POST JSON)):
+            player_id (int): id du joueur
+            videogame_id (int): id du jeu vidéo
+            score (int): score du joueur
 
         Returns:
             str: elo par défaut ajouté
@@ -106,6 +115,11 @@ class ViewElo(FlaskView):
         """
         Modifie l'elo d'un joueur
 
+        Args (Requested POST JSON)):
+            player_id (int): id du joueur
+            videogame_id (int): id du jeu vidéo
+            elo (int): score du joueur
+
         Returns:
             str: elo modifié
         """
@@ -142,13 +156,15 @@ class ViewElo(FlaskView):
         finally:
             return res
         
-
-        
     @route('/delete-default', methods=['DELETE'])
     @TechnicalControls.is_role([Role.ADMIN])
     def delete_default_elo(self) -> str():
         """
-        Deletes a player's default elo
+        Supprime l'élo par défaut d'un joueur
+
+        Args (Requested DELETE JSON)):
+            player_id (int): id du joueur
+            videogame_id (int): id du jeu vidéo
 
         Returns:
             str: default elo deleted
@@ -189,6 +205,9 @@ class ViewElo(FlaskView):
     def get_history(self) -> str():
         """
         Renvoi l'historique des elos d'un joueur
+
+        Args (Requested POST JSON)):
+            player_id (int): id du joueur
 
         Returns:
             str: historique des elos du joueur

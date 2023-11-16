@@ -24,7 +24,7 @@ class ViewRanking(FlaskView):
         """
         Rafraichit automatiquement le classement des joueurs en fonction des tournois passés
 
-        Args:
+        Args (Requested PUT JSON)):
             activate (bool): Active ou désactive le rafraichissement automatique du classement
         
         Returns:
@@ -74,11 +74,12 @@ class ViewRanking(FlaskView):
             return res
 
     @route('/update', methods=['POST'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def manual_update_ranking(self) -> str():
         """
         Met à jour le classement des joueurs en fonction des tournois passés depuis une date donnée manuellement
 
-        Args:
+        Args (Requested POST JSON)):
             date (datetime) : Date à partir de laquelle mettre à jour le classement
             videogameId (int) : Id du jeu vidéo pour lequel mettre à jour le classement
             coordonnees (str) : Coordonnées du lieu du tournoi

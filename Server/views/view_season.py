@@ -7,6 +7,7 @@ from controls.functional import FunctionalControls
 from controls.technical import TechnicalControls
 from model.season import Season
 from exceptions import BadRequestException, InvalidInput
+from model.role import Role
 
 class ViewSeason(FlaskView):
     """
@@ -16,10 +17,13 @@ class ViewSeason(FlaskView):
     def __init__(self) -> None:
         self.__season_manager = SeasonManager()
 
-    @route('/get', methods=['GET'])
+    @route('/get', methods=['POST'])
     def get_season_by_id(self) -> str():
         """
         Renvoi une saison en fonction de son id
+
+        Args (Requested POST Arguments)):
+            season_id (int): id de la saison
 
         Returns:
             str: saison
@@ -60,6 +64,9 @@ class ViewSeason(FlaskView):
         """
         Renvoi toutes les saisons
 
+        Args (Requested GET Arguments)):
+            None
+
         Returns:
             str: saisons
         """
@@ -93,9 +100,15 @@ class ViewSeason(FlaskView):
             return res
         
     @route('/add', methods=['POST'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def add_season(self) -> str():
         """
         Ajoute une saison
+
+        Args (Requested POST JSON)):
+            number (int): numéro de la saison
+            start_date (datetime): date de début de la saison
+            end_date (datetime): date de fin de la saison
 
         Returns:
             str: saison
@@ -133,10 +146,17 @@ class ViewSeason(FlaskView):
         finally:
             return res
         
-    @route('/update', methods=['POST'])
+    @route('/update', methods=['PUT'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def update_season(self) -> str():
         """
         Met à jour une saison
+        
+        Args (Requested PUT JSON)):
+            season_id (int): id de la saison
+            number (int): numéro de la saison
+            start_date (datetime): date de début de la saison
+            end_date (datetime): date de fin de la saison
 
         Returns:
             str: saison
@@ -175,10 +195,14 @@ class ViewSeason(FlaskView):
         finally:
             return res
         
-    @route('/remove', methods=['POST'])
+    @route('/remove', methods=['DELETE'])
+    @TechnicalControls.is_role([Role.ADMIN])
     def remove_season(self) -> str():
         """
         Supprime une saison
+
+        Args (Requested DELETE JSON)):
+            season_id (int): id de la saison
 
         Returns:
             str: saison

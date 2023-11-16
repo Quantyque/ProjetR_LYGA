@@ -17,6 +17,13 @@ class ViewTournament(FlaskView):
         """
         Renvoi une liste de tournois par date, jeu et lieu
 
+        Args:
+            afterDate (str): date de début de recherche
+            beforeDate (str): date de fin de recherche
+            videogameId (int): id du jeu vidéo
+            coordonnees (dict): coordonnées GPS
+            distance (int): distance de recherche
+
         Returns:
             dict: liste de tournois
         """

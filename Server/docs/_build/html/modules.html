@@ -1,0 +1,688 @@
+<!doctype html>
+<html class="no-js" lang="fr" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" />
+
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
+        <title>Server - Documentation ProjetR 0.1</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Documentation ProjetR 0.1</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  
+  <span class="sidebar-brand-text">Documentation ProjetR 0.1</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Recherche" name="q" aria-label="Recherche">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="server">
+<h1>Server<a class="headerlink" href="#server" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="constants.html">constants package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="constants.html#module-constants">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">exceptions package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#module-exceptions">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.BadRequestException"><code class="docutils literal notranslate"><span class="pre">BadRequestException</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.DataDuplicate"><code class="docutils literal notranslate"><span class="pre">DataDuplicate</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.DuplicateGame"><code class="docutils literal notranslate"><span class="pre">DuplicateGame</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.GameNotAudited"><code class="docutils literal notranslate"><span class="pre">GameNotAudited</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.InvalidCredentials"><code class="docutils literal notranslate"><span class="pre">InvalidCredentials</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.InvalidID"><code class="docutils literal notranslate"><span class="pre">InvalidID</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.InvalidInput"><code class="docutils literal notranslate"><span class="pre">InvalidInput</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.InvalidRole"><code class="docutils literal notranslate"><span class="pre">InvalidRole</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.TokenExpired"><code class="docutils literal notranslate"><span class="pre">TokenExpired</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#exceptions.UserNotFound"><code class="docutils literal notranslate"><span class="pre">UserNotFound</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logs.html">logs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logs.html#module-logs">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="logs.html#logs.log_error"><code class="docutils literal notranslate"><span class="pre">log_error()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="logs.html#logs.log_info"><code class="docutils literal notranslate"><span class="pre">log_info()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manager.html">manager package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.elo_manager">manager.elo_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager"><code class="docutils literal notranslate"><span class="pre">EloManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager.add_default_elo"><code class="docutils literal notranslate"><span class="pre">EloManager.add_default_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager.add_elos"><code class="docutils literal notranslate"><span class="pre">EloManager.add_elos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager.delete_all_elos_from_videogame"><code class="docutils literal notranslate"><span class="pre">EloManager.delete_all_elos_from_videogame()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager.delete_default_elo"><code class="docutils literal notranslate"><span class="pre">EloManager.delete_default_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager.edit_elo"><code class="docutils literal notranslate"><span class="pre">EloManager.edit_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager.get_default_elo"><code class="docutils literal notranslate"><span class="pre">EloManager.get_default_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.elo_manager.EloManager.get_history_elos"><code class="docutils literal notranslate"><span class="pre">EloManager.get_history_elos()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.event_manager">manager.event_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.event_manager.EventManager"><code class="docutils literal notranslate"><span class="pre">EventManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.event_manager.EventManager.get_event_by_id"><code class="docutils literal notranslate"><span class="pre">EventManager.get_event_by_id()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.player_manager">manager.player_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.player_manager.PlayerManager"><code class="docutils literal notranslate"><span class="pre">PlayerManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.player_manager.PlayerManager.add_players"><code class="docutils literal notranslate"><span class="pre">PlayerManager.add_players()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.player_manager.PlayerManager.get_all_players"><code class="docutils literal notranslate"><span class="pre">PlayerManager.get_all_players()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.player_manager.PlayerManager.get_player_by_id"><code class="docutils literal notranslate"><span class="pre">PlayerManager.get_player_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.player_manager.PlayerManager.get_ranked_players"><code class="docutils literal notranslate"><span class="pre">PlayerManager.get_ranked_players()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.player_manager.PlayerManager.remove_all_players"><code class="docutils literal notranslate"><span class="pre">PlayerManager.remove_all_players()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.ranking_manager">manager.ranking_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.ranking_manager.RankingManager"><code class="docutils literal notranslate"><span class="pre">RankingManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.ranking_manager.RankingManager.update_ranking"><code class="docutils literal notranslate"><span class="pre">RankingManager.update_ranking()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.season_manager">manager.season_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.season_manager.SeasonManager"><code class="docutils literal notranslate"><span class="pre">SeasonManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.season_manager.SeasonManager.add_season"><code class="docutils literal notranslate"><span class="pre">SeasonManager.add_season()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.season_manager.SeasonManager.get_all_seasons"><code class="docutils literal notranslate"><span class="pre">SeasonManager.get_all_seasons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.season_manager.SeasonManager.get_season_by_id"><code class="docutils literal notranslate"><span class="pre">SeasonManager.get_season_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.season_manager.SeasonManager.remove_season"><code class="docutils literal notranslate"><span class="pre">SeasonManager.remove_season()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.season_manager.SeasonManager.update_season"><code class="docutils literal notranslate"><span class="pre">SeasonManager.update_season()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.set_manager">manager.set_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.set_manager.SetManager"><code class="docutils literal notranslate"><span class="pre">SetManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.set_manager.SetManager.get_last_sets_by_player"><code class="docutils literal notranslate"><span class="pre">SetManager.get_last_sets_by_player()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.tournament_manager">manager.tournament_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.tournament_manager.TournamentManager"><code class="docutils literal notranslate"><span class="pre">TournamentManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.tournament_manager.TournamentManager.get_tournaments_by_location"><code class="docutils literal notranslate"><span class="pre">TournamentManager.get_tournaments_by_location()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.user_manager">manager.user_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.user_manager.UserManager"><code class="docutils literal notranslate"><span class="pre">UserManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.user_manager.UserManager.delete_user"><code class="docutils literal notranslate"><span class="pre">UserManager.delete_user()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.user_manager.UserManager.get_all_users"><code class="docutils literal notranslate"><span class="pre">UserManager.get_all_users()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.user_manager.UserManager.get_user_by_id"><code class="docutils literal notranslate"><span class="pre">UserManager.get_user_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.user_manager.UserManager.login"><code class="docutils literal notranslate"><span class="pre">UserManager.login()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.user_manager.UserManager.register"><code class="docutils literal notranslate"><span class="pre">UserManager.register()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.user_manager.UserManager.update_user"><code class="docutils literal notranslate"><span class="pre">UserManager.update_user()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager.video_game_manager">manager.video_game_manager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="manager.html#manager.video_game_manager.VideoGameManager"><code class="docutils literal notranslate"><span class="pre">VideoGameManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.video_game_manager.VideoGameManager.add_audited_game"><code class="docutils literal notranslate"><span class="pre">VideoGameManager.add_audited_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.video_game_manager.VideoGameManager.delete_audited_game"><code class="docutils literal notranslate"><span class="pre">VideoGameManager.delete_audited_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.video_game_manager.VideoGameManager.get_all_video_game"><code class="docutils literal notranslate"><span class="pre">VideoGameManager.get_all_video_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.video_game_manager.VideoGameManager.get_video_game_by_id"><code class="docutils literal notranslate"><span class="pre">VideoGameManager.get_video_game_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.video_game_manager.VideoGameManager.list_audited_game"><code class="docutils literal notranslate"><span class="pre">VideoGameManager.list_audited_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="manager.html#manager.video_game_manager.VideoGameManager.update_audited_game"><code class="docutils literal notranslate"><span class="pre">VideoGameManager.update_audited_game()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="manager.html#module-manager">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model.html">model package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="model.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.character">model.character module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.character.Character"><code class="docutils literal notranslate"><span class="pre">Character</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.character.Character.Id"><code class="docutils literal notranslate"><span class="pre">Character.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.character.Character.Images"><code class="docutils literal notranslate"><span class="pre">Character.Images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.character.Character.Name"><code class="docutils literal notranslate"><span class="pre">Character.Name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.character.Character.hydrate"><code class="docutils literal notranslate"><span class="pre">Character.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.character.Character.toJSON"><code class="docutils literal notranslate"><span class="pre">Character.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.elo">model.elo module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.elo.Elo"><code class="docutils literal notranslate"><span class="pre">Elo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.elo.Elo.Date"><code class="docutils literal notranslate"><span class="pre">Elo.Date</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.elo.Elo.Id"><code class="docutils literal notranslate"><span class="pre">Elo.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.elo.Elo.Score"><code class="docutils literal notranslate"><span class="pre">Elo.Score</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.elo.Elo.Season"><code class="docutils literal notranslate"><span class="pre">Elo.Season</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.elo.Elo.Videogame"><code class="docutils literal notranslate"><span class="pre">Elo.Videogame</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.elo.Elo.hydrate"><code class="docutils literal notranslate"><span class="pre">Elo.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.elo.Elo.toJSON"><code class="docutils literal notranslate"><span class="pre">Elo.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.entity">model.entity module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.entity.Entity"><code class="docutils literal notranslate"><span class="pre">Entity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.entity.Entity.hydrate"><code class="docutils literal notranslate"><span class="pre">Entity.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.entity.Entity.toJSON"><code class="docutils literal notranslate"><span class="pre">Entity.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.event">model.event module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.event.Event"><code class="docutils literal notranslate"><span class="pre">Event</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.Id"><code class="docutils literal notranslate"><span class="pre">Event.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.Name"><code class="docutils literal notranslate"><span class="pre">Event.Name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.NumEntrants"><code class="docutils literal notranslate"><span class="pre">Event.NumEntrants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.Players"><code class="docutils literal notranslate"><span class="pre">Event.Players</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.Sets"><code class="docutils literal notranslate"><span class="pre">Event.Sets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.Videogame"><code class="docutils literal notranslate"><span class="pre">Event.Videogame</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.hydrate"><code class="docutils literal notranslate"><span class="pre">Event.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.event.Event.toJSON"><code class="docutils literal notranslate"><span class="pre">Event.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.game">model.game module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.game.Game"><code class="docutils literal notranslate"><span class="pre">Game</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.game.Game.Id"><code class="docutils literal notranslate"><span class="pre">Game.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.game.Game.Players"><code class="docutils literal notranslate"><span class="pre">Game.Players</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.game.Game.WinnerId"><code class="docutils literal notranslate"><span class="pre">Game.WinnerId</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.game.Game.hydrate"><code class="docutils literal notranslate"><span class="pre">Game.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.game.Game.toJSON"><code class="docutils literal notranslate"><span class="pre">Game.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.player">model.player module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.player.Player"><code class="docutils literal notranslate"><span class="pre">Player</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.Bio"><code class="docutils literal notranslate"><span class="pre">Player.Bio</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.Characters"><code class="docutils literal notranslate"><span class="pre">Player.Characters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.Elos"><code class="docutils literal notranslate"><span class="pre">Player.Elos</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.ExternalUrls"><code class="docutils literal notranslate"><span class="pre">Player.ExternalUrls</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.Id"><code class="docutils literal notranslate"><span class="pre">Player.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.Images"><code class="docutils literal notranslate"><span class="pre">Player.Images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.IsDisqualified"><code class="docutils literal notranslate"><span class="pre">Player.IsDisqualified</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.Name"><code class="docutils literal notranslate"><span class="pre">Player.Name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.NbTournaments"><code class="docutils literal notranslate"><span class="pre">Player.NbTournaments</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.Prefix"><code class="docutils literal notranslate"><span class="pre">Player.Prefix</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.hydrate"><code class="docutils literal notranslate"><span class="pre">Player.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.player.Player.toJSON"><code class="docutils literal notranslate"><span class="pre">Player.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.ranking">model.ranking module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.ranking.Ranking"><code class="docutils literal notranslate"><span class="pre">Ranking</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.ranking.Ranking.Players"><code class="docutils literal notranslate"><span class="pre">Ranking.Players</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.ranking.Ranking.get_expected_score"><code class="docutils literal notranslate"><span class="pre">Ranking.get_expected_score()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.ranking.Ranking.get_new_elo"><code class="docutils literal notranslate"><span class="pre">Ranking.get_new_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.ranking.Ranking.init_players"><code class="docutils literal notranslate"><span class="pre">Ranking.init_players()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.ranking.Ranking.update_ranking"><code class="docutils literal notranslate"><span class="pre">Ranking.update_ranking()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.role">model.role module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.role.Role"><code class="docutils literal notranslate"><span class="pre">Role</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.role.Role.ADMIN"><code class="docutils literal notranslate"><span class="pre">Role.ADMIN</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.role.Role.USER"><code class="docutils literal notranslate"><span class="pre">Role.USER</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.season">model.season module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.season.Season"><code class="docutils literal notranslate"><span class="pre">Season</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.season.Season.EndDate"><code class="docutils literal notranslate"><span class="pre">Season.EndDate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.season.Season.Id"><code class="docutils literal notranslate"><span class="pre">Season.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.season.Season.Number"><code class="docutils literal notranslate"><span class="pre">Season.Number</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.season.Season.StartDate"><code class="docutils literal notranslate"><span class="pre">Season.StartDate</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.season.Season.hydrate"><code class="docutils literal notranslate"><span class="pre">Season.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.season.Season.toJSON"><code class="docutils literal notranslate"><span class="pre">Season.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.set">model.set module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.set.Set"><code class="docutils literal notranslate"><span class="pre">Set</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.Date"><code class="docutils literal notranslate"><span class="pre">Set.Date</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.EventNbEntrants"><code class="docutils literal notranslate"><span class="pre">Set.EventNbEntrants</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.Games"><code class="docutils literal notranslate"><span class="pre">Set.Games</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.Id"><code class="docutils literal notranslate"><span class="pre">Set.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.Players"><code class="docutils literal notranslate"><span class="pre">Set.Players</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.Round"><code class="docutils literal notranslate"><span class="pre">Set.Round</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.Videogame"><code class="docutils literal notranslate"><span class="pre">Set.Videogame</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.WinnerId"><code class="docutils literal notranslate"><span class="pre">Set.WinnerId</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.get_winner_looser"><code class="docutils literal notranslate"><span class="pre">Set.get_winner_looser()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.hydrate"><code class="docutils literal notranslate"><span class="pre">Set.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.set.Set.toJSON"><code class="docutils literal notranslate"><span class="pre">Set.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.tournament">model.tournament module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.tournament.Tournament"><code class="docutils literal notranslate"><span class="pre">Tournament</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.tournament.Tournament.Events"><code class="docutils literal notranslate"><span class="pre">Tournament.Events</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.tournament.Tournament.Id"><code class="docutils literal notranslate"><span class="pre">Tournament.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.tournament.Tournament.Location"><code class="docutils literal notranslate"><span class="pre">Tournament.Location</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.tournament.Tournament.Name"><code class="docutils literal notranslate"><span class="pre">Tournament.Name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.tournament.Tournament.Owner"><code class="docutils literal notranslate"><span class="pre">Tournament.Owner</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.tournament.Tournament.hydrate"><code class="docutils literal notranslate"><span class="pre">Tournament.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.tournament.Tournament.toJSON"><code class="docutils literal notranslate"><span class="pre">Tournament.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.user">model.user module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.user.User"><code class="docutils literal notranslate"><span class="pre">User</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.user.User.Id"><code class="docutils literal notranslate"><span class="pre">User.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.user.User.Password"><code class="docutils literal notranslate"><span class="pre">User.Password</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.user.User.Role"><code class="docutils literal notranslate"><span class="pre">User.Role</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.user.User.UserPP"><code class="docutils literal notranslate"><span class="pre">User.UserPP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.user.User.Username"><code class="docutils literal notranslate"><span class="pre">User.Username</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.user.User.hydrate"><code class="docutils literal notranslate"><span class="pre">User.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.user.User.toJSON"><code class="docutils literal notranslate"><span class="pre">User.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model.videogame">model.videogame module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="model.html#model.videogame.Videogame"><code class="docutils literal notranslate"><span class="pre">Videogame</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.videogame.Videogame.Characters"><code class="docutils literal notranslate"><span class="pre">Videogame.Characters</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.videogame.Videogame.Id"><code class="docutils literal notranslate"><span class="pre">Videogame.Id</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.videogame.Videogame.Images"><code class="docutils literal notranslate"><span class="pre">Videogame.Images</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.videogame.Videogame.Name"><code class="docutils literal notranslate"><span class="pre">Videogame.Name</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.videogame.Videogame.hydrate"><code class="docutils literal notranslate"><span class="pre">Videogame.hydrate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="model.html#model.videogame.Videogame.toJSON"><code class="docutils literal notranslate"><span class="pre">Videogame.toJSON()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="model.html#module-model">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="unit_tests.html">unit_tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unit_tests.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="unit_tests.ranking.html">unit_tests.ranking package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.ranking.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.ranking.html#module-unit_tests.ranking.test_ranking">unit_tests.ranking.test_ranking module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.ranking.html#module-unit_tests.ranking">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="unit_tests.season.html">unit_tests.season package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.season.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.season.html#module-unit_tests.season.test_season">unit_tests.season.test_season module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.season.html#module-unit_tests.season">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="unit_tests.set.html">unit_tests.set package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.set.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.set.html#module-unit_tests.set.test_winner_set">unit_tests.set.test_winner_set module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.set.html#module-unit_tests.set">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="unit_tests.user.html">unit_tests.user package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.user.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.user.html#module-unit_tests.user.test_users">unit_tests.user.test_users module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.user.html#module-unit_tests.user">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="unit_tests.video_games.html">unit_tests.video_games package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.video_games.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.video_games.html#module-unit_tests.video_games.test_video_games">unit_tests.video_games.test_video_games module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.video_games.html#module-unit_tests.video_games">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unit_tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unit_tests.html#module-unit_tests.api_tests">unit_tests.api_tests module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="unit_tests.html#unit_tests.api_tests.ApiTests"><code class="docutils literal notranslate"><span class="pre">ApiTests</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unit_tests.html#unit_tests.api_tests.ApiTests.run_unit_tests"><code class="docutils literal notranslate"><span class="pre">ApiTests.run_unit_tests()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unit_tests.html#module-unit_tests">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utilities.html">utilities package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-utilities.crons">utilities.crons module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utilities.html#utilities.crons.Crons"><code class="docutils literal notranslate"><span class="pre">Crons</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utilities.html#utilities.crons.Crons.get_cron_tasks"><code class="docutils literal notranslate"><span class="pre">Crons.get_cron_tasks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utilities.html#utilities.crons.Crons.start_cron_task"><code class="docutils literal notranslate"><span class="pre">Crons.start_cron_task()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utilities.html#utilities.crons.Crons.stop_cron_task"><code class="docutils literal notranslate"><span class="pre">Crons.stop_cron_task()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utilities.html#module-utilities">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="views.html">views package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="views.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_api_tests">views.view_api_tests module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_api_tests.ViewApiTests"><code class="docutils literal notranslate"><span class="pre">ViewApiTests</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_api_tests.ViewApiTests.route_base"><code class="docutils literal notranslate"><span class="pre">ViewApiTests.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_api_tests.ViewApiTests.run_unit_tests"><code class="docutils literal notranslate"><span class="pre">ViewApiTests.run_unit_tests()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_api_tests.ViewApiTests.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewApiTests.trailing_slash</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_elo">views.view_elo module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_elo.ViewElo"><code class="docutils literal notranslate"><span class="pre">ViewElo</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_elo.ViewElo.add_default_elo"><code class="docutils literal notranslate"><span class="pre">ViewElo.add_default_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_elo.ViewElo.delete_default_elo"><code class="docutils literal notranslate"><span class="pre">ViewElo.delete_default_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_elo.ViewElo.edit_elo"><code class="docutils literal notranslate"><span class="pre">ViewElo.edit_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_elo.ViewElo.get_default_elo"><code class="docutils literal notranslate"><span class="pre">ViewElo.get_default_elo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_elo.ViewElo.get_history"><code class="docutils literal notranslate"><span class="pre">ViewElo.get_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_elo.ViewElo.route_base"><code class="docutils literal notranslate"><span class="pre">ViewElo.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_elo.ViewElo.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewElo.trailing_slash</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_player">views.view_player module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_player.ViewPlayer"><code class="docutils literal notranslate"><span class="pre">ViewPlayer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_player.ViewPlayer.get_all_players"><code class="docutils literal notranslate"><span class="pre">ViewPlayer.get_all_players()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_player.ViewPlayer.get_infos_player"><code class="docutils literal notranslate"><span class="pre">ViewPlayer.get_infos_player()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_player.ViewPlayer.get_ranked_players"><code class="docutils literal notranslate"><span class="pre">ViewPlayer.get_ranked_players()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_player.ViewPlayer.route_base"><code class="docutils literal notranslate"><span class="pre">ViewPlayer.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_player.ViewPlayer.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewPlayer.trailing_slash</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_ranking">views.view_ranking module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_ranking.ViewRanking"><code class="docutils literal notranslate"><span class="pre">ViewRanking</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_ranking.ViewRanking.auto_ranking_refresh"><code class="docutils literal notranslate"><span class="pre">ViewRanking.auto_ranking_refresh()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_ranking.ViewRanking.manual_update_ranking"><code class="docutils literal notranslate"><span class="pre">ViewRanking.manual_update_ranking()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_ranking.ViewRanking.route_base"><code class="docutils literal notranslate"><span class="pre">ViewRanking.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_ranking.ViewRanking.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewRanking.trailing_slash</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_season">views.view_season module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_season.ViewSeason"><code class="docutils literal notranslate"><span class="pre">ViewSeason</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_season.ViewSeason.add_season"><code class="docutils literal notranslate"><span class="pre">ViewSeason.add_season()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_season.ViewSeason.get_all_seasons"><code class="docutils literal notranslate"><span class="pre">ViewSeason.get_all_seasons()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_season.ViewSeason.get_season_by_id"><code class="docutils literal notranslate"><span class="pre">ViewSeason.get_season_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_season.ViewSeason.remove_season"><code class="docutils literal notranslate"><span class="pre">ViewSeason.remove_season()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_season.ViewSeason.route_base"><code class="docutils literal notranslate"><span class="pre">ViewSeason.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_season.ViewSeason.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewSeason.trailing_slash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_season.ViewSeason.update_season"><code class="docutils literal notranslate"><span class="pre">ViewSeason.update_season()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_set">views.view_set module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_set.ViewSet"><code class="docutils literal notranslate"><span class="pre">ViewSet</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_set.ViewSet.get_last_sets_by_player"><code class="docutils literal notranslate"><span class="pre">ViewSet.get_last_sets_by_player()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_set.ViewSet.route_base"><code class="docutils literal notranslate"><span class="pre">ViewSet.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_set.ViewSet.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewSet.trailing_slash</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_tournaments">views.view_tournaments module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_tournaments.ViewTournament"><code class="docutils literal notranslate"><span class="pre">ViewTournament</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_tournaments.ViewTournament.route_base"><code class="docutils literal notranslate"><span class="pre">ViewTournament.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_tournaments.ViewTournament.tournament_by_location"><code class="docutils literal notranslate"><span class="pre">ViewTournament.tournament_by_location()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_tournaments.ViewTournament.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewTournament.trailing_slash</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_user">views.view_user module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_user.ViewUser"><code class="docutils literal notranslate"><span class="pre">ViewUser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.create"><code class="docutils literal notranslate"><span class="pre">ViewUser.create()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.delete_user"><code class="docutils literal notranslate"><span class="pre">ViewUser.delete_user()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.get_all_users"><code class="docutils literal notranslate"><span class="pre">ViewUser.get_all_users()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.get_user_by_id"><code class="docutils literal notranslate"><span class="pre">ViewUser.get_user_by_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.login"><code class="docutils literal notranslate"><span class="pre">ViewUser.login()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.route_base"><code class="docutils literal notranslate"><span class="pre">ViewUser.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewUser.trailing_slash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_user.ViewUser.update_user"><code class="docutils literal notranslate"><span class="pre">ViewUser.update_user()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views.view_video_game">views.view_video_game module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames.add_audited_game"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames.add_audited_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames.all_video_games"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames.all_video_games()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames.delete_audited_game"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames.delete_audited_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames.get_audited_game"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames.get_audited_game()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames.route_base"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames.route_base</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames.trailing_slash"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames.trailing_slash</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="views.html#views.view_video_game.ViewVideoGames.update_audited_game"><code class="docutils literal notranslate"><span class="pre">ViewVideoGames.update_audited_game()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="views.html#module-views">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wsgi.html">wsgi module</a></li>
+</ul>
+</div>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Lucas PUPAT, Grégory YONTCHEV, Youri EMMANUEL, Antoine RICHARD
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js?v=af8511e3"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="_static/translations.js?v=d99ca74e"></script>
+    </body>
+</html>
