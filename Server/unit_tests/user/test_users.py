@@ -8,21 +8,6 @@ class TestUser(unittest.TestCase):
         app.config['TESTING'] = True
         self.app = app.test_client()
 
-    def test_get_all_user(self):
-        """
-        Test the route /get-all
-
-        Returns:
-            None
-
-        Raises:
-            AssertionError: If test fails
-        """
-
-        #  User get all code 200 : success
-        response = self.app.get('/user/get-all')
-        self.assertEqual(response.status_code, 200, f'User (/get-all) : Expected status code 200, but got {response.status_code}')
-
     def test_crud_user(self):
         """
         Test the route /register
@@ -49,6 +34,13 @@ class TestUser(unittest.TestCase):
             # User login code 200 : success
             response = self.app.post('/user/login', json={"username": "abcdefg", "password": "abcdefg"})
             self.assertEqual(response.status_code, 200, f'User (/login): Expected status code 200, but got {response.status_code}')
+
+            # User login : data check
+            data = json.loads(response.get_data(as_text=True))
+            self.assertIn('id', data, f'User (/login): Expected id, but got {data}')
+            self.assertEqual(data['username'], "abcdefg", f'User (/login): Expected username abcdefg, but got {data["username"]}')
+            self.assertEqual(data['role'], 0, f'User (/login): Expected role 0, but got {data["role"]}')
+            self.assertIn('userPP', data, f'User (/login): Expected userPP, but got {data}')
 
             # Get user id
             data = json.loads(response.get_data(as_text=True))
@@ -99,6 +91,33 @@ class TestUser(unittest.TestCase):
         response = self.app.post('/user/get-by-id', json={'id': 1})
         self.assertEqual(response.status_code, 200, f'User (/get-by-id): Expected status code 200, but got {response.status_code}')
 
+        # User get by id : data check
+        data = json.loads(response.get_data(as_text=True))
+        self.assertIn('id', data, f'User (/login): Expected id, but got {data}')
+        self.assertIn('username', data, f'User (/login): Expected username, but got {data}')
+        self.assertIn('userPP', data, f'User (/login): Expected userPP, but got {data}')
+
         # User get by id code 404 : user not found
         response = self.app.post('/user/get-by-id', json={'id': 0})
         self.assertEqual(response.status_code, 404, f'Expected status code 404, but got {response.status_code}')
+
+    def test_get_all_user(self):
+        """
+        Test the route /get-all
+
+        Returns:
+            None
+
+        Raises:
+            AssertionError: If test fails
+        """
+
+        #  User get all code 200 : success
+        response = self.app.get('/user/get-all')
+        self.assertEqual(response.status_code, 200, f'User (/get-all) : Expected status code 200, but got {response.status_code}')
+
+        # User get all : data check
+        response_json = json.loads(response.get_data(as_text=True))
+        for item in response_json:
+            with self.subTest(item=item):
+                self.assertIn('username', item, f"The 'username' field is missing in JSON item: {item}")
