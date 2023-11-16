@@ -72,6 +72,12 @@ class VideoGameDaoSql(IVideoGameDaoSql, Dao):
             GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
         """
         game_to_update = self.db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
+        games = self.db.exec_request("SELECT * FROM Games")
+
+        # check if name game already exists
+        for g in games:
+            if g[1] == game.Name:
+                raise DuplicateGame(f"Game with name {game.Name} already exists.")
 
         if len(game_to_update) != 0:
             self.db.exec_request("UPDATE Games SET name = ? WHERE idGame = ?", (game.Name, game.Id))
