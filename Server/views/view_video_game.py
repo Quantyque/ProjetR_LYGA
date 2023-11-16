@@ -70,7 +70,7 @@ class ViewVideoGames(FlaskView):
             # Envoi de la requête
             result = self.__video_game_manager.add_audited_game(self.__video_game)
             
-            res = result, 200
+            res = result, 201
         
         except InvalidInput as e:
             log_info((e))
@@ -147,6 +147,10 @@ class ViewVideoGames(FlaskView):
         except GameNotAudited as e :
             log_info(str(e))
             res = str(e), 404
+
+        except DuplicateGame as e :
+            log_info(str(e))
+            res = str(e), 409
         
         except Exception as e :
             log_error(str(e))
