@@ -22,7 +22,7 @@ class SetDaoApi(ISetDaoApi, Api):
         Raises:
             Exception: Si la requête échoue.
         """
-
+        # Récupération des sets
         response = self.sg.request_api("""
                             query SetsByPlayer($idPlayer : ID!) {
                                                 player(id: $idPlayer) {
@@ -88,9 +88,11 @@ class SetDaoApi(ISetDaoApi, Api):
                         "idPlayer": idPlayer
                     })
         
+        # Gestion des erreurs
         if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
         
+        # Ajout des sets à la liste
         sets = []
         if "data" in response:
             for data_set in response['data']['player']['sets']['nodes']:

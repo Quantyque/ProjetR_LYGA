@@ -1,4 +1,5 @@
-import jwt, time
+import jwt
+import time
 from functools import wraps
 from flask import request
 from dotenv import load_dotenv
@@ -25,6 +26,11 @@ class TechnicalControls:
         def decorator(view_func):
             @wraps(view_func)
             def roleCheck(*args, **kwargs):
+
+                if not AUTH_SYSTEM:
+                    # Si AUTH_SYSTEM est False, autoriser l'accès sans vérification
+                    return view_func(*args, **kwargs)
+
                 load_dotenv()
                 auth_header = request.headers.get('Authorization')
                 if auth_header and auth_header.startswith('Bearer '):
@@ -43,8 +49,11 @@ class TechnicalControls:
                         return 'Invalid token', 401
                 else:
                     return 'Unauthorized', 401
+                
                 return view_func(*args, **kwargs)
+            
             return roleCheck
+        
         return decorator
     
     def check_is_user(token: str, id: int):

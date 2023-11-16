@@ -17,12 +17,13 @@ class IPlayerDaoSql(ABC):
         pass
 
     @abstractmethod
-    def get_ranked_players(self, videogame_id : int) -> [Player]:
+    def get_ranked_players(self, videogame_id : int, season_id : int) -> [Player]:
         """
         Retourne tous les joueurs classés dans un jeu vidéo
 
         Args:
             videogame_id (int): Id du jeu vidéo
+            season_id (int): Id de la saison
 
         Returns:
             [Player]: Liste des joueurs

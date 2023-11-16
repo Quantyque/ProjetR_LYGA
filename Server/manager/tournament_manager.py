@@ -13,12 +13,13 @@ class TournamentManager():
 
     # region Operations
 
-    def get_tournaments_by_location(self, date : int, videogame : Videogame, coordonnees : str, distance : str) -> [Tournament]:
+    def get_tournaments_by_location(self, afterDate : int, beforeDate : int, videogame : Videogame, coordonnees : str, distance : str) -> [Tournament]:
         """
         Récupère les tournois par localisation.
 
         Args:
-            date (int): La date.
+            afterDate (int): La date a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date jusqu'à laquelle rechercher les tournois.
             videogame (Videogame): Le jeu vidéo.
             coordonnees (str): Les coordonnées.
             distance (str): La distance.
@@ -30,6 +31,6 @@ class TournamentManager():
             HTTPError: Si la requête échoue.
         """
         
-        return self.__sg.get_tournaments_by_location(date, videogame, coordonnees, distance)
+        return self.__sg.get_tournaments_by_location(afterDate, beforeDate, videogame, coordonnees, distance)
 
     #endregion
