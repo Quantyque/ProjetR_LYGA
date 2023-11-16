@@ -26,6 +26,7 @@ class TournamentDaoApi(ITournamentDaoApi, Api):
         Raises:
             Exception: Si la requête échoue.
         """
+        # Récupération des tournois
         response = self.sg.request_api("""
                     query TournamentsAtLocation($afterDate : Timestamp!, $beforeDate : Timestamp!, $videogameId: ID!, $coordonnees : String!, $distance : String!) {
                         tournaments(
@@ -63,9 +64,11 @@ class TournamentDaoApi(ITournamentDaoApi, Api):
                             "distance" : distance
                         })
         
-        if "errors" in response and response["errors"]:
+        # Gestion des erreurs
+        if "errors" in response:
             raise BadRequestException(response["errors"][0]["message"])
 
+        # Ajout des tournois à la liste
         tournaments = []
         for data_tournament in response['data']['tournaments']['nodes']:
             tournament = Tournament()

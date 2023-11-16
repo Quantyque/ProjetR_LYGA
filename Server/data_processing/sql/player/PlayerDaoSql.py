@@ -19,7 +19,10 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
+        # Initialisation de la variable de retour
         players = {}
+
+        # Envoi de la requête
         res = self.db.exec_request("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p natural join elos e join 
                 (SELECT
             idPlayer,
@@ -29,8 +32,11 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
             idPlayer) sub
 			on e.idPlayer = sub.idPlayer
         AND e.date = sub.date_max""")
+
+        # Ajout des joueurs à la variable de retour
         for row in res:
             player : Player = Player()
+            # Si le joueur n'est pas déjà dans la liste
             if not row[0] in players.keys():
                 data_player = {
                     "id": row[0],
@@ -42,8 +48,12 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
                     "prefix": row[6]
                 }
                 player.hydrate(data_player)
+
+            # Si le joueur est déjà dans la liste
             else:
                 player = players[row[0]]
+
+            # Ajout de l'elo au joueur    
             elo = Elo()
             data_elo = {
                 "score": row[3],
@@ -73,19 +83,27 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
+        # Initialisation de la variable de retour
         players = {}
-        res = self.db.exec_request("""Select e.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p natural join elos e join 
+        # Envoi de la requête
+        res = self.db.exec_request("""Select e.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p 
+                natural join elos e 
+                join 
                 (SELECT
-            idPlayer,
-            MAX(date) AS date_max FROM
-            elos
-        GROUP BY
-            idPlayer) sub
-			on e.idPlayer = sub.idPlayer
-    AND e.date = sub.date_max
-        where (nbTournaments >= ? and idGame = ? and idSeason = ?) order by score desc""", (NUMBER_OF_TOURNAMENTS_TO_BE_RANKED, videogame_id, season_id))
+                idPlayer,
+                MAX(date) AS date_max 
+                FROM elos
+                GROUP BY idPlayer) sub
+                    ON e.idPlayer = sub.idPlayer
+                    AND e.date = sub.date_max
+                where (nbTournaments >= ? and idGame = ? and idSeason = ?) 
+                order by score desc""", 
+        (NUMBER_OF_TOURNAMENTS_TO_BE_RANKED, videogame_id, season_id))
+
+        # Ajout des joueurs à la variable de retour
         for row in res:
             player : Player = Player()
+            # Si le joueur n'est pas déjà dans la liste
             if not row[0] in players.keys():
                 data_player = {
                     "id": row[0],
@@ -97,8 +115,10 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
                     "prefix": row[6]
                 }
                 player.hydrate(data_player)
+            # Si le joueur est déjà dans la liste
             else:
                 player = players[row[0]]
+            # Ajout de l'elo au joueur
             elo = Elo()
             data_elo = {
                 "score": row[3],
@@ -124,10 +144,11 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
+        # Initialisation des requêtes et des paramètres
         req_players = "INSERT INTO players VALUES"
         params_players = []
         for player in players:
-            # Manage the addition in the players table
+            # Ajout des attributs des joueurs à la requête
             req_players += " (?, ?, ?, ?, ?),"
             params_players.append(player.Id)
             params_players.append(player.Name)
@@ -138,7 +159,7 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
             params_players.append(player.Prefix)
             params_players.append(player.NbTournaments)
 
-        # Insert players
+        # Insertion des joueurs dans la base de données
         req_players = req_players[:-1]
         self.db.exec_request(req_players, params_players)
 

@@ -24,6 +24,7 @@ class EventDaoApi(IEventDaoApi, Api):
         Raises:
             Exception: Si la requête échoue.
         """
+        # Récupération de l'évènement
         event : Event = Event()
         response : dict = self.sg.request_api("""
                     query EventById($idEvent: ID!, $page : Int!) {
@@ -83,9 +84,11 @@ class EventDaoApi(IEventDaoApi, Api):
                         "page": page
                     })
         
+        # Gestion des erreurs
         if "errors" in response and response["errors"]:
             raise BadRequestException(response["errors"][0]["message"])
         
+        # Hydratation de l'évènement en fonction des données récupérées
         data_event : dict = response["data"]["event"]
         event.hydrate(data_event)
         return event
