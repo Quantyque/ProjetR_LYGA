@@ -39,16 +39,18 @@ class ViewRanking(FlaskView):
 
             # Initialise les valeurs par défaut du tournoi (à ajouter dans un fichier de config)
             date_temp = datetime.datetime.today() - datetime.timedelta(days=1)
-            date_unix = time.mktime(date_temp.timetuple())
-            date = date_unix
+            date_unix_after = time.mktime(date_temp.timetuple())
+            after_date = date_unix_after
+            date_unix_before = time.mktime(datetime.datetime.today().timetuple())
+            before_date = date_unix_before
             videogameId = 1386
             coordonnees = "47.316667, 5.016667"
             distance = "5km"
 
             if (activate == True):
-                result = self.__crons.start_cron_task(self.__ranking_manager.update_ranking(date, videogameId, coordonnees, distance))
+                result = self.__crons.start_cron_task(self.__ranking_manager.update_ranking(after_date, before_date, videogameId, coordonnees, distance))
             else:
-                result = self.__crons.stop_cron_task(self.__ranking_manager.update_ranking(date, videogameId, coordonnees, distance))
+                result = self.__crons.stop_cron_task(self.__ranking_manager.update_ranking(after_date, before_date, videogameId, coordonnees, distance))
 
             res = result, 200
         
