@@ -1,5 +1,5 @@
 from data_processing.sql.user.IUserDaoSql import IUserDaoSql
-from exceptions import InvalidCredentials, UserNotFound
+from exceptions import InvalidCredentials, UserNotFound, DataDuplicate
 from datetime import timedelta, datetime
 from model.user import User
 from model.role import Role
@@ -31,7 +31,7 @@ class UserDaoSql(IUserDaoSql, Dao):
         user_infos = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
 
         if user_infos is not None:
-            raise InvalidCredentials("Username already taken.")
+            raise DataDuplicate("Username already taken.")
 
         password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         user = User(None, username, Role.USER.value, password, None)
@@ -142,10 +142,15 @@ class UserDaoSql(IUserDaoSql, Dao):
             UserNotFound: Si l'utilisateur n'existe pas.
         """
 
-        user_infos = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (user.Id,), True)
+        user_infos = self.db.exec_request("SELECT * FROM Users WHERE id = ?", (user.Id,), True)
 
         if user_infos is None:
             raise UserNotFound("User not found.")
+        
+        users = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (user.Username,), True)
+
+        if users is not None:
+            raise DataDuplicate("Username already taken.")
 
         if user.Password is not None:
             password = bcrypt.hashpw(user.Password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')

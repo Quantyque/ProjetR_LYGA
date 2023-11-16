@@ -1,6 +1,6 @@
 from manager.user_manager import UserManager
 from controls.functional import FunctionalControls
-from exceptions import InvalidInput, InvalidCredentials, TokenExpired, UserNotFound
+from exceptions import InvalidInput, InvalidCredentials, TokenExpired, UserNotFound, DataDuplicate
 from flask import request
 from logs import log_error, log_info
 from constants import INTERNAL_ERROR
@@ -37,7 +37,7 @@ class ViewUser(FlaskView):
             # Envoi de la requête
             self.__user_manager.register(username, password)
 
-            res = "User created", 200
+            res = "User created", 201
         
         except InvalidInput as e:
             log_info((e))
@@ -50,6 +50,10 @@ class ViewUser(FlaskView):
         except InvalidCredentials as e:
             log_info(str(e))
             res = str(e), 401
+
+        except DataDuplicate as e:
+            log_info(str(e))
+            res = str(e), 409
 
         except Exception as e :
             log_error(str(e))
@@ -213,6 +217,10 @@ class ViewUser(FlaskView):
         except UserNotFound as e:
             log_info(str(e))
             res = str(e), 404
+
+        except DataDuplicate as e:
+            log_info(str(e))
+            res = str(e), 409
         
         except Exception as e :
             log_error(str(e))
