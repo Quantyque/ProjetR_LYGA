@@ -5,6 +5,8 @@ Server
    :maxdepth: 4
 
    constants
+   controls
+   data_processing
    exceptions
    logs
    main

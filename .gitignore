@@ -10,6 +10,7 @@ share/
 .next/
 *.env
 *.env.*
+Include/
 
 # User-specific files
 *.rsuser
