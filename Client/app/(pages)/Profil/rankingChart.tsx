@@ -25,7 +25,7 @@ ChartJS.register(
 export default function RankingChart(props: any) {
 
   const { eloData } = props;
-  const labels = ['-2', '0', '1'];
+  const labels = ['before last Game', 'last game', 'Current'];
   const datasets = [];
   const eloScores: { [key: string]: GameElo } = {};
 
