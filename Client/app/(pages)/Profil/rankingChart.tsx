@@ -1,6 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
-import { GameElo } from '@/model/elo';
+import { GameElo } from '@/model/logic/elo';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,7 +25,7 @@ ChartJS.register(
 export default function RankingChart(props: any) {
 
   const { eloData } = props;
-  const labels = ['-2', '0', '1'];
+  const labels = ['before last Game', 'last game', 'Current'];
   const datasets = [];
   const eloScores: { [key: string]: GameElo } = {};
 

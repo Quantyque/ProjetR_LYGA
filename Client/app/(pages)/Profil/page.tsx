@@ -1,30 +1,55 @@
 'use client'
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./profil.css";
 import RankingChart from "@/app/(pages)/profil/rankingChart";
-import { Player } from "@/model/player";
-import { Elo } from "@/model/elo";
+import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
-import { Set } from "@/model/set";
-import { fetchEloHistoryByPlayerID, fetchPlayerByID, fetchSetsByIdPlayer } from "@/model/ImportDatas";
+import { PlayerDao } from "@/model/data/player/PlayerDao";
+import { SetDao } from "@/model/data/set/SetDao";
+import { EloDao } from "@/model/data/elo/EloDao";
+import { Player } from "@/model/logic/player";
+import { Set } from "@/model/logic/set";
 
 export default function Profil() {
-
+  
   const searchParams = useSearchParams()
   const playerId = searchParams.get('playerId')
   const dataToSend = { player_id: playerId };
 
-  var playerData : Player = fetchPlayerByID(dataToSend)!;
-  var playerSet : Set = fetchSetsByIdPlayer(dataToSend)!;
-  var playerEloHistory : Elo = fetchEloHistoryByPlayerID(dataToSend)!;
+  const eloDao : EloDao = new EloDao();
+  const playerDao : PlayerDao = new PlayerDao();
+  const setDao : SetDao = new SetDao();
 
-  console.log(playerData);
+  const [playerData, setPlayers] = useState<Player | null>(null);
+  const [playerEloHistory, setElo] = useState<Elo | null>(null);
+  const [playerSet, setSet] = useState<Set | null>(null);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const eloHistory = await eloDao.fetchEloHistoryByPlayerID(dataToSend);
+        const player = await playerDao.fetchPlayerByID(dataToSend);
+        const sets = await setDao.fetchSetsByIdPlayer(dataToSend);
+  
+        setElo(eloHistory);
+        setPlayers(player);
+        setSet(sets);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+
 
   return (
     <>
    
       <div id="mainProfil">
-      {playerData && playerSet && (
+      {playerData && playerSet && playerEloHistory && (
         <>
           <div id="profilPicture" className="avatar">
           <div className="w-52 rounded-full ring ring-black ring-offset-black ring-offset-8">

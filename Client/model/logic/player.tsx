@@ -6,8 +6,12 @@ type EloDictionary = { [key: number]: Elo };
 export type Player = {
     id: number,
     name: string,
+    date:string,
     prefix: string,
-    character: Character,
+    character: {    
+        id: number | null;
+        name: string | null;
+    },
     elos: EloDictionary,
     images: { [key: string]: string },
     externals_urls: { [key: string]: string },
