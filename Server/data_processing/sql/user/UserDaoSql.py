@@ -79,7 +79,7 @@ class UserDaoSql(IUserDaoSql, Dao):
         return result
             
 
-    def get_all_users(self):
+    def get_all_users(self) -> [User]:
         """
         Retourne tous les utilisateurs
 
@@ -102,7 +102,7 @@ class UserDaoSql(IUserDaoSql, Dao):
         return json_users
         
 
-    def get_user_by_id(self, id: int):
+    def get_user_by_id(self, id: int) -> User:
         """
         Retourne un utilisateur en fonction de son id
 

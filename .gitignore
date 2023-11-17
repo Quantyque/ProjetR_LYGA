@@ -11,6 +11,7 @@ share/
 *.env
 *.env.*
 Include/
+*.vpp.bak*
 
 # User-specific files
 *.rsuser

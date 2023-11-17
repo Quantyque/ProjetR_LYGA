@@ -44,7 +44,7 @@ class UserManager():
         """
         return self.__db.login(username, password)
 
-    def get_all_users(self):
+    def get_all_users(self) -> [User]:
         """
         Retourne tous les utilisateurs
 
@@ -57,7 +57,7 @@ class UserManager():
 
         return self.__db.get_all_users()
 
-    def get_user_by_id(self, id: int):
+    def get_user_by_id(self, id: int) -> User:
         """
         Retourne un utilisateur en fonction de son id
 
@@ -73,7 +73,7 @@ class UserManager():
         
         return self.__db.get_user_by_id(id)
 
-    def update_user(self, user: User):
+    def update_user(self, user: User) -> None:
         """
         Met à jour un utilisateur.
 
@@ -89,7 +89,7 @@ class UserManager():
         
         return self.__db.update_user(user)
 
-    def delete_user(self, id: int):
+    def delete_user(self, id: int) -> None:
         """
         Supprime un utilisateur.
 

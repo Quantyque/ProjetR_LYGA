@@ -141,6 +141,9 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
         Args:
             players ([Player]): Liste des joueurs
 
+        Returns:
+            None
+
         Raises:
             HTTPError: Si la requête échoue.
         """

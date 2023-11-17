@@ -18,7 +18,7 @@ class ViewSeason(FlaskView):
         self.__season_manager = SeasonManager()
 
     @route('/get', methods=['POST'])
-    def get_season_by_id(self) -> str():
+    def get_season_by_id(self) -> (str, int):
         """
         Renvoi une saison en fonction de son id
 
@@ -27,6 +27,7 @@ class ViewSeason(FlaskView):
 
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -60,7 +61,7 @@ class ViewSeason(FlaskView):
             return res
         
     @route('/all', methods=['GET'])
-    def get_all_seasons(self) -> str():
+    def get_all_seasons(self) -> (str, int):
         """
         Renvoi toutes les saisons
 
@@ -69,6 +70,7 @@ class ViewSeason(FlaskView):
 
         Returns:
             str: saisons
+            int: code HTTP
         """
         try:
             # Envoi de la requête
@@ -101,7 +103,7 @@ class ViewSeason(FlaskView):
         
     @route('/add', methods=['POST'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def add_season(self) -> str():
+    def add_season(self) -> (str, int):
         """
         Ajoute une saison
 
@@ -112,6 +114,7 @@ class ViewSeason(FlaskView):
 
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -148,7 +151,7 @@ class ViewSeason(FlaskView):
         
     @route('/update', methods=['PUT'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def update_season(self) -> str():
+    def update_season(self) -> (str, int):
         """
         Met à jour une saison
         
@@ -160,6 +163,7 @@ class ViewSeason(FlaskView):
 
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -197,7 +201,7 @@ class ViewSeason(FlaskView):
         
     @route('/remove', methods=['DELETE'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def remove_season(self) -> str():
+    def remove_season(self) -> (str, int):
         """
         Supprime une saison
 
@@ -206,6 +210,7 @@ class ViewSeason(FlaskView):
 
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables

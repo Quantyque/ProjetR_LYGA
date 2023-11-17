@@ -23,7 +23,7 @@ class ViewRanking(FlaskView):
 
     @route('/parameters/auto-refresh', methods=['PUT'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def auto_ranking_refresh(self) -> str():
+    def auto_ranking_refresh(self) -> (str, int):
         """
         Rafraichit automatiquement le classement des joueurs en fonction des tournois passés
 
@@ -32,6 +32,7 @@ class ViewRanking(FlaskView):
         
         Returns:
             str: Resultat de la requête
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -78,7 +79,7 @@ class ViewRanking(FlaskView):
 
     @route('/update', methods=['POST'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def manual_update_ranking(self) -> str():
+    def manual_update_ranking(self) -> (str, int):
         """
         Met à jour le classement des joueurs en fonction des tournois passés depuis une date donnée manuellement
 
@@ -90,6 +91,7 @@ class ViewRanking(FlaskView):
 
         Returns:
             str: Resultat de la requête
+            int: code HTTP
         """
         try:
             # Initialisation des variables

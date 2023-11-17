@@ -17,7 +17,7 @@ class ViewElo(FlaskView):
         self.__elo_manager = EloManager()
 
     @route('/default', methods=['POST'])
-    def get_default_elo(self) -> str():
+    def get_default_elo(self) -> (str, int):
         """
         Renvoi l'elo par défaut d'un joueur en fonction de son id et de l'id du jeu vidéo
 
@@ -27,6 +27,7 @@ class ViewElo(FlaskView):
 
         Returns:
             str: elo par défaut du joueur
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -63,7 +64,7 @@ class ViewElo(FlaskView):
         
     @route('/add-default', methods=['POST'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def add_default_elo(self) -> str():
+    def add_default_elo(self) -> (str, int):
         """
         Ajoute un elo par défaut à un joueur
 
@@ -74,6 +75,7 @@ class ViewElo(FlaskView):
 
         Returns:
             str: elo par défaut ajouté
+            int: code HTTP
         """
         try:
 
@@ -111,7 +113,7 @@ class ViewElo(FlaskView):
         
     @route('/edit-default', methods=['POST'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def edit_elo(self) -> str():
+    def edit_elo(self) -> (str, int):
         """
         Modifie l'elo d'un joueur
 
@@ -122,6 +124,7 @@ class ViewElo(FlaskView):
 
         Returns:
             str: elo modifié
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -158,7 +161,7 @@ class ViewElo(FlaskView):
         
     @route('/delete-default', methods=['DELETE'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def delete_default_elo(self) -> str():
+    def delete_default_elo(self) -> (str, int):
         """
         Supprime l'élo par défaut d'un joueur
 
@@ -168,6 +171,7 @@ class ViewElo(FlaskView):
 
         Returns:
             str: default elo deleted
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -202,7 +206,7 @@ class ViewElo(FlaskView):
             return res
         
     @route('/get-history', methods=['POST'])
-    def get_history(self) -> str():
+    def get_history(self) -> (str, int):
         """
         Renvoi l'historique des elos d'un joueur
 
@@ -211,6 +215,7 @@ class ViewElo(FlaskView):
 
         Returns:
             str: historique des elos du joueur
+            int: code HTTP
         """
         try:
             # Initialisation des variables

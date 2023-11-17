@@ -15,7 +15,7 @@ class VideoGameManager():
         self.__db: IVideoGameDaoSql = VideoGameDaoSql()
 
     # region Operations
-    def get_all_video_game(self):
+    def get_all_video_game(self) -> [Videogame]:
         """
         Réupère tous les jeux vidéos.
 
@@ -27,7 +27,7 @@ class VideoGameManager():
         """
         return self.__sg.get_all_video_games()
     
-    def get_video_game_by_id(self, id: int):
+    def get_video_game_by_id(self, id: int) -> Videogame:
         """
         Récupère un jeu vidéo par son id.
 
@@ -42,19 +42,22 @@ class VideoGameManager():
         """     
         return self.__sg.get_video_game_by_id(id)
 
-    def add_audited_game(self, game: Videogame):
+    def add_audited_game(self, game: Videogame) -> str():
         """
         Ajoute un jeu vidéo à la liste des jeux audités.
 
         Args:
             game (VideoGame): Le jeu vidéo à ajouter.
 
+        Returns:
+            str: Message de confirmation.
+
         Raises:
             GameAlreadyAudited: Si le jeu vidéo existe déjà.
         """
         return self.__db.add_audited_game(game)
         
-    def list_audited_game(self):
+    def list_audited_game(self) -> [Videogame]:
         """
         Liste les jeux vidéos audités.
 
@@ -66,24 +69,30 @@ class VideoGameManager():
         """
         return self.__db.list_audited_game()
 
-    def update_audited_game(self, game: Videogame):
+    def update_audited_game(self, game: Videogame) -> str():
         """
         Met à jour un jeu vidéo de la liste des jeux audités.
 
         Args:
             game (VideoGame): Le jeu vidéo à mettre à jour.
 
+        Returns:
+            str: Message de confirmation.
+
         Raises:
             GameNotAudited: Si le jeu vidéo n'existe pas.
         """
         return self.__db.update_audited_game(game)
 
-    def delete_audited_game(self, game: Videogame):
+    def delete_audited_game(self, game: Videogame) -> str():
         """
         Supprime un jeu vidéo de la liste des jeux audités.
 
         Args:
             game (VideoGame): Le jeu vidéo à supprimer.
+
+        Returns:
+            str: Message de confirmation.
 
         Raises:
             GameNotAudited: Si le jeu vidéo n'existe pas.

@@ -16,7 +16,7 @@ class ViewTournament(FlaskView):
         self.__tournament_manager = TournamentManager()
 
     @route('/location', methods=['POST'])
-    def tournament_by_location(self) -> dict:
+    def tournament_by_location(self) -> (str, int):
         """
         Renvoi une liste de tournois par date, jeu et lieu
 
@@ -28,7 +28,8 @@ class ViewTournament(FlaskView):
             distance (int): distance de recherche
 
         Returns:
-            dict: liste de tournois
+            str: tournois
+            int: code HTTP
         """
         try:
             # Initialisation des variables

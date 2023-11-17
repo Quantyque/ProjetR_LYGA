@@ -19,7 +19,7 @@ class ViewUser(FlaskView):
         self.__user_manager: UserManager = UserManager()
 
     @route('/register', methods=['POST'])
-    def create(self) -> str():
+    def create(self) -> (str, int):
         """
         Ajoute un utilisateur dans la base de données
 
@@ -30,6 +30,7 @@ class ViewUser(FlaskView):
 
         Returns:
             str: message de confirmation
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -71,7 +72,7 @@ class ViewUser(FlaskView):
             return res
 
     @route('/login', methods=['POST'])
-    def login(self) -> str():
+    def login(self) -> (str, int):
         """
         Connecte un utilisateur à l'application
 
@@ -80,6 +81,7 @@ class ViewUser(FlaskView):
 
         Returns:
             str: token de connexion
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -119,7 +121,7 @@ class ViewUser(FlaskView):
             return res
         
     @route('/get-all', methods=['GET'])
-    def get_all_users(self) -> str():
+    def get_all_users(self) -> (str, int):
         """
         Retourne tous les utilisateurs
 
@@ -128,6 +130,7 @@ class ViewUser(FlaskView):
 
         Returns:
             str: liste des utilisateurs
+            int: code HTTP
         """
         try:
             # Envoi de la requête
@@ -143,7 +146,7 @@ class ViewUser(FlaskView):
             return res
         
     @route('/get-by-id', methods=['POST'])
-    def get_user_by_id(self) -> str():
+    def get_user_by_id(self) -> (str, int):
         """
         Retourne un utilisateur en fonction de son id
 
@@ -152,6 +155,7 @@ class ViewUser(FlaskView):
 
         Returns:
             str: utilisateur
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -185,7 +189,7 @@ class ViewUser(FlaskView):
             return res
         
     @route('/update', methods=['PUT'])
-    def update_user(self) -> str():
+    def update_user(self) -> (str, int):
         """
         Met à jour un utilisateur
 
@@ -198,6 +202,7 @@ class ViewUser(FlaskView):
 
         Returns:
             str: message de confirmation
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -254,7 +259,7 @@ class ViewUser(FlaskView):
             return res
         
     @route('/delete', methods=['DELETE'])
-    def delete_user(self) -> str():
+    def delete_user(self) -> (str, int):
         """
         Supprime un utilisateur
 
@@ -263,6 +268,7 @@ class ViewUser(FlaskView):
 
         Returns:
             str: message de confirmation
+            int: code HTTP
         """
         try:
             # Initialisation des variables

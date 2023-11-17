@@ -4,7 +4,16 @@ import unittest
 class ApiTests:
         
     @staticmethod
-    def run_unit_tests():
+    def run_unit_tests() -> str:
+        """
+            Run unit tests
+
+            Returns:
+                (str): Unit tests result
+
+            Raises:
+                (Exception): If an error occurs
+        """
         test_loader = unittest.TestLoader()
         test_suite = test_loader.discover(start_dir='.', pattern='test_*.py')
         

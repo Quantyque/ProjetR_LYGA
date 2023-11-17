@@ -83,7 +83,7 @@ class EloDaoSql(IEloDaoSql, Dao):
 
         self.db.exec_request("DELETE FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player, id_videogame))
 
-    def add_elos(self, players : dict, videogame_id : int, date : int):
+    def add_elos(self, players : dict, videogame_id : int, date : int) -> None:
         """
         Ajoute les elos d'une partie à la base de données
 
@@ -126,7 +126,7 @@ class EloDaoSql(IEloDaoSql, Dao):
             req_elos = req_elos[:-1]
             self.db.exec_request(req_elos, params_elos)
 
-    def delete_all_elos_from_videogame(self, videogame_id : int):
+    def delete_all_elos_from_videogame(self, videogame_id : int) -> None:
         """
         Supprime tous les elos d'un jeu vidéo
 

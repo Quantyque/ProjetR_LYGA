@@ -1,15 +1,16 @@
 from model.entity import Entity
 from typing import Optional
+from model.role import Role
 
 class User(Entity):
     """
     Représente un utilisateur de l'application
     """
 
-    def __init__(self, id: str, username: str, role: int, password: Optional[str] = None, userPP: Optional[str] = None):
+    def __init__(self, id: str, username: str, role: Role, password: Optional[str] = None, userPP: Optional[str] = None):
         self.__id: int = id
         self.__username: str = username
-        self.__role: int = role
+        self.__role: Role = role
         self.__password: str = password
         self.__userPP : str = userPP
 

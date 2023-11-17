@@ -39,7 +39,7 @@ class IUserDaoSql(ABC):
         pass
 
     @abstractmethod 
-    def get_all_users(self):
+    def get_all_users(self) -> [User]:
         """
         Retourne tous les utilisateurs
 
@@ -52,7 +52,7 @@ class IUserDaoSql(ABC):
         pass
 
     @abstractmethod 
-    def get_user_by_id(self, id: int):
+    def get_user_by_id(self, id: int) -> User:
         """
         Retourne un utilisateur en fonction de son id
 

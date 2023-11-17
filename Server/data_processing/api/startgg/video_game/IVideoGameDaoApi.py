@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class IVideoGameDaoApi(ABC):
 
     @abstractmethod
-    def get_all_video_games(self):
+    def get_all_video_games(self) -> [Videogame]:
         """
         Récupère tous les jeux vidéo.
 
