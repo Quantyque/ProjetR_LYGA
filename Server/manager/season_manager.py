@@ -42,7 +42,7 @@ class SeasonManager():
         """
         return self.__db.get_all_seasons()
     
-    def update_season(self, id_season : int, number : int, start_date : int, end_date : int):
+    def update_season(self, id_season : int, number : int, start_date : int, end_date : int) -> None:
         """
         Met à jour une saison dans la base de données
 
@@ -51,6 +51,9 @@ class SeasonManager():
             number (int): Numéro de la saison
             start_date (int): Date de début de la saison en temps unix
             end_date (int): Date de fin de la saison en temps unix
+
+        Return:
+            None
 
         Raises:
             HTTPError: Si la requête échoue.
@@ -62,19 +65,22 @@ class SeasonManager():
         season.EndDate = end_date
         self.__db.update_season(season)
 
-    def remove_season(self, idSeason : int):
+    def remove_season(self, idSeason : int) -> None:
         """
         Supprime une saison de la base de données
 
         Args:
             idSeason (int): Id de la saison à supprimer
 
+        Return:
+            None
+
         Raises:
             HTTPError: Si la requête échoue.
         """
         self.__db.remove_season(idSeason)
 
-    def add_season(self, number : int, start_date : int, end_date : int):
+    def add_season(self, number : int, start_date : int, end_date : int) -> None:
         """
         Ajoute une saison à la base de données
 
@@ -82,6 +88,9 @@ class SeasonManager():
             number (int): Numéro de la saison
             start_date (int): Date de début de la saison en temps unix
             end_date (int): Date de fin de la saison en temps unix
+
+        Return:
+            None
 
         Raises:
             HTTPError: Si la requête échoue.

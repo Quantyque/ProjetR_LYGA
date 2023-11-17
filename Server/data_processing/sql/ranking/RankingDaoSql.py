@@ -1,10 +1,17 @@
 from data_processing.sql.ranking.IRankingDaoSql import IRankingDaoSql
+from data_processing.api.startgg.tournament.ITournamentDaoApi import ITournamentDaoApi
 from data_processing.api.startgg.tournament.TournamentDaoApi import TournamentDaoApi
+from data_processing.api.startgg.event.IEventDaoApi import IEventDaoApi
 from data_processing.api.startgg.event.EventDaoApi import EventDaoApi
+from data_processing.api.startgg.video_game.IVideoGameDaoApi import IVideoGameDaoApi
 from data_processing.api.startgg.video_game.VideoGameDaoApi import VideoGameDaoApi
+from data_processing.sql.video_game.IVideoGameDaoSql import IVideoGameDaoSql
 from data_processing.sql.video_game.VideoGameSql import VideoGameDaoSql
+from data_processing.sql.player.IPlayerDaoSql import IPlayerDaoSql
 from data_processing.sql.player.PlayerDaoSql import PlayerDaoSql
+from data_processing.sql.elo.IEloDaoSql import IEloDaoSql
 from data_processing.sql.elo.EloDaoSql import EloDaoSql
+from data_processing.sql.season.ISeasonDaoSql import ISeasonDaoSql
 from data_processing.sql.season.SeasonDaoSql import SeasonDaoSql
 from model.ranking import Ranking
 from model.tournament import Tournament
@@ -18,13 +25,13 @@ class RankingDaoSql(IRankingDaoSql, Dao):
     def __init__(self):
         super().__init__()
         # Initialise les DAO
-        self.__tournament_dao_api = TournamentDaoApi()
-        self.__videogame_dao_api = VideoGameDaoApi()
-        self.__videogame_dao_sql = VideoGameDaoSql()
-        self.__season_dao_sql = SeasonDaoSql()
-        self.__player_dao_sql = PlayerDaoSql()
-        self.__elo_dao_sql = EloDaoSql()
-        self.__event_dao_api = EventDaoApi()
+        self.__tournament_dao_api: ITournamentDaoApi = TournamentDaoApi()
+        self.__videogame_dao_api: IVideoGameDaoApi = VideoGameDaoApi()
+        self.__videogame_dao_sql: IVideoGameDaoSql = VideoGameDaoSql()
+        self.__season_dao_sql: ISeasonDaoSql = SeasonDaoSql()
+        self.__player_dao_sql: IPlayerDaoSql = PlayerDaoSql()
+        self.__elo_dao_sql: IEloDaoSql = EloDaoSql()
+        self.__event_dao_api: IEventDaoApi = EventDaoApi()
 
     def update_ranking(self, afterDate : int, beforeDate : int, videogame_id : int, coordonnees : str, distance : str) -> Dict[int, str]:
         """

@@ -13,7 +13,7 @@ class ViewApiTests(FlaskView):
     @staticmethod
     @route('/run', methods=['GET'])
     @TechnicalControls.is_role([Role.ADMIN])
-    def run_unit_tests():
+    def run_unit_tests() -> (str, int):
         """
             Lance les tests unitaires
 

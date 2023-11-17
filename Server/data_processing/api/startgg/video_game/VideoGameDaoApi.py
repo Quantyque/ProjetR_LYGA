@@ -8,7 +8,7 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
     def __init__(self) -> None:
         super().__init__()
 
-    def get_all_video_games(self):
+    def get_all_video_games(self) -> [Videogame]:
         """
         Récupère tous les jeux vidéo.
 

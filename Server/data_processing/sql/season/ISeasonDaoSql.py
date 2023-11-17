@@ -24,38 +24,47 @@ class ISeasonDaoSql(ABC, Dao):
         pass
 
     @abstractmethod
-    def add_season(self, season : Season):
+    def add_season(self, season : Season) -> None:
         """
         Ajoute une saison à la base de données
 
         Args:
             season (Season): Saison à ajouter
 
+        Returns:
+            None
+
         Raises:
             HTTPError: Si la requête échoue.
         """
         pass
 
     @abstractmethod
-    def remove_season(self, idSeason : int):
+    def remove_season(self, idSeason : int) -> None:
         """
         Supprime une saison de la base de données
 
         Args:
             idSeason (int): Id de la saison à supprimer
 
+        Returns:
+            None
+
         Raises:
             HTTPError: Si la requête échoue.
         """
         pass
 
     @abstractmethod
-    def update_season(self, season : Season):
+    def update_season(self, season : Season) -> None:
         """
         Met à jour une saison dans la base de données
 
         Args:
             season (Season): Saison à mettre à jour
+
+        Returns:
+            None
 
         Raises:
             HTTPError: Si la requête échoue.

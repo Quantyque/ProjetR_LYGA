@@ -34,12 +34,15 @@ class IPlayerDaoSql(ABC):
         pass
 
     @abstractmethod
-    def add_players(self, players : [Player]):
+    def add_players(self, players : [Player]) -> None:
         """
         Ajoute des joueurs à la base de données
 
         Args:
             players ([Player]): Liste des joueurs
+
+        Returns:
+            None
 
         Raises:
             HTTPError: Si la requête échoue.
@@ -47,7 +50,7 @@ class IPlayerDaoSql(ABC):
         pass
 
     @abstractmethod
-    def remove_all_players(self):
+    def remove_all_players(self) -> None:
         """
         Supprime tous les joueurs de la base de données
 

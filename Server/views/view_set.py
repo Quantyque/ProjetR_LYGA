@@ -17,15 +17,13 @@ class ViewSet(FlaskView):
 
 
     @route('/player', methods=['POST'])
-    def get_last_sets_by_player(self) -> dict:
+    def get_last_sets_by_player(self) -> (str, int):
         """
         Retourne les 10 sets d'un joueur en fonction d'une page.
 
         Returns:
-            dict: Les sets.
-
-        Raises:
-            Exception: Si la requête échoue.
+            str: sets du joueur
+            int: code HTTP
         """
         try:
             # Initialisation des variables

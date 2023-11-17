@@ -12,14 +12,6 @@ manager.elo\_manager module
    :undoc-members:
    :show-inheritance:
 
-manager.event\_manager module
------------------------------
-
-.. automodule:: manager.event_manager
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 manager.player\_manager module
 ------------------------------
 
