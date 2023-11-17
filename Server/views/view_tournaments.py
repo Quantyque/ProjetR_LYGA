@@ -8,6 +8,9 @@ from flask_classful import FlaskView, route
 from controls.functional import FunctionalControls
 
 class ViewTournament(FlaskView):
+    """
+    Controller permettant de gérer les tournois
+    """
 
     def __init__(self) -> None:
         self.__tournament_manager = TournamentManager()

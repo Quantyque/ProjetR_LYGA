@@ -11,6 +11,9 @@ from model.user import User
 
 
 class ViewUser(FlaskView):
+    """
+    Controller permettant de gérer les utilisateurs
+    """
 
     def __init__(self):
         self.__user_manager: UserManager = UserManager()

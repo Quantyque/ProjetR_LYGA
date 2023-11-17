@@ -9,12 +9,13 @@ class SetDaoApi(ISetDaoApi, Api):
         super().__init__()
 
     # region : Operations
-    def get_last_sets_by_player(self, idPlayer : int) -> [Set]:
+    def get_last_sets_by_player(self, idPlayer : int, page : int) -> [Set]:
         """
-        Retournes les 3 derniers sets d'un joueur.
+        Retourne les 10 sets d'un joueur en fonction d'une page.
 
         Args:
             idPlayer (int): L'id du joueur.
+            page (int): La page à afficher.
 
         Returns:
             [Set]: Les sets.
@@ -22,11 +23,12 @@ class SetDaoApi(ISetDaoApi, Api):
         Raises:
             Exception: Si la requête échoue.
         """
+        pass
         # Récupération des sets
         response = self.sg.request_api("""
-                            query SetsByPlayer($idPlayer : ID!) {
+                                        query SetsByPlayer($idPlayer : ID!, $page : Int!) {
                                                 player(id: $idPlayer) {
-                                                    sets(perPage: 3) {
+                                                    sets(perPage: 10, page : $page) {
                                                     nodes {
                                                         id
                                                         round
@@ -85,11 +87,12 @@ class SetDaoApi(ISetDaoApi, Api):
                                             }
                                         }
                     """, {
-                        "idPlayer": idPlayer
+                        "idPlayer": idPlayer,
+                        "page": page
                     })
         
         # Gestion des erreurs
-        if "errors" in response and response["errors"]:
+        if "errors" in response:
             raise BadRequestException(response["errors"][0]["message"])
         
         # Ajout des sets à la liste

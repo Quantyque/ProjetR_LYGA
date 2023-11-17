@@ -13,6 +13,9 @@ import datetime
 import time
 
 class ViewRanking(FlaskView):
+    """
+    Controller permettant de gérer le classement des joueurs
+    """
 
     def __init__(self) -> None:
         self.__ranking_manager: RankingManager = RankingManager()

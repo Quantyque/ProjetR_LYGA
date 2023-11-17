@@ -6,6 +6,9 @@ from controls.technical import TechnicalControls
 from model.role import Role
 
 class ViewApiTests(FlaskView):
+    """
+    Controller permettant de gérer les tests unitaires
+    """
 
     @staticmethod
     @route('/run', methods=['GET'])

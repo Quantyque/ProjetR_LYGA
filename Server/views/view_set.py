@@ -9,32 +9,34 @@ from controls.functional import FunctionalControls
 
 class ViewSet(FlaskView):
     """
-    Controller for linking HTTP requests to set managers
+    Controller permettant de gérer les sets
     """
 
     def __init__(self) -> None:
         self.__set_manager = SetManager()
 
+
     @route('/player', methods=['POST'])
     def get_last_sets_by_player(self) -> dict:
         """
-        Renvoie les derniers sets d'un joueur
-
-        Args:
-            player_id (int): id du joueur
+        Retourne les 10 sets d'un joueur en fonction d'une page.
 
         Returns:
-            dict: liste des derniers sets d'un joueur
+            dict: Les sets.
+
+        Raises:
+            Exception: Si la requête échoue.
         """
         try:
             # Initialisation des variables
             idPlayer = request.get_json().get('player_id')
+            page = request.get_json().get('page')
 
             # Verification des variables
-            FunctionalControls.check_json_arguments_not_null(idPlayer)
+            FunctionalControls.check_json_arguments_not_null(idPlayer, page)
 
             # Envoi de la requête
-            result = self.__set_manager.get_last_sets_by_player(idPlayer)
+            result = self.__set_manager.get_last_sets_by_player(idPlayer, page)
 
             #Récupération du résultat sous forme de JSON
             json = []

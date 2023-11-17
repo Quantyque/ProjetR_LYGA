@@ -4,12 +4,13 @@ from abc import ABC, abstractmethod
 class ISetDaoApi(ABC):
 
     @abstractmethod
-    def get_last_sets_by_player(self, idPlayer : int) -> [Set]:
+    def get_last_sets_by_player(self, idPlayer : int, page : int) -> [Set]:
         """
-        Retournes les 3 derniers sets d'un joueur.
+        Retourne les 10 sets d'un joueur en fonction d'une page.
 
         Args:
             idPlayer (int): L'id du joueur.
+            page (int): La page à afficher.
 
         Returns:
             [Set]: Les sets.

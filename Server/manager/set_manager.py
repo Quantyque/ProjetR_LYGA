@@ -12,20 +12,22 @@ class SetManager():
 
     # region Operations
 
-    def get_last_sets_by_player(self, idPlayer : int) -> [Set]:
+    def get_last_sets_by_player(self, idPlayer : int, page : int) -> [Set]:
         """
-        Récupère les derniers sets d'un joueur.
+        Retourne les 10 sets d'un joueur en fonction d'une page.
 
         Args:
             idPlayer (int): L'id du joueur.
-        
+            page (int): La page à afficher.
+
         Returns:
             [Set]: Les sets.
 
         Raises:
-            HTTPError: Si la requête échoue.
+            Exception: Si la requête échoue.
         """
-        return self.__sg.get_last_sets_by_player(idPlayer)
+        pass
+        return self.__sg.get_last_sets_by_player(idPlayer, page)
 
     
     #endregion

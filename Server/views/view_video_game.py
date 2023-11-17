@@ -10,6 +10,9 @@ from controls.technical import TechnicalControls
 from model.role import Role
 
 class ViewVideoGames(FlaskView):
+    """
+    Controller permettant de gérer les jeux vidéos
+    """
 
     def __init__(self):
         self.__video_game_manager = VideoGameManager()
