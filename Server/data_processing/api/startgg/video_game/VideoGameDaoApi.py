@@ -43,7 +43,7 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
         }
         """)
         # Gestions des erreurs
-        if "errors" in response and response["errors"]:
+        if "errors" in response:
             raise BadRequestException(response["errors"][0]["message"])
 
         # Ajout des jeux vidéo à la liste
