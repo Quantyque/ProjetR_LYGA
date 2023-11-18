@@ -19,7 +19,7 @@ function UserNavMenu() {
                     </li>
                     <li><a href='profil'>Profil</a></li>
                     <li><a>Settings</a></li>
-                    {session.user.role === 1 && <li><a href='admin-panel'>Admin panel</a></li>}
+                    {session.user.role === 1 && <li><a href='admin-dashboard'>Admin panel</a></li>}
                     <li><button onClick={() => signOut()}>
                         Logout
                         </button>

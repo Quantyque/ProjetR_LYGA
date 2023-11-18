@@ -1,4 +1,4 @@
-import MainMenuChoices from '../../components/MainMenu/MainMenuChoices';
+import MainMenuChoices from '@/app/components/MainMenu/MainMenuChoices';
 
 
 export default function Home() {

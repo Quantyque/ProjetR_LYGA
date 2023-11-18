@@ -1,7 +1,7 @@
 "use client"
 import React, { useRef } from 'react'
 import Link from 'next/link'
-import './login.css'
+import './register.css'
 import { signIn } from 'next-auth/react'
 
 type Props = {
@@ -10,26 +10,21 @@ type Props = {
     error?: string
 }
 
-const Login = (props: Props) => {
+const Register = (props: Props) => {
 
     const username = useRef("")
     const password = useRef("")
+    const confirmPassword = useRef("")
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
 
-        await signIn('credentials', {
-            username: username.current,
-            password: password.current,
-            callbackUrl: '/home'
-        })
-
     }
 
     return (
         <div className={props.className}>
-            <div style={{ position: 'absolute', height: '92%', right: '0', width: '55%', top: '9.85%', backgroundColor: '#F05959' }}>
+            <div style={{ position: 'absolute', height: '92%', right: '0', width: '55%', top: '9.80%', backgroundColor: '#F05959' }}>
                 <img src="/images/connexionImg.png" alt="" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div id='loginFormContainer' style={{ position: 'absolute', height: '90%', left: '0', width: '45%', top: '10%' }}>
@@ -51,6 +46,13 @@ const Login = (props: Props) => {
                             className='input w-full input-warning'
                             id='formPassword'
                             onChange={(e) => password.current = e.target.value}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            className='input w-full input-warning'
+                            id='formPassword'
+                            onChange={(e) => confirmPassword.current = e.target.value}
                         />
                         <div id='rememberMe' className="form-control">
                             <label className="label cursor-pointer">
@@ -75,4 +77,4 @@ const Login = (props: Props) => {
     )
 }
 
-export default Login
+export default Register

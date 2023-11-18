@@ -1,7 +1,7 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import "./profil.css";
-import RankingChart from "@/app/(pages)/profil/rankingChart";
+import RankingChart from "@/app/(pages)/(main)/Profil/rankingChart";
 import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
 import { PlayerDao } from "@/model/data/player/PlayerDao";

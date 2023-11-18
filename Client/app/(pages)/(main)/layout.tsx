@@ -1,7 +1,7 @@
 import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Providers from './components/Providers/Providers'
+import Navbar from '@/app/components/Navbar/Navbar'
 
 export const metadata: Metadata = {
   title: 'ProjetR'
@@ -9,16 +9,15 @@ export const metadata: Metadata = {
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({
+export default function MainLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-      <html lang="en">
-          <Providers>
-            {children}
-          </Providers>
-      </html>
+    <body className={inter.className}>
+        <Navbar/>
+        {children}
+    </body>
   )
 }

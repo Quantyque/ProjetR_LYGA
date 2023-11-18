@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import '../(pages)/ranking/Ranking.css'
+import '../(pages)/(main)/Ranking/Ranking.css'
 
 export default function Rank(
     { 
