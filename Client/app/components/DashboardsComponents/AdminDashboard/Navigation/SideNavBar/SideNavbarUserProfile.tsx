@@ -3,12 +3,12 @@ import React from 'react'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react';
 
-interface AdminDashboardSideNavbarUserProfileProps {
+interface SideNavbarUserProfileProps {
     href: string;
     title: string;
 }
 
-const AdminDashboardSideNavbarUserProfile = ({href, title}: AdminDashboardSideNavbarUserProfileProps) => {
+const SideNavbarUserProfile = ({href, title}: SideNavbarUserProfileProps) => {
 
     const { data: session } = useSession();
 
@@ -22,4 +22,4 @@ const AdminDashboardSideNavbarUserProfile = ({href, title}: AdminDashboardSideNa
     )
 }
 
-export default AdminDashboardSideNavbarUserProfile
+export default SideNavbarUserProfile

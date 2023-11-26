@@ -4,7 +4,7 @@ import { BsPersonFillLock } from 'react-icons/bs';
 import { IoGameController } from "react-icons/io5";
 import { FaRankingStar } from "react-icons/fa6";
 import { FaUserCog } from "react-icons/fa";
-import AdminDashboardMenuElement from '@/app/components/DashboardsComponents/AdminDashboardBase/AdminDashboardMenu/AdminDashboardMenuElement';
+import MenuElement from '@/app/components/DashboardsComponents/AdminDashboard/Menu/MenuElement';
 
 export default function AdminDashboardMenuPage() {
 
@@ -29,10 +29,10 @@ export default function AdminDashboardMenuPage() {
         </p>
       </div>
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-10 mx-6 lg:mx-0 my-9'>
-        <AdminDashboardMenuElement href='/admin-dashboard/user-manager' icon={<BsPersonFillLock />} title='Utilisateurs' description="Gérer les utilisateurs de l'application" />
-        <AdminDashboardMenuElement href='/admin-dashboard/vg-manager' icon={<IoGameController />} title='Jeux audités' description='Gérer les jeux audités de l&apos;application' />
-        <AdminDashboardMenuElement href='/admin-dashboard/rankings-manager' icon={<FaRankingStar />} title='Classements' description='Gérer les divers classements par jeux audités' />
-        <AdminDashboardMenuElement href='/admin-dashboard/user-profile-manager' icon={<FaUserCog />} title='Mon profil' description='Gérer mon profil' />
+        <MenuElement href='/admin-dashboard/user-manager' icon={<BsPersonFillLock />} title='Utilisateurs' description="Gérer les utilisateurs de l'application" />
+        <MenuElement href='/admin-dashboard/vg-manager' icon={<IoGameController />} title='Jeux audités' description='Gérer les jeux audités de l&apos;application' />
+        <MenuElement href='/admin-dashboard/rankings-manager' icon={<FaRankingStar />} title='Classements' description='Gérer les divers classements par jeux audités' />
+        <MenuElement href='/admin-dashboard/settings' icon={<FaUserCog />} title='Paramètres / Mon compte' description='Gérer mes préférences et mon profil' />
       </div>
     </div>
   );

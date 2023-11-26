@@ -19,6 +19,18 @@ export class VideogameDao implements IVideogameDao{
         console.log(Allgames)
         return(Allgames);
     }
+
+    /**
+     * Retourne un tableau contenant toute la liste des jeux video audités
+     * @returns un tableau d'objet videogame audités
+    */
+    async fetchAuditedVideoGames(): Promise<Videogame[]> {
+
+        var Allgames;
+        Allgames = this.sender.GET("videogames/audited")
+        return(Allgames);
+
+    }
     
 }
 

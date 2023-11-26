@@ -1,5 +1,5 @@
 import React from 'react'
-import AdminDashboard from '@/app/components/DashboardsComponents/AdminDashboardBase/AdminDashboard';
+import AdminDashboard from '@/app/components/DashboardsComponents/AdminDashboard/AdminDashboard';
 
 export default function AdminDashboardLayout({children,} : {children: React.ReactNode}) 
 {

@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import Link from 'next/link'
 import './login.css'
 import { signIn } from 'next-auth/react'
@@ -15,15 +15,19 @@ const Login = (props: Props) => {
     const username = useRef("")
     const password = useRef("")
 
+    const [loading, setLoading] = useState(false);
+
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault()
+
+        setLoading(true);
 
         await signIn('credentials', {
             username: username.current,
             password: password.current,
             callbackUrl: '/home'
-        })
+        }).finally(() => {  setLoading(false); })
 
     }
 
@@ -37,6 +41,9 @@ const Login = (props: Props) => {
                     <h1 id='title'>LOGIN</h1>
                     { props.searchParams?.message && <div className="alert alert-error">{props.searchParams.message}</div> }
                     {!!props.error && <div className="alert alert-error">Authentification failed. Try again.</div>}
+                    {loading ? (
+                        <div className="loading loading-spinner loading-lg ml-[190px] mt-[95px]"></div>
+                    ) : (
                     <form className="login-form" onSubmit={onSubmit}>
                         <input
                             type="text"
@@ -69,6 +76,7 @@ const Login = (props: Props) => {
                             </p>
                         </div>
                     </form>
+                    )}
                 </div>
             </div>
         </div>

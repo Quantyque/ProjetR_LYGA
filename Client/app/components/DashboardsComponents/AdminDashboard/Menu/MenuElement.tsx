@@ -1,14 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
 
-interface AdminDashboardMenuElementProps {
+interface MenuElementProps {
     href: string,
     icon: React.ReactNode,
     title: string,
     description: string,
 }
 
-const AdminDashboardMenuElement = ({href, icon, title, description}: AdminDashboardMenuElementProps) => {
+const MenuElement = ({href, icon, title, description}: MenuElementProps) => {
   return (
 
     <Link href={ href } className='rounded-md bg-zinc-700 btn-ghost'>
@@ -27,4 +27,4 @@ const AdminDashboardMenuElement = ({href, icon, title, description}: AdminDashbo
   )
 }
 
-export default AdminDashboardMenuElement
+export default MenuElement
