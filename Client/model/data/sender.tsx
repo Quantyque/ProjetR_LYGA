@@ -1,12 +1,24 @@
 import { API_HOST } from "../constants/constants";
 
+/**
+ * Use to send informations to Database
+ */
 class Sender {
+
+    /**
+     * Api host of sender
+     */
     private _apiHost: string;
 
     public constructor() {
         this._apiHost = API_HOST;
     }
 
+    /**
+     * GET query
+     * @param route path where the query is done
+     * @returns JSON format response
+     */
     public async GET(route: string): Promise<any> {
         const apiEndpoint = this._apiHost + route;
         console.log(apiEndpoint);
@@ -30,6 +42,12 @@ class Sender {
         }
     }
 
+    /**
+     * POST query
+     * @param route path where the query is done
+     * @param data data changed
+     * @returns JSON format response
+     */
     public async POST(route: string, data: any): Promise<any> {
         const apiEndpoint = this._apiHost + route;
 
@@ -54,6 +72,12 @@ class Sender {
         }
     }
 
+    /**
+     * UPDATE query
+     * @param route path where the query is done
+     * @param data data changed
+     * @returns JSON format response
+     */
     public async UPDATE(route: string, data: any): Promise<any> {
         const apiEndpoint = this._apiHost + route;
 
@@ -78,6 +102,11 @@ class Sender {
         }
     }
 
+    /**
+     * DELETE query
+     * @param route path where the query is done
+     * @returns JSON format response
+     */
     public async DELETE(route: string): Promise<any> {
         const apiEndpoint = this._apiHost + route;
 

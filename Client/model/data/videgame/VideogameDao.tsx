@@ -7,11 +7,6 @@ export class VideogameDao implements IVideogameDao{
 
     sender : Sender = new Sender();
 
-    /**
-     * Retourne un tableau contenant toute la liste des jeux video
-     * @returns un tableau d'objet videogame
-     * @author Antoine Richard
-     */
     async fetchVideoGames(): Promise<Videogame[]> {
 
         var Allgames;

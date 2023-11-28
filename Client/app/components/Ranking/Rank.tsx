@@ -1,14 +1,25 @@
 import Link from 'next/link';
-import '../(pages)/ranking/Ranking.css'
+import './Ranking.css'
 
+/**
+ * Component of "ranking/page.tsx"
+ * Show the rank
+ * @param place place of a players
+ * @param user_profile image of the players
+ * @param name name of players
+ * @param score score of the players
+ * @param idPlayer id of a player
+ * @returns the rank of the players from a game and a season
+ */
 export default function Rank(
-    { 
+    {
         place, 
         user_profile,
         name, 
         team,  
         score,
-        idPlayer
+        idPlayer,
+        season_id
     }: 
     {
         place: any; 
@@ -17,6 +28,7 @@ export default function Rank(
         team: any;
         score: any;
         idPlayer:any;
+        season_id:any;
     }) 
 {
 
@@ -52,7 +64,7 @@ export default function Rank(
 
   return (
     <tr className={`${placePodiumClasse}`} id={`${placePodiumID}`}>
-        <th className='placeRank text-3xl sm:text-6xl'>{place}</th>
+        <th>{place}</th>
         <td>
             <div className="avatar">
                 <div className="w-16 rounded-full">
@@ -60,10 +72,10 @@ export default function Rank(
                 </div>
             </div>
         </td>
-        <td className='text-xs sm:text-5xl' id='team_Name'>
+        <td>
             {currentTeam}<Link href={{pathname:'/profil',query:{playerId : idPlayer},}}> {name} </Link>
         </td>
-        <td className='score text-xs sm:text-5xl'>{score}</td>
+        <td>{score}</td>
     </tr>
   )
 }
