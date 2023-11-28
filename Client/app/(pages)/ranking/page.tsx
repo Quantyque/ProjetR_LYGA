@@ -11,12 +11,11 @@ import { Videogame } from '@/model/logic/videogame'
  * @returns an HTML page of the rank
  */
 export default function Ranking() {
-
-  let i = 0;
   
+let i = 0;
+
   const playerDao : PlayerDao = new PlayerDao();
   const videogameDao : VideogameDao = new VideogameDao();
-
   const [players, setPlayers] = useState<Player[]>([]);
   const [videoGames, setVideoGame] = useState<Videogame[]>([]);
 
@@ -25,17 +24,16 @@ export default function Ranking() {
       try {
         const players = await playerDao.fetchPlayers(1,1386);
         const games = await videogameDao.fetchVideoGames();
-
         setPlayers(players);
         setVideoGame(games);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-  
     fetchData();
   }, []);
-  
+
+
 
   return (
     <main>
@@ -50,15 +48,16 @@ export default function Ranking() {
             ))}
           </select>
           <label>Season</label>
-          <input type='number' value={1} className='input'></input>
+          <input type='number' defaultValue={1} className='input'></input>
+          <button type='button' className='btn'>Search</button>
         </div>
-        <table className='table-auto w-screen'>
+        <table className='table'>
           <thead>
               <tr>
-                  <th>Place</th>
+                  <th className='text-center'>Place</th>
                   <th>User Profile</th>
                   <th>Team | Name</th>
-                  <th>Score</th>
+                  <th className='text-center'>Score</th>
               </tr>
           </thead>
           <tbody>

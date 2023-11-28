@@ -64,18 +64,18 @@ export default function Rank(
 
   return (
     <tr className={`${placePodiumClasse}`} id={`${placePodiumID}`}>
-        <th>{place}</th>
+        <th className='text-7xl font-bold text-center'>{place}</th>
         <td>
             <div className="avatar">
-                <div className="w-16 rounded-full">
+                <div className="w-20 rounded-full">
                     <img alt="" src={`${user_profile}`}/>
                 </div>
             </div>
         </td>
-        <td>
+        <td className="text-6xl font-bold">
             {currentTeam}<Link href={{pathname:'/profil',query:{playerId : idPlayer},}}> {name} </Link>
         </td>
-        <td>{score}</td>
+        <td className="text-6xl font-bold">{score}</td>
     </tr>
   )
 }
