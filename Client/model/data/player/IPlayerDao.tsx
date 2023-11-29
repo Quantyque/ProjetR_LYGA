@@ -11,14 +11,20 @@ interface IPlayerDao {
     fetchPlayerByID(id: string): Promise<Player | null>;
 
     /**
-    * Récupère toute les informations de tout les joueurs présent dans la DB
+    * Récupère les joueurs d'une saison et d'un jeu
     * @param season_id id of the season
     * @param videogame_id id of the videogame
     * @returns Les informations de tout les joueurs dans un tableau d'informations
     * @author Youri Emmanuel
     */  
-    fetchPlayers(season_id: any, videogame_id: any): Promise<Player[]>;
+    fetchPlayersBySeasonIDVideogameID(season_id: any, videogame_id: any): Promise<Player[]>;
     
+    /**
+     * Récupère toute les informations de tout les joueurs présent dans la DB
+     * @returns Les informations de tout les joueurs dans un tableau d'informations
+     * @author Antoine Richard
+     */
+    fetchAllPlayers(): Promise<Player[]>;
 }
 
 export default IPlayerDao;

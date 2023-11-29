@@ -22,7 +22,7 @@ let i = 0;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const players = await playerDao.fetchPlayers(1,1386);
+        const players = await playerDao.fetchPlayersBySeasonIDVideogameID(1,1386);
         const games = await videogameDao.fetchVideoGames();
         setPlayers(players);
         setVideoGame(games);
@@ -32,8 +32,6 @@ let i = 0;
     };
     fetchData();
   }, []);
-
-
 
   return (
     <main>

@@ -16,7 +16,7 @@ export class PlayerDao implements IPlayerDao{
 
   }
 
-  async fetchPlayers(season_id: any, videogame_id: any) : Promise<Player[]>{
+  async fetchPlayersBySeasonIDVideogameID(season_id: any, videogame_id: any) : Promise<Player[]>{
     
     var players;
     const requestBody = {
@@ -24,6 +24,14 @@ export class PlayerDao implements IPlayerDao{
       "videogame_id": videogame_id,
     };
     players = this.sender.POST("player/all_ranked",requestBody)
+    console.log(players)
+    return(players);
+  }
+
+  async fetchAllPlayers(): Promise<Player[]>{
+
+    var players;
+    players = this.sender.GET("player/all")
     console.log(players)
     return(players);
   }

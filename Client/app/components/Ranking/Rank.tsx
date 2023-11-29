@@ -75,7 +75,7 @@ export default function Rank(
         <td className="text-6xl font-bold">
             {currentTeam}<Link href={{pathname:'/profil',query:{playerId : idPlayer},}}> {name} </Link>
         </td>
-        <td className="text-6xl font-bold">{score}</td>
+        <td className="text-6xl font-bold text-center">{score}</td>
     </tr>
   )
 }
