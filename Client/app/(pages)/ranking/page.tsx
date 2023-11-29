@@ -1,6 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { VideogameDao } from '@/model/data/videgame/VideogameDao'
+import videogameController from '@/controller/videogameController'
+import playerController from '@/controller/playerController'
+import { VideogameDao } from '@/model/data/videogame/VideogameDao'
 import { PlayerDao } from '@/model/data/player/PlayerDao'
 import Rank from '@/app/components/Ranking/Rank'
 import { Player } from '@/model/logic/player'
@@ -9,23 +11,61 @@ import { Videogame } from '@/model/logic/videogame'
 /**
  * Show the page of the ranking
  * @returns an HTML page of the rank
+ * @author Antoine Richard
  */
 export default function Ranking() {
-  
-let i = 0;
 
-  const playerDao : PlayerDao = new PlayerDao();
-  const videogameDao : VideogameDao = new VideogameDao();
+  let placeOrder = 0;
+  const [videogames, setVideogames] = useState<Videogame[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
-  const [videoGames, setVideoGame] = useState<Videogame[]>([]);
 
+  /*
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedRole, setSelectedRole] = useState<number | null>(null);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [isModalAddOpen, setModalAddOpen] = React.useState(false);
+  
+  const openModal = () => {
+    setModalAddOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalAddOpen(false);
+  };
+
+  */
+
+  {/* Recuperation des utilisateurs */}
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const players = await playerDao.fetchPlayersBySeasonIDVideogameID(1,1386);
-        const games = await videogameDao.fetchVideoGames();
-        setPlayers(players);
-        setVideoGame(games);
+        const videogameCtrl: videogameController = new videogameController();
+        const videogames = await videogameCtrl.getVideogames();
+        const playerCtrl: playerController = new playerController();
+        const players = await playerCtrl.getPlayersBySeasonIDVideogameID(1,1386);
+        setVideogames(
+          videogames.map(
+            (data) =>
+              new Videogame(data.id, data.name, data.characters, data.image)
+          )
+        )
+        setPlayers(
+          players.map(
+            (data) =>
+              new Player(
+                data.id,
+                data.name,
+                data.date,
+                data.prefix,
+                data.characters,
+                data.elos,
+                data.images,
+                data.externals_urls,
+                data.isDisqualified,
+                data.bio
+                )
+          )
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -39,9 +79,9 @@ let i = 0;
         <div className='m-2 space-x-2'>
           <label>Game</label>
           <select className='btn'>
-            {videoGames.map((videoGame) => (
-              <option key={videoGame.id} value={videoGame.id}>
-                {videoGame.name}
+            {videogames.map((videogame) => (
+              <option key={videogame.id} value={videogame.id}>
+                {videogame.name}
               </option>
             ))}
           </select>
@@ -61,8 +101,8 @@ let i = 0;
           <tbody>
             {
               players.map((player) => (
-              i = i+1,
-              <Rank place={i} user_profile={player.images["profile"]} name={player.name} team={player.prefix} score={Number((player.elos[1386].score).toFixed(0))} idPlayer={player.id} season_id={1}/>
+                placeOrder = placeOrder + 1,
+              <Rank place={placeOrder} user_profile={player.images["profile"]} name={player.name} team={player.prefix} score={Math.round(player.elos[1386].score)} idPlayer={player.id} season_id={1}/>
             ))}
           </tbody>
         </table>

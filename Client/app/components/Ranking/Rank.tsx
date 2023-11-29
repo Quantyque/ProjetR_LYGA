@@ -10,6 +10,7 @@ import './Ranking.css'
  * @param score score of the players
  * @param idPlayer id of a player
  * @returns the rank of the players from a game and a season
+ * @author Antoine Richard
  */
 export default function Rank(
     {
