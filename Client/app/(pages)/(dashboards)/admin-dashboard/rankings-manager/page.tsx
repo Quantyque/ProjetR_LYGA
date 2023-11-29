@@ -2,10 +2,10 @@
 import React, {lazy, Suspense, useState, useEffect} from 'react'
 import { FaRankingStar } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
-import { VideogameDao } from '@/model/data/videgame/VideogameDao'
+import { VideogameDao } from '@/model/data/videogame/VideogameDao'
 import { Videogame } from '@/model/logic/videogame';
 import { MdCancel } from "react-icons/md";
-import IVideogameDao from '@/model/data/videgame/IVideogameDao';
+import IVideogameDao from '@/model/data/videogame/IVideogameDao';
 
 const TableElement = lazy(() =>
   import('@/app/components/DashboardsComponents/AdminDashboard/RankingsManager/TableElement')

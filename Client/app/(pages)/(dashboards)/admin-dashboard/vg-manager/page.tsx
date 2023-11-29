@@ -3,11 +3,12 @@ import React, {useState, useEffect, lazy, Suspense} from 'react'
 import { IoGameController } from "react-icons/io5";
 import { CiBoxList } from "react-icons/ci";
 import { IoIosAddCircle } from "react-icons/io";
-import { VideogameDao } from '@/model/data/videgame/VideogameDao'
+import { VideogameDao } from '@/model/data/videogame/VideogameDao'
 import { Videogame } from '@/model/logic/videogame';
-import IVideogameDao from '@/model/data/videgame/IVideogameDao';
+import IVideogameDao from '@/model/data/videogame/IVideogameDao';
 import { MdCancel } from "react-icons/md";
 import ModalAdd from '@/app/components/DashboardsComponents/AdminDashboard/VideoGamesManager/Modals/ModalAdd';
+import { ToastProvider } from '@/app/components/Providers/ToastProvider';
 
 const TableElement = lazy(() =>
   import('@/app/components/DashboardsComponents/AdminDashboard/VideoGamesManager/TableElement')
@@ -18,8 +19,22 @@ const VgManagerPage = () => {
   const videogameDao : IVideogameDao = new VideogameDao();
   const [videoGames, setVideoGame] = useState<Videogame[]>([]);
 
+  const [isModalAddOpen, setModalAddOpen] = React.useState(false);
+
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+
+  const openAddModal = () => {
+
+    setModalAddOpen(true);
+
+  };
+
+  const closeAddModal = () => {
+
+    setModalAddOpen(false);
+
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,16 +56,27 @@ const VgManagerPage = () => {
   {/* Filtres */}
   const filteredVideoGames = videoGames
     .filter((videoGames) => {
+
       const searchTermLowerCase: string = searchTerm.toLowerCase();
       const isVideoGamesMatch = videoGames.name.toLowerCase().includes(searchTermLowerCase);
-
       return isVideoGamesMatch;
+
     }).sort((a, b) => {
+
+      var result;
+      
       if (sortOrder === 'asc') {
-        return a.name.localeCompare(b.name);
+
+        result = a.name.localeCompare(b.name);
+
       } else {
-        return b.name.localeCompare(a.name);
+
+        result = b.name.localeCompare(a.name);
+
       }
+
+      return result;
+
     });
 
   {/* Reinitialisation des filtres */}
@@ -89,7 +115,9 @@ const VgManagerPage = () => {
               <IoIosAddCircle className="mr-2"/> Ajouter
             </span>
         </button>
-        <ModalAdd classId='add'/>
+        <ToastProvider>        
+          <ModalAdd classId='add' isOpen={ isModalAddOpen } onClose={ closeAddModal }/>
+        </ToastProvider>
       </div>
       <div className="overflow-x-auto">
         <table className="table">

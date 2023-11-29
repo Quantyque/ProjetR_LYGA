@@ -8,6 +8,7 @@ import { FaUser, FaUserMinus, FaTrash } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 import IUserDao from '@/model/data/user/IUserDao';
 import { UserDao } from '@/model/data/user/UserDao';
+import { useToast } from '@/app/components/Providers/ToastProvider';
 
 interface ModalEditProps {
     user: User
@@ -18,9 +19,9 @@ interface ModalEditProps {
 
 const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
 
+    const { showToast, toast, hideToast } = useToast();
     const [editedUsername, setEditedUsername] = useState(user.username);
     const [editedRole, setEditedRole] = useState(user.role);
-    const [toast, setToast] = useState({ message: "", type: "" });
 
     useEffect(() => {
 
@@ -28,38 +29,6 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
         setEditedRole(user.role);
 
     }, [user]);
-
-
-    const showToast = (message: string, type: string) => {
-
-        setToast({ message, type });
-        localStorage.setItem('toastMessage', message);
-        localStorage.setItem('toastType', type);
-    
-        setTimeout(() => {
-            setToast({ message: "", type: "" });
-            localStorage.removeItem('toastMessage');
-            localStorage.removeItem('toastType');
-        }, 3000);
-
-    };
-
-    useEffect(() => {
-
-        const savedMessage = localStorage.getItem('toastMessage');
-        const savedType = localStorage.getItem('toastType');
-    
-        if (savedMessage && savedType) {
-          setToast({ message: savedMessage, type: savedType });
-    
-          setTimeout(() => {
-            setToast({ message: '', type: '' });
-            localStorage.removeItem('toastMessage');
-            localStorage.removeItem('toastType');
-          }, 3000);
-        }
-
-    }, []);
     
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
 

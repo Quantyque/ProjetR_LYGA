@@ -8,7 +8,7 @@ export class UserDao implements IUserDao{
 
     /**
      * Créer un utilisateur avec un role
-     * @param user 
+     * @param Promise<string> : message de confirmation de création
      */
     async createUserWithRole(user: User, password: string, confirm_password: string): Promise<string> {
         const result = await this.sender.POST("user/admin-register", { ...user.toJSON(), password, confirm_password })
@@ -27,6 +27,7 @@ export class UserDao implements IUserDao{
     /**
      * Retourne un utilisateur via de son id
      * @param id 
+     * @returns Promise<User> : un utilisateur
      */
     async fetchUserById(id: number): Promise<User> {
         const user = await this.sender.POST("user/get-by-id", id)
@@ -36,6 +37,7 @@ export class UserDao implements IUserDao{
     /**
      * Met à jour un utilisateur
      * @param user 
+     * @returns Promise<string> : message de confirmation de mise à jour
      */
     async updateUser(user: User): Promise<string> {
         const result = await this.sender.UPDATE("user/update", user.toJSON())
@@ -44,7 +46,8 @@ export class UserDao implements IUserDao{
 
     /**
      * Supprime un utilisateur 
-     * @param id 
+     * @param user 
+     * @returns Promise<string> : message de confirmation de suppression
      */
     async deleteUser(user: User): Promise<string> {
         const result = await this.sender.DELETE("user/delete", user.toJSON())
@@ -53,6 +56,7 @@ export class UserDao implements IUserDao{
 
     /**
      * Récupère la liste des roles
+     * @returns Promise<string[]> : liste des roles
      */
     async fetchRoles(): Promise<string[]> {
         const roles = await this.sender.GET("user/get-roles")

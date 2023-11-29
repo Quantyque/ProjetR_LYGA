@@ -8,6 +8,7 @@ import User from '@/model/logic/user';
 import Role from '@/model/logic/role';
 import { MdCancel } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
+import { ToastProvider } from '@/app/components/Providers/ToastProvider';
 
 const MenuElement = lazy(() =>
   import('@/app/components/DashboardsComponents/AdminDashboard/UserManager/MenuElement')
@@ -21,13 +22,13 @@ export default function UserManagerPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [isModalAddOpen, setModalAddOpen] = React.useState(false);
 
-  const openModal = () => {
+  const openAddModal = () => {
 
     setModalAddOpen(true);
 
   };
 
-  const closeModal = () => {
+  const closeAddModal = () => {
 
     setModalAddOpen(false);
 
@@ -35,17 +36,13 @@ export default function UserManagerPage() {
 
   {/* Recuperation des utilisateurs */}
   useEffect(() => {
+
     const fetchData = async () => {
       try {
+
         const userDao: IUserDao = new UserDao();
         const response = await userDao.fetchUsers();
-
-        setUsers(
-          response.map(
-            (data) =>
-              new User(data.id, data.username, data.role, data.userPP, undefined)
-          )
-        );
+        setUsers(response.map((data) => new User(data.id, data.username, data.role, data.userPP, undefined)));
 
       } catch (error) {
 
@@ -55,30 +52,45 @@ export default function UserManagerPage() {
     };
 
     fetchData();
+
   }, []);
 
   {/* Filtres */}
   const filteredUsers = users
     .filter((user) => {
+
       const searchTermLowerCase: string = searchTerm.toLowerCase();
       const isUsernameMatch = user.username.toLowerCase().includes(searchTermLowerCase);
       const isRoleMatch = selectedRole === null || user.role === selectedRole;
-
+      
       return isUsernameMatch && isRoleMatch;
+
     })
     .sort((a, b) => {
+
+      var result;
+
       if (sortOrder === 'asc') {
-        return a.username.localeCompare(b.username);
+
+        result = a.username.localeCompare(b.username);
+
       } else {
-        return b.username.localeCompare(a.username);
+
+        result = b.username.localeCompare(a.username);
+
       }
+
+      return result;
+
     });
 
   {/* Reinitialisation des filtres */}
   const resetFilters = () => {
+
     setSearchTerm('');
     setSelectedRole(null);
     setSortOrder('asc');
+
   };
 
   return (
@@ -114,7 +126,9 @@ export default function UserManagerPage() {
               <IoIosAddCircle className="mr-2"/> Ajouter
             </span>
           </button>
-          <ModalAdd classId='add' isOpen={ isModalAddOpen } onClose={ closeModal }/>
+          <ToastProvider>
+            <ModalAdd classId='add' isOpen={ isModalAddOpen } onClose={ closeAddModal }/>
+          </ToastProvider>
         </div>
       </div>
       <div className='grid grid-cols-1 xl:grid-cols-4 gap-10 mx-6 lg:mx-0 my-9'>

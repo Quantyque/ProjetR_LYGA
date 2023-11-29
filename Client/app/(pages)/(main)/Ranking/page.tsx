@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { VideogameDao } from '@/model/data/videgame/VideogameDao'
+import { VideogameDao } from '@/model/data/videogame/VideogameDao'
 import { PlayerDao } from '@/model/data/player/PlayerDao'
 import Rank from '@/app/components/Rank'
 import './ranking.css'

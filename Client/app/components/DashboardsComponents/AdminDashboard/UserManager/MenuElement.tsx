@@ -1,8 +1,9 @@
 "use client";
-import React, { useEffect } from 'react';
+import React from 'react';
 import User from '@/model/logic/user';
 import Role from '@/model/logic/role';
 import ModalEdit from '@/app/components/DashboardsComponents/AdminDashboard/UserManager/Modals/ModalEdit';
+import { ToastProvider } from '@/app/components/Providers/ToastProvider';
 
 interface MenuElementProps {
     user: User
@@ -36,7 +37,9 @@ const MenuElement = ({user}: MenuElementProps) => {
                     </div>
                 </div>
             </button>
-            <ModalEdit user={user} isOpen={isModalOpen} onClose={closeModal} classId='edit'/>
+            <ToastProvider>
+                <ModalEdit user={user} isOpen={isModalOpen} onClose={closeModal} classId='edit'/>
+            </ToastProvider>
         </div>
 
     )
