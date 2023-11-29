@@ -35,8 +35,8 @@ class RankingDaoSql(IRankingDaoSql, Dao):
         Met à jour le classement
 
         Args:
-            afterDate (int): date depuis laquelle on veut récupérer les tournois
-            beforeDate (int): date jusqu'à laquelle on veut récupérer les tournois
+            afterDate (int): La date unix a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date unix jusqu'à laquelle rechercher les tournois.
             videogame_id (int): id du jeu vidéo à mettre à jour
             coordonnees (str): coordonnees de la localisation des tournois à récupérer
             distance (str): distance de la localisation des tournois à récupérer

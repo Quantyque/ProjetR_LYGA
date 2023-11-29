@@ -17,8 +17,8 @@ class RankingManager():
         Mise à jour du classement d'un jeu vidéo.
 
         Args:
-            afterDate (int): La date a partir de laquelle rechercher les tournois.
-            beforeDate (int): La date jusqu'à laquelle rechercher les tournois.
+            afterDate (int): La date unix a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date unix jusqu'à laquelle rechercher les tournois.
             videogame_id (int): L'id du jeu vidéo.
             coordonnees (str): Les coordonnées.
             distance (str): La distance.

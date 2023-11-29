@@ -405,3 +405,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 .env
+Conception/.SAE_S5.vpp.lck
