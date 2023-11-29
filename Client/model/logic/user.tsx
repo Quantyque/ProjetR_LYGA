@@ -38,7 +38,7 @@ class User {
       this._role = value;
     }
   
-    get userPP(): string {
+    get userPP(): string | undefined {
       return this._userPP;
     }
   
