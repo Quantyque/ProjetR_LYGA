@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import User from '@/model/logic/user';
 import Role from '@/model/logic/role';
 import ModalEdit from '@/app/components/DashboardsComponents/AdminDashboard/UserManager/Modals/ModalEdit';
@@ -10,10 +10,20 @@ interface MenuElementProps {
 
 const MenuElement = ({user}: MenuElementProps) => {
 
+    const [isModalOpen, setModalOpen] = React.useState(false);
+
+    const openModal = () => {
+        setModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setModalOpen(false);
+    };
+
     return (
         
         <div className='rounded-md bg-zinc-700 btn-ghost'>
-            <button onClick={() => (document.getElementById('edit') as HTMLDialogElement)?.showModal()} className='w-full block'>
+            <button onClick={openModal} className='w-full block'>
                 <div className="p-4 flex items-center">
                     <img src={ user.userPP ?? "/images/undefined_profile_image.jpg" } className="rounded-full w-16 h-16"/>
                     <div className='my-4 mx-6 flex-1'>
@@ -26,7 +36,7 @@ const MenuElement = ({user}: MenuElementProps) => {
                     </div>
                 </div>
             </button>
-            <ModalEdit user={user} classId='edit'/>
+            <ModalEdit user={user} isOpen={isModalOpen} onClose={closeModal} classId='edit'/>
         </div>
 
     )

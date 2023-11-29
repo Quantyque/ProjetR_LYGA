@@ -8,6 +8,7 @@ from flask_classful import FlaskView, route
 from controls.technical import TechnicalControls
 from model.role import Role
 from model.user import User
+from flask import jsonify
 
 
 class ViewUser(FlaskView):
@@ -46,7 +47,62 @@ class ViewUser(FlaskView):
             # Envoi de la requête
             self.__user_manager.register(username, password)
 
-            res = "User created", 201
+            res = jsonify({"message": "User created", "success": True}), 201
+        
+        except InvalidInput as e:
+            log_info((e))
+            res = str(e), 400
+        
+        except ValueError as e :
+            log_info(str(e))
+            res = str(e), 400
+        
+        except InvalidCredentials as e:
+            log_info(str(e))
+            res = str(e), 401
+
+        except DataDuplicate as e:
+            log_info(str(e))
+            res = str(e), 409
+
+        except Exception as e :
+            log_error(str(e))
+            res = INTERNAL_ERROR, 500
+
+        finally:
+            return res
+        
+    @route('/admin-register', methods=['POST'])
+    def admin_create(self) -> (str, int):
+        """
+        Ajoute un utilisateur dans la base de données avec un role (ADMIN)
+
+        Args:
+            username (str): nom d'utilisateur
+            password (str): mot de passe
+            confirm_password (str): confirmation du mot de passe
+            role (Role): role de l'utilisateur
+
+        Returns:
+            str: message de confirmation
+            int: code HTTP
+        """
+        try:
+            # Initialisation des variables
+            username: str = request.get_json().get('username')
+            password: str = request.get_json().get('password')
+            confirm_password: str = request.get_json().get('confirm_password')
+            role: Role = request.get_json().get('role')
+
+            # Verification des variables
+            FunctionalControls.check_json_arguments_not_null(id, username, password, confirm_password)
+            FunctionalControls.check_forbidden_chars(username, password)
+            FunctionalControls.check_password_match(password, confirm_password)
+
+            # Envoi de la requête
+            self.__user_manager.admin_register(username, password, role)
+
+            res = jsonify({"message": "User created", "success": True}), 201
         
         except InvalidInput as e:
             log_info((e))
@@ -214,7 +270,9 @@ class ViewUser(FlaskView):
 
             # Verification des variables
             FunctionalControls.check_json_arguments_not_null(id)
-            FunctionalControls.check_forbidden_chars(username, userPP)
+
+            if userPP is not None:
+                FunctionalControls.check_forbidden_chars(userPP)
 
             if password is not None:
                 FunctionalControls.check_forbidden_chars(password)
@@ -223,9 +281,9 @@ class ViewUser(FlaskView):
             TechnicalControls.check_is_user(request.headers.get('Authorization'), id)
 
             # Envoi de la requête
-            self.__user_manager.update_user(User(id, username, password, userPP, role))
+            self.__user_manager.update_user(User(id, username, role, password, userPP))
 
-            res = "User updated", 200
+            res = jsonify({"message": "User updated", "success": True}), 200
         
         except InvalidInput as e:
             log_info((e))
@@ -283,7 +341,7 @@ class ViewUser(FlaskView):
             # Envoi de la requête
             self.__user_manager.delete_user(id)
 
-            res = "User deleted", 200
+            res = jsonify({"message": "User deleted", "success": True}), 200
         
         except InvalidInput as e:
             log_info((e))
@@ -304,6 +362,29 @@ class ViewUser(FlaskView):
         except UserNotFound as e:
             log_info(str(e))
             res = str(e), 404
+        
+        except Exception as e :
+            log_error(str(e))
+            res = INTERNAL_ERROR, 500
+
+        finally:
+            return res
+        
+    @route('/get-roles', methods=['GET'])
+    #@TechnicalControls.is_role(Role.ADMIN)
+    def get_roles(self) -> (str, int):
+        """
+        Retourne tous les roles
+
+        Returns:
+            str: liste des roles
+            int: code HTTP
+        """
+        try:
+            # Envoi de la requête
+            result = self.__user_manager.get_roles()
+
+            res = result, 200
         
         except Exception as e :
             log_error(str(e))

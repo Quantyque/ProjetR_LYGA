@@ -3,6 +3,12 @@ import User from '@/model/logic/user';
 interface IUserDao {
 
     /**
+     * Créer un utilisateur avec un role
+     * @param user 
+     */
+    createUserWithRole(user: User, password: string, confirm_password: string): Promise<string>;
+
+    /**
      * Retourne un tableau contenant toute la liste des utilisateurs
      * @returns un tableau d'objet user
      */
@@ -18,13 +24,18 @@ interface IUserDao {
      * Met à jour un utilisateur
      * @param user 
      */
-    updateUser(user: User): Promise<User>;
+    updateUser(user: User): Promise<string>;
 
     /**
      * Supprime un utilisateur 
-     * @param id 
+     * @param user 
      */
-    deleteUser(id: number): Promise<User>;
+    deleteUser(user: User): Promise<string>;
+
+    /**
+     * Récupère la liste des roles
+     */
+    fetchRoles(): Promise<string[]>;
 
 }
 

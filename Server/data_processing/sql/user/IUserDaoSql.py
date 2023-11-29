@@ -20,6 +20,22 @@ class IUserDaoSql(ABC):
         """
         pass
 
+    def admin_register(self, username: str, password: str, role: int) -> None:
+        """
+        Enregistre un nouvel utilisateur avec un role (ADMIN).
+        
+        Args:
+            username (str): Le nom d'utilisateur.
+            password (str): Le mot de passe.
+            role (int): Le rôle de l'utilisateur.
+            
+        Returns:
+            None
+            
+        Raises:
+            DuplicateUser: Si l'utilisateur existe déjà.    
+        """
+
     @abstractmethod
     def login(self, username: str, password: str) -> list(str()):
         """
@@ -96,5 +112,15 @@ class IUserDaoSql(ABC):
 
         Raises:
             UserNotFound: Si l'utilisateur n'existe pas.
+        """
+        pass
+
+    @abstractmethod
+    def get_roles(self):
+        """
+        Retourne les rôles.
+
+        Returns:
+            list(str()): La liste des rôles.
         """
         pass

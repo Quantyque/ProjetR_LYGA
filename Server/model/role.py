@@ -4,5 +4,5 @@ class Role(Enum):
     """
     Enumération des rôles possibles pour un utilisateur
     """
-    USER = 0
+    USER = 2
     ADMIN = 1

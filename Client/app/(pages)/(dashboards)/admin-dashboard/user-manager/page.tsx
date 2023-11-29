@@ -19,6 +19,19 @@ export default function UserManagerPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedRole, setSelectedRole] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [isModalAddOpen, setModalAddOpen] = React.useState(false);
+
+  const openModal = () => {
+
+    setModalAddOpen(true);
+
+  };
+
+  const closeModal = () => {
+
+    setModalAddOpen(false);
+
+  };
 
   {/* Recuperation des utilisateurs */}
   useEffect(() => {
@@ -26,14 +39,18 @@ export default function UserManagerPage() {
       try {
         const userDao: IUserDao = new UserDao();
         const response = await userDao.fetchUsers();
+
         setUsers(
           response.map(
             (data) =>
               new User(data.id, data.username, data.role, data.userPP, undefined)
           )
         );
+
       } catch (error) {
+
         console.error("Error fetching data:", error);
+
       }
     };
 
@@ -97,7 +114,7 @@ export default function UserManagerPage() {
               <IoIosAddCircle className="mr-2"/> Ajouter
             </span>
           </button>
-          <ModalAdd classId='add'/>
+          <ModalAdd classId='add' isOpen={ isModalAddOpen } onClose={ closeModal }/>
         </div>
       </div>
       <div className='grid grid-cols-1 xl:grid-cols-4 gap-10 mx-6 lg:mx-0 my-9'>

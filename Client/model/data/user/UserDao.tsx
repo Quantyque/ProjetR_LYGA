@@ -1,5 +1,4 @@
 import User from "@/model/logic/user";
-import { useEffect, useState } from "react";
 import IUserDao from "@/model/data/user/IUserDao";
 import Sender from "@/model/data/sender";
 
@@ -8,13 +7,21 @@ export class UserDao implements IUserDao{
     sender : Sender = new Sender();
 
     /**
+     * Créer un utilisateur avec un role
+     * @param user 
+     */
+    async createUserWithRole(user: User, password: string, confirm_password: string): Promise<string> {
+        const result = await this.sender.POST("user/admin-register", { ...user.toJSON(), password, confirm_password })
+        return result;
+    }
+
+    /**
      * Retourne un tableau contenant toute la liste des utilisateurs
      * @returns un tableau d'objet user
      */
     async fetchUsers(): Promise<User[]> {
-        var Allusers;
-        Allusers = this.sender.GET("user/get-all")
-        return(Allusers);
+        const allUsers = await this.sender.GET("user/get-all")
+        return(allUsers);
     }
 
     /**
@@ -22,9 +29,7 @@ export class UserDao implements IUserDao{
      * @param id 
      */
     async fetchUserById(id: number): Promise<User> {
-        var user;
-        user = this.sender.POST("user/get-by-id", id)
-        console.log(user)
+        const user = await this.sender.POST("user/get-by-id", id)
         return(user);
     }
 
@@ -32,19 +37,26 @@ export class UserDao implements IUserDao{
      * Met à jour un utilisateur
      * @param user 
      */
-    async updateUser(user: User): Promise<User> {
-        this.sender.UPDATE("user/update", user)
-        return(user);
+    async updateUser(user: User): Promise<string> {
+        const result = await this.sender.UPDATE("user/update", user.toJSON())
+        return result;
     }
 
     /**
      * Supprime un utilisateur 
      * @param id 
      */
-    async deleteUser(id: number): Promise<User> {
-        var user;
-        user = this.sender.DELETE("user/delete", id)
-        return(user);
+    async deleteUser(user: User): Promise<string> {
+        const result = await this.sender.DELETE("user/delete", user.toJSON())
+        return result;
+    }
+
+    /**
+     * Récupère la liste des roles
+     */
+    async fetchRoles(): Promise<string[]> {
+        const roles = await this.sender.GET("user/get-roles")
+        return(roles);
     }
     
 }
