@@ -17,7 +17,7 @@ class ViewSeason(FlaskView):
     def __init__(self) -> None:
         self.__season_manager = SeasonManager()
 
-    @route('/get', methods=['POST'])
+    @route('/get', methods=['GET'])
     def get_season_by_id(self) -> (str, int):
         """
         Renvoi une saison en fonction de son id
@@ -31,7 +31,7 @@ class ViewSeason(FlaskView):
         """
         try:
             # Initialisation des variables
-            season_id = request.args.get('season_id')
+            season_id = request.get_json().get('season_id')
 
             # Envoi de la requête
             result = self.__season_manager.get_season_by_id(season_id)
