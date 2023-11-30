@@ -63,7 +63,7 @@ class RankingDaoSql(IRankingDaoSql, Dao):
         sets, complete_events = self.__get_sets_and_complete_events(events)
 
         # Met à jour le classement
-        players = player_dao_sql.get_all_players_by_season(current_season.Id)
+        players = self.__player_dao_sql.get_all_players_by_season(current_season.Id)
         ranking = Ranking(players.values())
         ranking.update_ranking(sets, videogame, current_season) 
 
