@@ -92,6 +92,10 @@ const RankingManagerPage = () => {
           <thead>
             <tr>
               <th className="text-left">Jeu audité</th>
+              <th className="text-left">Prendre en compte les tournois depuis ...</th>
+              <th className="text-left">Prendre en compte les tournois jusqu'à ...</th>
+              <th className="text-left">Localisation</th>
+              <th className="text-left">Rayon</th>
               <th className="text-left">Auto-rafraichissement</th>
               <th className="text-right">Rafraichissement manuel</th>
             </tr>
