@@ -1,18 +1,27 @@
 interface IRankingDao {
 
     /**
-     * Activates or deactivates the automatic refresh of the ranking.
-     * @param status true to activate, false to deactivate.*
-     * @returns a promise with the result of the operation.
+     * Active ou désactive l'actualisation automatique du classement.
+     * @param status true pour activer, false pour désactiver.
+     * @param afterDate La date après laquelle le classement sera actualisé.
+     * @param beforeDate La date avant laquelle le classement sera actualisé.
+     * @param videoGameId L'identifiant du jeu vidéo à actualiser.
+     * @param coordonnees Les coordonnées du centre de la zone dans laquelle le classement sera actualisé => [latitude, longitude].
+     * @param distance La distance en kilomètres à partir du centre de la zone dans laquelle le classement sera actualisé.
+     * @returns Une promesse avec le résultat de l'opération.
      */
-    autoRefresh(status: boolean, videoGameId: number): Promise<string>;
+    autoRefresh(status: boolean, afterDate: Date, beforeDate: Date, videoGameId : number, coordonnees: [number, number], distance: number): Promise<string>;
 
     /**
-     * Do a manual refresh of a ranking.
-     * @param videoGameId the id of the video game to refresh.
-     * @returns a promise with the result of the operation.
+     * Effectue une actualisation manuelle du classement.
+     * @param afterDate La date après laquelle le classement sera actualisé.
+     * @param beforeDate La date avant laquelle le classement sera actualisé.
+     * @param videoGameId L'identifiant du jeu vidéo à actualiser.
+     * @param coordonnees Les coordonnées du centre de la zone dans laquelle le classement sera actualisé => [latitude, longitude].
+     * @param distance La distance en kilomètres à partir du centre de la zone dans laquelle le classement sera actualisé.
+     * @returns Une promesse avec le résultat de l'opération.
      */
-    manualRefresh(videoGameId : number): Promise<string>;
+    manualRefresh(afterDate: Date, beforeDate: Date, videoGameId : number, coordonnees: [number, number], distance: number): Promise<string>;
     
 }
 

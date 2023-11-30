@@ -23,7 +23,6 @@ function LocationMarker({ onMapClick }: LocationMarkerProps) {
         const { lat, lng } = e.latlng;
         setPosition(e.latlng);
         onMapClick(lat, lng);
-        console.log(lat, lng)
         },
         locationfound(e) {
         setPosition(e.latlng);
