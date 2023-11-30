@@ -28,9 +28,6 @@ class ViewSeason(FlaskView):
             # Initialisation des variables
             season_id = request.args.get('season_id')
 
-            # Verification des variables
-            FunctionalControls.check_arguments_not_null(season_id)
-
             # Envoi de la requête
             result = self.__season_manager.get_season_by_id(season_id)
 

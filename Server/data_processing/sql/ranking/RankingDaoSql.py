@@ -78,7 +78,7 @@ class RankingDaoSql(IRankingDaoSql, Dao):
                 print(page_courante)
 
         # Met à jour le classement
-        players = player_dao_sql.get_all_players()
+        players = player_dao_sql.get_all_players_by_season(current_season.Id)
         ranking = Ranking(players.values())
         ranking.update_ranking(sets, videogame, current_season) 
 
