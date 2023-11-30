@@ -9,6 +9,15 @@ interface IUserDao {
     createUserWithRole(user: User, password: string, confirm_password: string): Promise<string>;
 
     /**
+     * Créer un utilisateur sans role
+     * @param user : utilisateur
+     * @param password : mot de passe
+     * @param confirm_password : mot de passe de confirmation
+     * @return Promise<string> : message de confirmation de création
+     */
+    createUser(user: User, password: string, confirm_password: string): Promise<string>;
+
+    /**
      * Retourne un tableau contenant toute la liste des utilisateurs
      * @returns Promise<User[]> : un tableau d'objet user
      */

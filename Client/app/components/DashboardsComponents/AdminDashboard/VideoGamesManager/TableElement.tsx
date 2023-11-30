@@ -13,6 +13,24 @@ const VideoGamesManagerTableElement = ({ game }: VideoGamesManagerTableElementPr
 
   const [isModalOpen, setModalOpen] = React.useState(false);
 
+  const closeOnEscape = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+  };
+
+  React.useEffect(() => {
+
+      if (isModalOpen) {
+          window.addEventListener('keydown', closeOnEscape);
+      }
+
+      return () => {
+          window.removeEventListener('keydown', closeOnEscape);
+      };
+
+  }, [isModalOpen]);
+
   const openModal = () => {
 
     setModalOpen(true);

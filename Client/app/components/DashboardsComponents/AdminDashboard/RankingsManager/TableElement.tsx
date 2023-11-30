@@ -6,6 +6,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import IRankingDao from '@/model/data/ranking/IRankingDao';
 import { SetDao } from '@/model/data/ranking/RankingDao';
 import MapElement from './MapElement';
+import { useToast } from '@/app/components/Providers/ToastProvider';
 
 interface TableElementProps {
   videoGame: Videogame,
@@ -16,17 +17,18 @@ const TableElement = ({ videoGame }: TableElementProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const [showMap, setShowMap] = useState(false);
   const [coordinates, setCoordinates] = useState("");
+  const { showToast, toast, hideToast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleManualRefreshButtonClick = async () => {
 
     try {
 
+      setIsLoading(true);
       const startDate = (document.getElementById('start') as HTMLInputElement)?.value;
       const endDate = (document.getElementById('end') as HTMLInputElement)?.value;
       const coordinatesInput = (document.getElementById('coordinates') as HTMLInputElement)?.value;
       const distanceInput = (document.getElementById('distance') as HTMLInputElement)?.value;
-  
-      console.log({startDate : startDate, endDate: endDate, coordinatesInput: coordinatesInput, distanceInput: distanceInput, videoGameId: videoGame.id});
   
       if (startDate && endDate && coordinatesInput && distanceInput) {
 
@@ -39,28 +41,36 @@ const TableElement = ({ videoGame }: TableElementProps) => {
   
           const rankingDao: IRankingDao = new SetDao();
           await rankingDao.manualRefresh(new Date(startDate), new Date(endDate), videoGame.id, coordinatesToSend, distance);
+
+          showToast("Le classement a été mis à jour", "success");
   
           window.location.reload();
 
         } else {
 
           console.error("Le format des coordonnées est incorrect.");
+          showToast("Le format des coordonnées est incorrect.", "error");
 
         }
       } else {
 
         console.error("Veuillez remplir tous les champs nécessaires.");
+        showToast("Veuillez remplir tous les champs nécessaires.", "error");
 
       }
     } catch (error) {
 
-      console.error("Erreur lors de la sauvegarde :", error);
+      console.error("Erreur lors de la mise à jour :", error);
+      showToast("Erreur lors de la mise à jour", "error");
+
+    } finally {
+
+      setIsLoading(false);
 
     }
 
   };
   
-
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
@@ -102,7 +112,9 @@ const TableElement = ({ videoGame }: TableElementProps) => {
           </label>
         </td>
         <td>
-          <button className='btn btn-ghost bg-orange-500 hover:bg-orange-600 m-4' onClick={ handleManualRefreshButtonClick }><FiRefreshCw /></button>
+          <button className={"btn btn-ghost bg-orange-500 hover:bg-orange-600 m-4"} onClick={handleManualRefreshButtonClick}>
+            <FiRefreshCw className={isLoading ? 'animate-spin' : ''} />
+          </button>
         </td>
       </tr>
       {showMap && (
@@ -111,6 +123,15 @@ const TableElement = ({ videoGame }: TableElementProps) => {
             <MapElement onMapClick={updateCoordinates}/>
           </td>
         </tr>
+      )}
+      {toast.message && (
+          <div className={"toast"}>
+              <div className={`alert ${toast.type === "success" ? "bg-green-500" : "bg-red-500"}`}>
+                  <span className='text-white'>
+                      { toast.message }
+                  </span>
+              </div>
+          </div>
       )}
     </>
   );

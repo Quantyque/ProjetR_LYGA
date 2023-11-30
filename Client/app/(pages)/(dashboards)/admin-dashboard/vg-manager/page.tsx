@@ -24,6 +24,24 @@ const VgManagerPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
+  const closeOnEscape = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeAddModal();
+    }
+  };
+
+  React.useEffect(() => {
+
+      if (isModalAddOpen) {
+          window.addEventListener('keydown', closeOnEscape);
+      }
+
+      return () => {
+          window.removeEventListener('keydown', closeOnEscape);
+      };
+
+  }, [isModalAddOpen]);
+
   const openAddModal = () => {
 
     setModalAddOpen(true);
@@ -110,7 +128,7 @@ const VgManagerPage = () => {
             </span>
           </button>
         </div>
-        <button className='ml-2 p-2 rounded-md bg-green-500 hover:bg-green-300' onClick={() => (document.getElementById('add') as HTMLDialogElement)?.showModal()}>
+        <button className='ml-2 p-2 rounded-md bg-green-500 hover:bg-green-300' onClick={ openAddModal }>
             <span className='flex items-center'>
               <IoIosAddCircle className="mr-2"/> Ajouter
             </span>

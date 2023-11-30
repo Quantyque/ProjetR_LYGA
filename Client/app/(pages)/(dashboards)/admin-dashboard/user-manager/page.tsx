@@ -22,6 +22,24 @@ export default function UserManagerPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [isModalAddOpen, setModalAddOpen] = React.useState(false);
 
+  const closeOnEscape = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeAddModal();
+    }
+  };
+
+  React.useEffect(() => {
+
+      if (isModalAddOpen) {
+          window.addEventListener('keydown', closeOnEscape);
+      }
+
+      return () => {
+          window.removeEventListener('keydown', closeOnEscape);
+      };
+
+  }, [isModalAddOpen]);
+
   const openAddModal = () => {
 
     setModalAddOpen(true);
@@ -60,7 +78,7 @@ export default function UserManagerPage() {
     .filter((user) => {
 
       const searchTermLowerCase: string = searchTerm.toLowerCase();
-      const isUsernameMatch = user.username.toLowerCase().includes(searchTermLowerCase);
+      const isUsernameMatch = user.username?.toLowerCase().includes(searchTermLowerCase);
       const isRoleMatch = selectedRole === null || user.role === selectedRole;
       
       return isUsernameMatch && isRoleMatch;
@@ -121,7 +139,7 @@ export default function UserManagerPage() {
           </button>
         </div>
         <div>
-          <button className='ml-2 p-2 rounded-md bg-green-500 hover:bg-green-300' onClick={() => (document.getElementById('add') as HTMLDialogElement)?.showModal()}>
+          <button className='ml-2 p-2 rounded-md bg-green-500 hover:bg-green-300' onClick={ openAddModal }>
             <span className='flex items-center'>
               <IoIosAddCircle className="mr-2"/> Ajouter
             </span>

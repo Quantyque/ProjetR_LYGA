@@ -37,7 +37,7 @@ const Login = (props: Props) => {
             </div>
             <div id='loginFormContainer' style={{ position: 'absolute', height: '90%', left: '0', width: '45%', top: '10%' }}>
                 <div id="loginForm">
-                    <h1 id='title'>LOGIN</h1>
+                    <h1 id='title'>CONNEXION</h1>
                     { props.searchParams?.message && <div className="alert alert-error">{props.searchParams.message}</div> }
                     {!!props.error && <div className="alert alert-error">Authentification failed. Try again.</div>}
                     {loading ? (
@@ -46,32 +46,34 @@ const Login = (props: Props) => {
                     <form className="login-form" onSubmit={onSubmit}>
                         <input
                             type="text"
-                            placeholder="Username"
+                            placeholder="Pseudo"
                             className='input w-full input-error'
                             id='formUsername'
                             onChange={(e) => username.current = e.target.value}
+                            required
                         />
                         <input
                             type="password"
-                            placeholder="Password"
+                            placeholder="Mot de passe"
                             className='input w-full input-warning'
                             id='formPassword'
                             onChange={(e) => password.current = e.target.value}
+                            required
                         />
                         <div id='rememberMe' className="form-control">
                             <label className="label cursor-pointer">
-                                <span className="label-text">Remember me</span>
+                                <span className="label-text">Rester connecté</span>
                                 <input type="checkbox" className="checkbox" />
                             </label>
                         </div>
                         <div id='centerContainer'>
                             <button className='btn btn-wide' id='loginButton' type="submit">
-                                Connect
+                                Se connecter
                             </button>
                         </div>
                         <div id='centerContainer'>
                             <p className="message">
-                                Not registered? <a href="#">Create an account</a>
+                                Pas encore inscrit ? <a href="/register">S'inscrire</a>
                             </p>
                         </div>
                     </form>

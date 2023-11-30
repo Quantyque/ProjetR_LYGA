@@ -8,10 +8,26 @@ export class UserDao implements IUserDao{
 
     /**
      * Créer un utilisateur avec un role
-     * @param Promise<string> : message de confirmation de création
+     * @param user : utilisateur
+     * @param password : mot de passe
+     * @param confirm_password : mot de passe de confirmation
+     * @param role : role de l'utilisateur
+     * @return Promise<string> : message de confirmation de création
      */
     async createUserWithRole(user: User, password: string, confirm_password: string): Promise<string> {
         const result = await this.sender.POST("user/admin-register", { ...user.toJSON(), password, confirm_password })
+        return result;
+    }
+
+    /**
+     * Créer un utilisateur sans role
+     * @param user : utilisateur
+     * @param password : mot de passe
+     * @param confirm_password : mot de passe de confirmation
+     * @return Promise<string> : message de confirmation de création
+     */
+    async createUser(user: User, password: string, confirm_password: string): Promise<string> {
+        const result = await this.sender.POST("user/register", { ...user.toJSON(), password, confirm_password })
         return result;
     }
 

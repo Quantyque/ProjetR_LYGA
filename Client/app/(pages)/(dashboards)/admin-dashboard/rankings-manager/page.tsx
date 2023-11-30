@@ -6,6 +6,7 @@ import { VideogameDao } from '@/model/data/videogame/VideogameDao'
 import { Videogame } from '@/model/logic/videogame';
 import { MdCancel } from "react-icons/md";
 import IVideogameDao from '@/model/data/videogame/IVideogameDao';
+import { ToastProvider } from '@/app/components/Providers/ToastProvider';
 
 const TableElement = lazy(() =>
   import('@/app/components/DashboardsComponents/AdminDashboard/RankingsManager/TableElement')
@@ -110,7 +111,9 @@ const RankingManagerPage = () => {
                   </div>
                 </div>
               }>
-                <TableElement videoGame={videoGame} />
+                <ToastProvider>
+                  <TableElement videoGame={videoGame} />
+                </ToastProvider>
               </Suspense>
             ))}
           </tbody>
