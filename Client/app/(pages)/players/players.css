@@ -1,0 +1,99 @@
+#AllContainer{
+    margin: 0;
+    padding: 0;
+    height: 90vh;
+}
+
+#Filters{
+    position:absolute;
+    top: 20%;
+    left: 5%;
+    height: 60%;
+    width: 18%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#playersMainContainer{
+    position: absolute;
+    top: 20%;
+    right: 10%;
+    height: 70%;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;    
+}
+
+#researchBar{
+    position: relative;
+    top: 5%;
+}
+
+#SearchText{
+    position: relative;
+    top: 3%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#filterContainer{
+    position: absolute;
+    bottom: 5%;
+    padding: 5%;
+    height: 65%;
+    width: 90%;
+    border: 1px solid black;
+    border-radius: 5%;
+}
+
+#abecedaireSVG{
+    height: 30px;
+    width: 30px;
+}
+
+#abcText{
+    position: relative;
+    top: 8%;
+    width: 100%;
+    display: flex;
+    justify-content:  center;
+    align-items: center;
+    flex-direction: row;
+    
+}
+
+.TESTPLAYER{
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(23,20,20,1) 0%, rgba(87,75,59,1) 50%, rgba(134,102,84,1) 100%);
+    position: relative;
+    margin: 1%;
+    height: 14%;
+    width: 45%;
+    border-radius: 42px 35px 35px 42px;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+}
+
+.testAvatar{
+    position: relative;
+    height: 100%;
+
+}
+
+.TESTPLAYER:hover{
+    scale: 1.02;
+}
+
+.PlayerName{
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
