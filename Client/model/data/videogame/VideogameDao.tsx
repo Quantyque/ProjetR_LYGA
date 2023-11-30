@@ -10,7 +10,7 @@ export class VideogameDao implements IVideogameDao{
     async fetchVideoGames(): Promise<Videogame[]> {
 
         var Allgames;
-        Allgames = this.sender.GET("videogames/all")
+        Allgames = this.sender.GET("videogames/audited")
         console.log(Allgames)
         return(Allgames);
     }
