@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from "react";
-import "./profil.css";
+import "./Profil.css";
 import RankingChart from "@/app/(pages)/profil/rankingChart";
 import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
@@ -9,47 +9,59 @@ import { SetDao } from "@/model/data/set/SetDao";
 import { EloDao } from "@/model/data/elo/EloDao";
 import { Player } from "@/model/logic/player";
 import { Set } from "@/model/logic/set";
+import eloController from "@/controller/eloController";
+import playerController from "@/controller/playerController";
+import setController from "@/controller/setController";
 
 export default function Profil() {
   
   const searchParams = useSearchParams()
   const playerId = searchParams.get('playerId')
   const dataToSend = { player_id: playerId };
-
-  const eloDao : EloDao = new EloDao();
-  const playerDao : PlayerDao = new PlayerDao();
-  const setDao : SetDao = new SetDao();
+  
+  const EloController : eloController = new eloController();
+  const PlayerController : playerController = new playerController();
+  const SetController : setController = new setController();
 
   const [playerData, setPlayers] = useState<Player | null>(null);
   const [playerEloHistory, setElo] = useState<Elo | null>(null);
   const [playerSet, setSet] = useState<Set | null>(null);
   
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchData = async (pageNumber : any) => {
+    try {
+      const eloHistory = await EloController.getEloHistoryByPlayerID(dataToSend);
+      const player = await PlayerController.getPlayerByID(dataToSend);
+      const sets = await SetController.getSetByID(dataToSend, { page: pageNumber });
+
+      setElo(eloHistory);
+      setPlayers(player);
+      setSet(sets);
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handlePageChange = (direction : any) => {
+    setCurrentPage((prevPage) => {
+      const newPage = direction === 'left' ? Math.max(prevPage - 1, 1) : Math.min(prevPage + 1, 5);
+      fetchData(newPage);
+      return newPage;
+    });
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const eloHistory = await eloDao.fetchEloHistoryByPlayerID(dataToSend);
-        const player = await playerDao.fetchPlayerByID(dataToSend);
-        const sets = await setDao.fetchSetsByIdPlayer(dataToSend);
-  
-        setElo(eloHistory);
-        setPlayers(player);
-        setSet(sets);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-  
-    fetchData();
-  }, []);
-  
+    fetchData(currentPage);
+  }, [currentPage]);
 
 
   return (
     <>
    
       <div id="mainProfil">
-      {playerData && playerSet && playerEloHistory && (
+       {playerData && playerSet && playerEloHistory && ( 
         <>
           <div id="profilPicture" className="avatar">
           <div className="w-52 rounded-full ring ring-black ring-offset-black ring-offset-8">
@@ -99,9 +111,9 @@ export default function Profil() {
             </div>
           </div>
           <div id="Match_History_container">
-              <p id="Title"> LAST 3 SETS</p>
+              <p id="Title"> LAST SETS</p>
               <div>
-                <table style={{marginTop:'70px'}}>
+                <table>
                   <thead>
                     <tr>
                       <th colSpan={1}>Dates</th>
@@ -135,11 +147,20 @@ export default function Profil() {
                   </tbody>
                 </table>
               </div>
+              <div id="pagination">
+                  <button className="spacing" onClick={() => handlePageChange('left')} disabled={currentPage === 1}>
+                    Précédent
+                  </button>
+                  <span className="spacing">Page {currentPage}</span>
+                  <button className="spacing" onClick={() => handlePageChange('right')} disabled={currentPage === 5}>
+                    Suivant
+                  </button>
+              </div>
           </div>
         </>
          )}
       </div>
-     
+                  
     </>
   );
 }

@@ -8,10 +8,10 @@ export class SetDao implements ISetDao{
 
   sender : Sender = new Sender();
   
-  async fetchSetsByIdPlayer(id: any): Promise<Set | null> {
+  async fetchSetsByIdPlayer(id: any, page: any): Promise<Set | null> {
 
     var LastsetsPlayed;
-    LastsetsPlayed = this.sender.POST("sets/player/", id)
+    LastsetsPlayed = this.sender.POST("sets/player", { ...id, ...page })
     console.log(LastsetsPlayed)
     return(LastsetsPlayed);
   }

@@ -8,7 +8,7 @@ interface ISetDao {
     * @returns Les 3 dernier Sets réaliser par le joueur dans un tableau
     * @author Youri Emmanuel
     */
-    fetchSetsByIdPlayer(id: string): Promise<Set | null>;
+    fetchSetsByIdPlayer(id: string, page: number): Promise<Set | null>;
     
 }
 

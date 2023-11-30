@@ -22,8 +22,8 @@ class setController {
      * @param id id of the player
      * @returns a set by id player
      */
-    async getSetByID(id: string): Promise<Set | null>{
-        return await this.setDao.fetchSetsByIdPlayer(id)
+    async getSetByID(id: any, page:any): Promise<Set | null>{
+        return await this.setDao.fetchSetsByIdPlayer(id,page)
     }
 
 }

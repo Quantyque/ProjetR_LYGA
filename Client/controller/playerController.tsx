@@ -22,7 +22,7 @@ class playerController {
      * @param id id of the player
      * @returns a player by his id
      */
-    async getPlayerByID(id: string): Promise<Player | null>{
+    async getPlayerByID(id: any): Promise<Player | null>{
         return await this.playerDao.fetchPlayerByID(id)
     }
 
