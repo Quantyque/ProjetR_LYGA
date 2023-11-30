@@ -6,21 +6,30 @@ from manager.tournament_manager import TournamentManager
 from manager.video_game_manager import VideoGameManager
 from flask_classful import FlaskView, route
 from controls.functional import FunctionalControls
-from controls.technical import TechnicalControls
-from model.role import Role
 
 class ViewTournament(FlaskView):
+    """
+    Controller permettant de gérer les tournois
+    """
 
     def __init__(self) -> None:
         self.__tournament_manager = TournamentManager()
 
     @route('/location', methods=['POST'])
-    def tournament_by_location(self) -> dict:
+    def tournament_by_location(self) -> (str, int):
         """
         Renvoi une liste de tournois par date, jeu et lieu
 
+        Args:
+            afterDate (str): date de début de recherche
+            beforeDate (str): date de fin de recherche
+            videogameId (int): id du jeu vidéo
+            coordonnees (dict): coordonnées GPS
+            distance (int): distance de recherche
+
         Returns:
-            dict: liste de tournois
+            str: tournois
+            int: code HTTP
         """
         try:
             # Initialisation des variables

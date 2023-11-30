@@ -10,18 +10,23 @@ from controls.technical import TechnicalControls
 from model.role import Role
 
 class ViewVideoGames(FlaskView):
+    """
+    Controller permettant de gérer les jeux vidéos
+    """
 
     def __init__(self):
         self.__video_game_manager = VideoGameManager()
         self.__video_game = Videogame()
 
     @route('/all', methods=['GET'])
-    def all_video_games(self) -> str():
+    # @TechnicalControls.is_role([Role.ADMIN])
+    def all_video_games(self) -> (str, int):
         """
         Recupere tous les jeux disponibles sur Start.gg
 
         Return: 
             str: Liste de tous les jeux disponibles sur Start.gg
+            int: Code HTTP
         """
         try:
             # Envoi de la requête
@@ -42,10 +47,10 @@ class ViewVideoGames(FlaskView):
             return res
     
     @route('/add-audited', methods=['POST'])
-    # @TechnicalControls.is_role([Role.ADMIN])
-    def add_audited_game(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])
+    def add_audited_game(self) -> (str, int):
         """
-        Ajour d'un jeu à la liste des jeux audités
+        Ajout d'un jeu à la liste des jeux audités
 
         Args:
             id (int): Id du jeu à ajouter
@@ -53,6 +58,7 @@ class ViewVideoGames(FlaskView):
         
         Return:
             str: Message de succès ou d'erreur
+            int: Code HTTP
         """
         try:
             # Initialisation des variables
@@ -69,7 +75,7 @@ class ViewVideoGames(FlaskView):
             # Envoi de la requête
             result = self.__video_game_manager.add_audited_game(self.__video_game)
             
-            res = result, 200
+            res = result, 201
         
         except InvalidInput as e:
             log_info((e))
@@ -91,12 +97,13 @@ class ViewVideoGames(FlaskView):
             return res
     
     @route('/audited', methods=['GET'])
-    def get_audited_game(self) -> str():
+    def get_audited_game(self) -> (str, int):
         """
         Réupère la liste des jeux audités
 
         Return:
             str: Liste des jeux audités
+            int: Code HTTP
         """
         try:
             res = self.__video_game_manager.list_audited_game(), 200
@@ -109,8 +116,8 @@ class ViewVideoGames(FlaskView):
             return res
 
     @route('/update-audited', methods=['PUT'])
-    # @TechnicalControls.is_role([Role.ADMIN])    
-    def update_audited_game(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])    
+    def update_audited_game(self) -> (str, int):
         """
         Modifie un jeu dans la liste des jeux audités
 
@@ -120,6 +127,7 @@ class ViewVideoGames(FlaskView):
         
         Return:
             str: Message de succès ou d'erreur
+            int: Code HTTP
         """
         try:
             # Initialisation des variables
@@ -146,6 +154,10 @@ class ViewVideoGames(FlaskView):
         except GameNotAudited as e :
             log_info(str(e))
             res = str(e), 404
+
+        except DuplicateGame as e :
+            log_info(str(e))
+            res = str(e), 409
         
         except Exception as e :
             log_error(str(e))
@@ -155,8 +167,8 @@ class ViewVideoGames(FlaskView):
             return res
 
     @route('/delete-audited', methods=['DELETE'])
-    # @TechnicalControls.is_role([Role.ADMIN])    
-    def delete_audited_game(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])    
+    def delete_audited_game(self) -> (str, int):
         """
         Supprime un jeu de la liste des jeux audités
 
@@ -165,6 +177,7 @@ class ViewVideoGames(FlaskView):
         
         Return:
             str: Message de succès ou d'erreur
+            int: Code HTTP
         """
         try:
             # Initialisation des variables

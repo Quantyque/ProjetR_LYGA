@@ -44,23 +44,64 @@ class UserManager():
         """
         return self.__db.login(username, password)
 
-    def get_all_users(self):
+    def get_all_users(self) -> [User]:
+        """
+        Retourne tous les utilisateurs
+
+        Returns:
+            list(User): La liste des utilisateurs
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
 
         return self.__db.get_all_users()
 
-    def get_user_by_id(self, user: User):
-        
-        return self.__db.get_user_by_id(user)
+    def get_user_by_id(self, id: int) -> User:
+        """
+        Retourne un utilisateur en fonction de son id
 
-    def add_user(self, user: User):
-        
-        return self.__db.add_user(user)
+        Args:
+            user (User): L'utilisateur à récupérer
 
-    def update_user(self, user: User):
+        Returns:
+            User: L'utilisateur correspondant à l'id
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+        
+        return self.__db.get_user_by_id(id)
+
+    def update_user(self, user: User) -> None:
+        """
+        Met à jour un utilisateur.
+
+        Args:
+            user (User): L'utilisateur à mettre à jour.
+
+        Returns:
+            None
+
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+        """
         
         return self.__db.update_user(user)
 
-    def delete_user(self, id: int):
+    def delete_user(self, id: int) -> None:
+        """
+        Supprime un utilisateur.
+
+        Args:
+            id (int): L'id de l'utilisateur à supprimer.
+
+        Returns:
+            None
+
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+        """
         
         return self.__db.delete_user(id)
 

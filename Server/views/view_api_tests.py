@@ -1,17 +1,19 @@
 from unit_tests.api_tests import ApiTests
 from constants import INTERNAL_ERROR
-from logs import log_error, log_info
+from logs import log_error
 from flask_classful import FlaskView, route
-from controls.functional import FunctionalControls
 from controls.technical import TechnicalControls
 from model.role import Role
-from exceptions import BadRequestException, InvalidInput
 
 class ViewApiTests(FlaskView):
+    """
+    Controller permettant de gérer les tests unitaires
+    """
 
     @staticmethod
     @route('/run', methods=['GET'])
-    def run_unit_tests():
+    @TechnicalControls.is_role([Role.ADMIN])
+    def run_unit_tests() -> (str, int):
         """
             Lance les tests unitaires
 

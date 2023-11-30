@@ -13,21 +13,26 @@ import datetime
 import time
 
 class ViewRanking(FlaskView):
+    """
+    Controller permettant de gérer le classement des joueurs
+    """
 
     def __init__(self) -> None:
         self.__ranking_manager: RankingManager = RankingManager()
         self.__crons: Crons = Crons()
 
     @route('/parameters/auto-refresh', methods=['PUT'])
-    def auto_ranking_refresh(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])
+    def auto_ranking_refresh(self) -> (str, int):
         """
         Rafraichit automatiquement le classement des joueurs en fonction des tournois passés
 
-        Args:
+        Args (Requested PUT JSON)):
             activate (bool): Active ou désactive le rafraichissement automatique du classement
         
         Returns:
             str: Resultat de la requête
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -73,18 +78,21 @@ class ViewRanking(FlaskView):
             return res
 
     @route('/update', methods=['POST'])
-    def manual_update_ranking(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])
+    def manual_update_ranking(self) -> (str, int):
         """
         Met à jour le classement des joueurs en fonction des tournois passés depuis une date donnée manuellement
 
-        Args:
-            date (datetime) : Date à partir de laquelle mettre à jour le classement
+        Args (Requested POST JSON)):
+            afterDate (int): La date unix a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date unix jusqu'à laquelle rechercher les tournois.
             videogameId (int) : Id du jeu vidéo pour lequel mettre à jour le classement
             coordonnees (str) : Coordonnées du lieu du tournoi
             distance (str) : Distance autour du lieu du tournoi pour chercher les joueurs
 
         Returns:
             str: Resultat de la requête
+            int: code HTTP
         """
         try:
             # Initialisation des variables

@@ -8,7 +8,7 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
     def __init__(self) -> None:
         super().__init__()
 
-    def get_all_video_games(self):
+    def get_all_video_games(self) -> [Videogame]:
         """
         Récupère tous les jeux vidéo.
 
@@ -18,8 +18,10 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
         Raises:
             Exception: Si la requête échoue.
         """
-
+        # Initialisation du jeu vidéo
         video_game: Videogame = Videogame()
+        video_games = []
+        # Récupération des jeux vidéo
         response = self.sg.request_api("""
         {
             videogames(query: {}) {
@@ -40,12 +42,11 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
             }
         }
         """)
-
-        if "errors" in response and response["errors"]:
+        # Gestions des erreurs
+        if "errors" in response:
             raise BadRequestException(response["errors"][0]["message"])
 
-        video_games = []
-
+        # Ajout des jeux vidéo à la liste
         if "data" in response and "videogames" in response["data"]:
             for node in response["data"]["videogames"]["nodes"]:
                 video_game = Videogame()
@@ -67,7 +68,7 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
         Raises:
             GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
         """
-        
+        # Création de la requête
         graphql_query = """
             query Videogames($id: ID!) {
                 videogame(id : $id){
@@ -79,16 +80,18 @@ class VideoGameDaoApi(IVideoGameDaoApi, Api):
                 }
                 }
         """
-
         params = {
             "id": id
         }
         
+        # Envoi de la requête
         response = self.sg.request_api(graphql_query, params)
 
+        # Gestion des erreurs
         if "errors" in response:
             raise BadRequestException(response["errors"][0]["message"])
     
+        # Récupération du jeu vidéo
         videogame = Videogame()
         videogame.hydrate(response["data"]["videogame"])
         return videogame

@@ -1,9 +1,11 @@
-import jwt, time
+import jwt
+import time
 from functools import wraps
 from flask import request
 from dotenv import load_dotenv
 import os
-from exceptions import InvalidRole, TokenExpired
+from exceptions import InvalidRole, TokenExpired, InvalidCredentials
+from constants import AUTH_SYSTEM
 
 class TechnicalControls:
     def is_role(required_roles):
@@ -24,6 +26,11 @@ class TechnicalControls:
         def decorator(view_func):
             @wraps(view_func)
             def roleCheck(*args, **kwargs):
+
+                if not AUTH_SYSTEM:
+                    # Si AUTH_SYSTEM est False, autoriser l'accès sans vérification
+                    return view_func(*args, **kwargs)
+
                 load_dotenv()
                 auth_header = request.headers.get('Authorization')
                 if auth_header and auth_header.startswith('Bearer '):
@@ -42,6 +49,54 @@ class TechnicalControls:
                         return 'Invalid token', 401
                 else:
                     return 'Unauthorized', 401
+                
                 return view_func(*args, **kwargs)
+            
             return roleCheck
+        
         return decorator
+    
+    def check_is_user(token: str, id: int):
+        """
+        Vérifie que l'utilisateur est bien l'utilisateur dont l'id est passé en paramètre. Pas de vérification si l'utilisateur est un admin.
+
+        Args:
+            token (str): Le token de connexion.
+            id (int): L'id de l'utilisateur.
+
+        Raises:
+            InvalidToken: Si le token est invalide.
+            InvalidCredentials: Si l'utilisateur n'est pas le bon.
+        """
+
+        if AUTH_SYSTEM == True:
+        
+            load_dotenv()
+            auth_header = token
+
+            if auth_header and auth_header.startswith('Bearer '):
+
+                token = auth_header[len('Bearer '):]
+
+                try:
+
+                    jwt_decoded = jwt.decode(token.encode('utf-8'), os.getenv('JWT_SECRET'), algorithms=[os.getenv('JWT_ALGO')])
+                    user_id: int = jwt_decoded.get('id')
+                    user_role: int = jwt_decoded.get('role')
+
+                    if user_role != 0 and user_id != id:
+                        raise InvalidCredentials("Invalid credentials")
+                    
+                except jwt.ExpiredSignatureError:
+
+                    raise TokenExpired("Token has expired")
+                
+                except (jwt.DecodeError, InvalidCredentials):
+
+                    raise InvalidCredentials("Invalid credentials")
+                
+            else:
+                raise InvalidCredentials("Invalid credentials")
+            
+        else:
+            pass

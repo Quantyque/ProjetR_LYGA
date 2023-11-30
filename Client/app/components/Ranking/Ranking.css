@@ -1,0 +1,16 @@
+#firstPlace{
+    background: linear-gradient(-45deg, #996d2c, #f7e589);
+    color: #121212;
+}
+#secondPlace{
+    background: linear-gradient(-45deg, #363636, #DCDCDC);
+    color: #121212;
+}
+#thirdPlace{
+    background: linear-gradient(-45deg, #662E00, #D47800);
+        color: #121212;
+}
+.defaultPlace{
+    background: linear-gradient(-45deg, #121212, #414141);
+    color: white;
+}

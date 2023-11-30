@@ -21,6 +21,7 @@ class PlayerDaoApi(IPlayerDaoApi, Api):
         Raises:
             Exception: Si la requête échoue.
         """
+        # Récupération du joueur
         player : Player = Player()
         response = self.sg.request_api("""
                 query PlayerById($idPlayer : ID!) {
@@ -73,9 +74,11 @@ class PlayerDaoApi(IPlayerDaoApi, Api):
                     """,
                     {"idPlayer" : id})
         
+        # Gestion des erreurs
         if "errors" in response:
             raise BadRequestException(response["errors"][0]["message"])
         
+        # Hydratation du joueur en fonction des données récupérées
         player.hydrate(response["data"]["player"])
 
         return player

@@ -7,6 +7,7 @@ from controls.functional import FunctionalControls
 from controls.technical import TechnicalControls
 from model.season import Season
 from exceptions import BadRequestException, InvalidInput
+from model.role import Role
 
 class ViewSeason(FlaskView):
     """
@@ -16,13 +17,17 @@ class ViewSeason(FlaskView):
     def __init__(self) -> None:
         self.__season_manager = SeasonManager()
 
-    @route('/get', methods=['GET'])
-    def get_season_by_id(self) -> str():
+    @route('/get', methods=['POST'])
+    def get_season_by_id(self) -> (str, int):
         """
         Renvoi une saison en fonction de son id
 
+        Args (Requested POST Arguments)):
+            season_id (int): id de la saison
+
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -53,12 +58,16 @@ class ViewSeason(FlaskView):
             return res
         
     @route('/all', methods=['GET'])
-    def get_all_seasons(self) -> str():
+    def get_all_seasons(self) -> (str, int):
         """
         Renvoi toutes les saisons
 
+        Args (Requested GET Arguments)):
+            None
+
         Returns:
             str: saisons
+            int: code HTTP
         """
         try:
             # Envoi de la requête
@@ -90,12 +99,19 @@ class ViewSeason(FlaskView):
             return res
         
     @route('/add', methods=['POST'])
-    def add_season(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])
+    def add_season(self) -> (str, int):
         """
         Ajoute une saison
 
+        Args (Requested POST JSON)):
+            number (int): numéro de la saison
+            start_date (datetime): date de début de la saison
+            end_date (datetime): date de fin de la saison
+
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -130,13 +146,21 @@ class ViewSeason(FlaskView):
         finally:
             return res
         
-    @route('/update', methods=['POST'])
-    def update_season(self) -> str():
+    @route('/update', methods=['PUT'])
+    @TechnicalControls.is_role([Role.ADMIN])
+    def update_season(self) -> (str, int):
         """
         Met à jour une saison
+        
+        Args (Requested PUT JSON)):
+            season_id (int): id de la saison
+            number (int): numéro de la saison
+            start_date (datetime): date de début de la saison
+            end_date (datetime): date de fin de la saison
 
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -172,13 +196,18 @@ class ViewSeason(FlaskView):
         finally:
             return res
         
-    @route('/remove', methods=['POST'])
-    def remove_season(self) -> str():
+    @route('/remove', methods=['DELETE'])
+    @TechnicalControls.is_role([Role.ADMIN])
+    def remove_season(self) -> (str, int):
         """
         Supprime une saison
 
+        Args (Requested DELETE JSON)):
+            season_id (int): id de la saison
+
         Returns:
             str: saison
+            int: code HTTP
         """
         try:
             # Initialisation des variables

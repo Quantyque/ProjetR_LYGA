@@ -83,7 +83,7 @@ class EloDaoSql(IEloDaoSql, Dao):
 
         self.db.exec_request("DELETE FROM defaultPlayerElos WHERE idPlayer = ? and idGame = ?", (id_player, id_videogame))
 
-    def add_elos(self, players : dict, videogame_id : int, date : int):
+    def add_elos(self, players : dict, videogame_id : int, date : int) -> None:
         """
         Ajoute les elos d'une partie à la base de données
 
@@ -99,20 +99,21 @@ class EloDaoSql(IEloDaoSql, Dao):
             HTTPError: Si la requête échoue.
         """
 
-        # Add elos to the database if the elo does not exist or if the elo has changed
         players_to_add = []
 
         for player_id in players:
+            # Récupère le dernier elo du joueur pour le jeu vidéo
             res = self.db.exec_request("SELECT idPlayer, idGame, score, date FROM elos WHERE idGame = ? and idPlayer = ? order by date limit 1", [videogame_id, player_id])
+            # Ajoute les elos des joueurs qui ne sont pas dans la base de données ou dont l'elo a changé
             if len(res) == 0 or res[0][2] != players[player_id].Elos[videogame_id].Score:
                 players_to_add.append(player_id)
 
-        # Create the elo addition request
+        # Création de la requête
         req_elos = "INSERT INTO elos VALUES"
         params_elos = []
 
         for player_id in players_to_add:
-            # Manage the addition in the Elos table
+            # Ajoute les attributs des elos à la requête
             req_elos += " (null,?, ?, ?, ?, ?),"
             params_elos.append(players[player_id].Elos[videogame_id].Score)
             params_elos.append(player_id)
@@ -120,12 +121,12 @@ class EloDaoSql(IEloDaoSql, Dao):
             params_elos.append(date)
             params_elos.append(players[player_id].Elos[videogame_id].Season.Id)
                 
-        # Insert elo data
+        # Exectution de la requête
         if len(players_to_add) > 0:
             req_elos = req_elos[:-1]
             self.db.exec_request(req_elos, params_elos)
 
-    def delete_all_elos_from_videogame(self, videogame_id : int):
+    def delete_all_elos_from_videogame(self, videogame_id : int) -> None:
         """
         Supprime tous les elos d'un jeu vidéo
 
@@ -154,10 +155,12 @@ class EloDaoSql(IEloDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
-
-        res = self.db.exec_request("SELECT score, date, idGame, name FROM elos natural join games WHERE idPlayer = ? ORDER BY date", (player_id,))
+        # Initialisation de la liste des elos
         elos = []
+        # Récupération des elos
+        res = self.db.exec_request("SELECT score, date, idGame, name FROM elos natural join games WHERE idPlayer = ? ORDER BY date", (player_id,))
 
+        # Ajout des elos à la liste
         for row in res:
             videogame = Videogame()
             videogame.Id = row[2]
@@ -186,9 +189,10 @@ class EloDaoSql(IEloDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
-
+        # Initialisation de la liste des elos
         elos = []
 
+        # Récupération des elos
         res = self.db.exec_request("""Select idElo, score, e.idPlayer, e.idGame, name, idSeason from Games g natural join elos e join 
                         (SELECT
                         idPlayer, idGame,
@@ -199,6 +203,7 @@ class EloDaoSql(IEloDaoSql, Dao):
                         on e.idPlayer = sub.idPlayer
                         AND e.date = sub.date_max""", (player_id,))
         
+        # Ajout des elos à la liste
         for row in res:
             data_video_game = {
                 "id": row[3],

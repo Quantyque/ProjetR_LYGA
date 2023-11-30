@@ -12,3 +12,6 @@ REGEX_FORBIDDEN_CHARS = r'[<>;\'`"()&%$*+=\[\]{}\|\\\^]'
 # Ranking
 LOSER_RUN_FACTOR = 0.33
 NUMBER_OF_TOURNAMENTS_TO_BE_RANKED = 3
+
+# Auth
+AUTH_SYSTEM = False

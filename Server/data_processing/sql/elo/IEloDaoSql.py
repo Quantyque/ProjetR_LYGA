@@ -71,7 +71,7 @@ class IEloDaoSql(ABC):
         pass
 
     @abstractmethod
-    def add_elos(self, players : dict, videogame_id : int, date : int):
+    def add_elos(self, players : dict, videogame_id : int, date : int) -> None:
         """
         Ajoute les elos d'une partie à la base de données
 
@@ -89,7 +89,7 @@ class IEloDaoSql(ABC):
         pass
 
     @abstractmethod
-    def delete_all_elos_from_videogame(self, videogame_id : int):
+    def delete_all_elos_from_videogame(self, videogame_id : int) -> None:
         """
         Supprime tous les elos d'un jeu vidéo
 

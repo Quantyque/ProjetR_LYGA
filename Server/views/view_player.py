@@ -17,12 +17,16 @@ class ViewPlayer(FlaskView):
         self.__player_manager = PlayerManager()
 
     @route('/infos', methods=['POST'])
-    def get_infos_player(self) -> str():
+    def get_infos_player(self) -> (str, int):
         """
         Renvoi les informations d'un joueur en fonction de son id
 
+        Args (Requested POST JSON)):
+            player_id (int): id du joueur
+
         Returns:
             str: informations du joueur
+            int: code HTTP
         """
         try:
             # Initialisation des variables
@@ -56,12 +60,16 @@ class ViewPlayer(FlaskView):
             return res
         
     @route('/all', methods=['GET'])
-    def get_all_players(self) -> str():
+    def get_all_players(self) -> (str, int):
         """
         Renvoi la liste de tous les joueurs de la base de données
 
+        Args (Requested GET)):
+            None
+
         Returns:
             str: liste de tous les joueurs de la base de données
+            int: code HTTP
         """
         try:
 
@@ -87,12 +95,17 @@ class ViewPlayer(FlaskView):
             return res
 
     @route('/all_ranked', methods=['POST']) 
-    def get_ranked_players(self) -> str():
+    def get_ranked_players(self) -> (str, int):
         """
-        Renoi la liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum
+        Renvoi la liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum
+
+        Args (Requested POST JSON)):
+            videogame_id (int): id du jeu
+            season_id (int): id de la saison
 
         Returns:
             str: liste des joueurs classés par elo pour un jeu donné ayant joué le nombre de tournois minimum
+            int: code HTTP
         """
         try:
             # Initialisation des variables
