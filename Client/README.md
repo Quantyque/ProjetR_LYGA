@@ -78,6 +78,8 @@ Le projet est composé de plusieurs dossiers :
 - **app** : contients les pages de l'application, l'authentification à l'API et les composantes des pages
 - **controller** : contient les controleurs des types de données. C'est ce qui permet de faire la passerelle entre la vue et le model
 - **public** : contient les fichiers publiques qu'utilise l'application.
+- **cypress/e2e**: contient les tests unitaires de l'application.
+- **docs**: documentation du code de l'application.
 
 ## Routes
 
