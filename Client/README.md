@@ -24,8 +24,13 @@ Le fichier doit contenir la ligne suivante :
 STARTGG_KEY = <clé_api>
 ```
 
-Ce fichier foit également contenir les informations pour obtenir le hachable du mot de passe.
-Pour cela, contacter un membre du projet afin de l'obtenir.
+Ce fichier doit également contenir les informations pour définir les tokens d'identification utilisés pour sécuriser l'API et authentifier les utilisateurs.
+Pour cela, contacter un membre du projet afin de l'obtenir ou utilisez un générateur de chaîne de caractère (doit être longue) avec des caractères complexes.
+
+```bash
+JWT_SECRET = <secret>
+JWT_ALGO = HS256
+```
 
 Vous pouvez ensuite lancer le projet avec la commande suivante : 
 
