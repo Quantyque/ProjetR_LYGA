@@ -19,7 +19,7 @@ export default function Navbar() {
                         <a id="TitleNavbar" className="btn btn-ghost normal-case text-white text-xl" href='/home' >
                             <img src="/projetR.svg" width={"32"} height={"32"} className='mr-2' alt="" />
                             PROJET R
-                            <div className="badge badge-neutral ml-1">V1.0 Alpha</div>
+                            <div className="badge badge-neutral ml-1">V1.0 Beta</div>
                         </a>
                         <div className="dropdown" id='menuNavigation'>
                         <label tabIndex={0} className="btn m-1 btn-ghost" id='menuNavigationTitle'>Menu <BsChevronDown/></label>
