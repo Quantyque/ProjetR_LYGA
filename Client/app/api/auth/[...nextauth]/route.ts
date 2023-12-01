@@ -15,32 +15,47 @@ const authOptions: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
+                console.log(credentials);
+            
+                try {
+                    const res = await fetch('http://127.0.0.1:5000/user/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ 
+                            username: credentials?.username, 
+                            password: credentials?.password 
+                        }),
+                    });
+            
+                    if (!res.ok) {
 
-                const res = await fetch('http://localhost:5000/user/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        username: credentials?.username, 
-                        password: credentials?.password 
-                    }),
-                });
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                        
+                    }
+            
+                    const user = await res.json();
+                    const payload = jwt.decode(user.authorization) as JwtPayload;
+            
+                    if (user) {
 
-                const user = await res.json();
-                const payload = jwt.decode(user.authorization) as JwtPayload;
+                        return user;
 
-                if (user) {
+                    } else {
 
-                    return user;
+                        return null;
 
-                } else {
+                    }
 
+                } catch (err) {
+
+                    console.log(err);
                     return null;
 
                 }
-
             }
+            
         }),
     ],
     callbacks: {

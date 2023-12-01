@@ -1,8 +1,8 @@
 import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Navbar from './components/Navbar/Navbar'
 import Providers from './components/Providers/Providers'
+import { ToastProvider } from './components/Providers/ToastProvider'
 
 export const metadata: Metadata = {
   title: 'ProjetR'
@@ -16,13 +16,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-      <html lang="fr">
-        <body className={inter.className}>
+      <html lang="en">
           <Providers>
-            <Navbar/>
             {children}
           </Providers>
-        </body>
       </html>
   )
 }

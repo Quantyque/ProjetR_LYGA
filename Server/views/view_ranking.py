@@ -102,6 +102,12 @@ class ViewRanking(FlaskView):
             coordonnees = request.get_json().get('coordonnees')
             distance = request.get_json().get('distance')
 
+            print(afterDate)
+            print(beforeDate)
+            print(videogameId)
+            print(coordonnees)
+            print(distance)
+
             # Verification des variables
             FunctionalControls.check_json_arguments_not_null(afterDate, beforeDate, videogameId, coordonnees, distance)
 

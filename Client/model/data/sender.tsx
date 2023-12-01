@@ -20,8 +20,9 @@ class Sender {
      * @returns Réponse sous format JSON
      */
     public async GET(route: string): Promise<any> {
+        
         const apiEndpoint = this._apiHost + route;
-        console.log(apiEndpoint);
+
         try {
             const response = await fetch(apiEndpoint, {
                 method: "GET",
@@ -102,12 +103,7 @@ class Sender {
         }
     }
 
-    /**
-     * Requête DELETE
-     * @param route passage de la requête où elle est faite 
-     * @returns Réponse sous format JSON
-     */
-    public async DELETE(route: string): Promise<any> {
+    public async DELETE(route: string, data: any): Promise<any> {
         const apiEndpoint = this._apiHost + route;
 
         try {
@@ -116,6 +112,7 @@ class Sender {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify(data),
             });
 
             if (!response.ok) {

@@ -1,7 +1,12 @@
 'use client'
 import React, { useEffect, useState } from "react";
+<<<<<<<< HEAD:Client/app/(pages)/(main)/Profil/page.tsx
+import "./profil.css";
+import RankingChart from "@/app/(pages)/(main)/Profil/rankingChart";
+========
 import "./Profil.css";
 import RankingChart from "@/app/(pages)/profil/rankingChart";
+>>>>>>>> sprint4:Client/app/(pages)/profil/page.tsx
 import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
 import { Player } from "@/model/logic/player";

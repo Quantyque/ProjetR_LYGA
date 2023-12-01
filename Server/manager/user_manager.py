@@ -25,7 +25,20 @@ class UserManager():
             DuplicateUser: Si l'utilisateur existe déjà.
         """
         return self.__db.register(username, password)
+    
+    def admin_register(self, username: str, password: str, role: int) -> None:
+        """
+        Inscrit un utilisateur avec un role (ADMIN).
 
+        Args:
+            username (str): Le nom d'utilisateur.
+            password (str): Le mot de passe.
+            role (int): Le rôle de l'utilisateur.
+
+        Raises:
+            DuplicateUser: Si l'utilisateur existe déjà.
+        """
+        return self.__db.admin_register(username, password, role)
 
     def login(self, username: str, password: str) -> list(str()):
         """
@@ -104,5 +117,18 @@ class UserManager():
         """
         
         return self.__db.delete_user(id)
+    
+    def get_roles(self) -> list(str()):
+        """
+        Retourne les rôles
+
+        Returns:
+            list(str()): La liste des rôles
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+
+        return self.__db.get_roles()
 
     # endregion

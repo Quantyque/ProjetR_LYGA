@@ -4,7 +4,7 @@ import { NextResponse } from "next/server"
 export default withAuth(
   function middleware(req){
 
-    if (req.nextUrl.pathname.startsWith("/admin-panel") && req.nextauth.token?.role !== 1) {
+    if (req.nextUrl.pathname.startsWith("/admin-dashboard") && req.nextauth.token?.role !== 1) {
       return NextResponse.rewrite(new URL("/signin?message=Access denied !", req.url))
     };
 
@@ -19,7 +19,7 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ["/admin-panel/:path*"]
+  matcher: ["/admin-dashboard/:path*"]
 }
 
 

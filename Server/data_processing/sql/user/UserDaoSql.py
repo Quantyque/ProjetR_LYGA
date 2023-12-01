@@ -37,6 +37,31 @@ class UserDaoSql(IUserDaoSql, Dao):
         user = User(None, username, Role.USER.value, password, None)
         self.db.exec_request("INSERT INTO Users(username, password, role) VALUES (?, ?, ?)", (user.Username, user.Password, user.Role))
 
+    def admin_register(self, username: str, password: str, role: int) -> None:
+        """
+        Enregistre un nouvel utilisateur avec un role (ADMIN).
+
+        Args:
+            username (str): Le nom d'utilisateur.
+            password (str): Le mot de passe.
+            role (int): Le rôle de l'utilisateur.
+
+        Returns:
+            None
+
+        Raises:
+            DuplicateUser: Si l'utilisateur existe déjà.
+        """
+
+        user_infos = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
+
+        if user_infos is not None:
+            raise DataDuplicate("Username already taken.")
+
+        password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        user = User(None, username, role, password, None)
+        self.db.exec_request("INSERT INTO Users(username, password, role) VALUES (?, ?, ?)", (user.Username, user.Password, user.Role))
+
     def login(self, username: str, password: str) -> list(str()):
         """
         Connecte un utilisateur.
@@ -150,14 +175,22 @@ class UserDaoSql(IUserDaoSql, Dao):
         users = self.db.exec_request("SELECT * FROM Users WHERE username = ?", (user.Username,), True)
 
         if users is not None:
-            raise DataDuplicate("Username already taken.")
+            if users[0] != user.Id:
+                raise DataDuplicate("Username already taken.")
 
-        if user.Password is not None:
+        if user.Password is not None and user.UserPP is not None:
             password = bcrypt.hashpw(user.Password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
             self.db.exec_request("UPDATE Users SET username = ?, password = ?, role = ?, userPP = ? WHERE id = ?", (user.Username, password, user.Role, user.UserPP, user.Id))
-
-        else:
+        elif user.Password is not None:
+            password = bcrypt.hashpw(user.Password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+            self.db.exec_request("UPDATE Users SET username = ?, password = ?, role = ? WHERE id = ?", (user.Username, password, user.Role, user.Id))
+            print("ok 2")
+        elif user.UserPP is not None:
             self.db.exec_request("UPDATE Users SET username = ?, role = ?, userPP = ? WHERE id = ?", (user.Username, user.Role, user.UserPP, user.Id))
+            print("ok 3")
+        else:
+            self.db.exec_request("UPDATE Users SET username = ?, role = ? WHERE id = ?", (user.Username, user.Role, user.Id))
+            print("ok 4")
 
     def delete_user(self, id: int) -> None:
         """
@@ -179,5 +212,26 @@ class UserDaoSql(IUserDaoSql, Dao):
             raise UserNotFound("User not found.")
 
         self.db.exec_request("DELETE FROM Users WHERE id = ?", (id,))
+
+    def get_roles(self):
+        """
+        Retourne les rôles au format JSON
+
+        Returns:
+            list(dict): La liste des rôles au format JSON
+
+        Raises:
+            Exception: Si la requête échoue.
+        """
+
+        roles = self.db.exec_request("SELECT * FROM role")
+
+        if roles is not None:
+            result = [{'id': role[0], 'name': role[1]} for role in roles]
+        else:
+            raise Exception("Invalid credentials.")
+        
+        return result
+
 
     # endregion
