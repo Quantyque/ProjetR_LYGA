@@ -17,7 +17,7 @@ interface LocationMarkerProps {
  * @returns Marker on the map
  */
 function LocationMarker({ onMapClick }: LocationMarkerProps) {
-    const [position, setPosition] = useState(null);
+    const [position, setPosition] = useState<L.LatLng | null>(null);
 
     const markerIcon = new L.Icon({
         iconSize: [25, 41],
