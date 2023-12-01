@@ -13,7 +13,7 @@ import userController from '@/controller/userControllers';
  * @param onClose : Fonction de fermeture de la modal
  */
 interface ModalAddProps {
-    classId: string
+    classId: string;
     isOpen: boolean;
     onClose: () => void;
 }
