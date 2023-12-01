@@ -25,12 +25,12 @@ class VideoGameDaoSql(IVideoGameDaoSql, Dao):
             GameAlreadyAudited: Si le jeu vidéo est déjà dans la liste.
         """
 
-        rows = self.db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
+        rows = self.db.exec_request_multiple("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
         if len(rows) == 0:
             image = ""
             if len(game.Images) > 0:
                 image = game.Images[0]
-            self.db.exec_request("INSERT INTO Games(idGame, name, imageUrl) VALUES (?, ?, ?)", (game.Id, game.Name, image))
+            self.db.exec_request_one("INSERT INTO Games(idGame, name, imageUrl) VALUES (?, ?, ?)", (game.Id, game.Name, image))
         else:
             raise DuplicateGame(f"Game with id {game.Id} already exists.")
         
@@ -47,7 +47,7 @@ class VideoGameDaoSql(IVideoGameDaoSql, Dao):
             NoGameAudited: Si aucun jeu vidéo n'est dans la liste.
         """
 
-        rows = self.db.exec_request("SELECT * FROM Games")
+        rows = self.db.exec_request_multiple("SELECT * FROM Games")
 
         result = []
         for row in rows:
@@ -71,8 +71,8 @@ class VideoGameDaoSql(IVideoGameDaoSql, Dao):
         Raises:
             GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
         """
-        game_to_update = self.db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
-        games = self.db.exec_request("SELECT * FROM Games")
+        game_to_update = self.db.exec_request_multiple("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
+        games = self.db.exec_request_multiple("SELECT * FROM Games")
 
         # check if name game already exists
         for g in games:
@@ -80,7 +80,7 @@ class VideoGameDaoSql(IVideoGameDaoSql, Dao):
                 raise DuplicateGame(f"Game with name {game.Name} already exists.")
 
         if len(game_to_update) != 0:
-            self.db.exec_request("UPDATE Games SET name = ? WHERE idGame = ?", (game.Name, game.Id))
+            self.db.exec_request_one("UPDATE Games SET name = ? WHERE idGame = ?", (game.Name, game.Id))
         else:
             raise GameNotAudited(f"Game with id {game.Id} not audited.")
         
@@ -100,9 +100,9 @@ class VideoGameDaoSql(IVideoGameDaoSql, Dao):
             GameNotAudited: Si le jeu vidéo n'est pas dans la liste.
         """
 
-        rows = self.db.exec_request("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
+        rows = self.db.exec_request_multiple("SELECT * FROM Games WHERE idGame = ?", (game.Id,))
         if len(rows) != 0:
-            self.db.exec_request("DELETE FROM Games WHERE idGame = ?", (game.Id,))
+            self.db.exec_request_one("DELETE FROM Games WHERE idGame = ?", (game.Id,))
         
         return jsonify({"message": "Game deleted successfully."})
 
