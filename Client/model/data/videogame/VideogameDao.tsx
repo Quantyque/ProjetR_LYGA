@@ -1,5 +1,4 @@
 import { Videogame } from "@/model/logic/videogame";
-import { useEffect, useState } from "react";
 import IVideogameDao from "./IVideogameDao";
 import Sender from "../sender";
 
@@ -35,7 +34,7 @@ export class VideogameDao implements IVideogameDao{
      * @param videogame jeu video à ajouter
      * @returns un message de confirmation d'ajout du jeu video
     */
-    addVideoGame(videogame: Videogame): Promise<string> {
+    addVideogameToBeAudited(videogame: Videogame): Promise<string> {
             
         const response = this.sender.POST("/videogames/add-audited", {id: videogame.id, name: videogame.name})
         return response;

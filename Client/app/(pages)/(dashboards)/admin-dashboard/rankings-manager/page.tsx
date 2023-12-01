@@ -2,11 +2,10 @@
 import React, {lazy, Suspense, useState, useEffect} from 'react'
 import { FaRankingStar } from "react-icons/fa6";
 import { CiBoxList } from "react-icons/ci";
-import { VideogameDao } from '@/model/data/videogame/VideogameDao'
 import { Videogame } from '@/model/logic/videogame';
 import { MdCancel } from "react-icons/md";
-import IVideogameDao from '@/model/data/videogame/IVideogameDao';
 import { ToastProvider } from '@/app/components/Providers/ToastProvider';
+import videogameController from '@/controller/videogameController';
 
 const TableElement = lazy(() =>
   import('@/app/components/DashboardsComponents/AdminDashboard/RankingsManager/TableElement')
@@ -14,7 +13,7 @@ const TableElement = lazy(() =>
 
 const RankingManagerPage = () => {
 
-  const videogameDao : IVideogameDao = new VideogameDao();
+  const videogameCtrl : videogameController = new videogameController();
   const [videoGames, setVideoGame] = useState<Videogame[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -25,7 +24,7 @@ const RankingManagerPage = () => {
 
       try {
 
-        const games = await videogameDao.fetchAuditedVideoGames();
+        const games = await videogameCtrl.getAuditedVideogames();
         setVideoGame(games);
 
       } catch (error) {
@@ -50,11 +49,21 @@ const RankingManagerPage = () => {
 
     })
     .sort((a, b) => {
+
+      var result;
+
       if (sortOrder === 'asc') {
-        return a.name.localeCompare(b.name);
+        
+        result = a.name.localeCompare(b.name);
+
       } else {
-        return b.name.localeCompare(a.name);
+
+        result = b.name.localeCompare(a.name);
+
       }
+
+      return result;
+
     });
 
   {/* Reinitialisation des filtres */}

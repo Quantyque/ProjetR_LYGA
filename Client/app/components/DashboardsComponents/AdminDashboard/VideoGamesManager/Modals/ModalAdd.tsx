@@ -4,9 +4,8 @@ import { IoIosAddCircle } from "react-icons/io";
 import { CgClose } from "react-icons/cg";
 import { IoMdAddCircle } from "react-icons/io";
 import { Videogame } from '@/model/logic/videogame';
-import { VideogameDao } from '@/model/data/videogame/VideogameDao';
-import IVideogameDao from '@/model/data/videogame/IVideogameDao';
 import { useToast } from '@/app/components/Providers/ToastProvider';
+import videogameController from '@/controller/videogameController';
 
 interface ModalAddProps {
     classId: string
@@ -20,14 +19,15 @@ const ModalAdd = ({ classId, isOpen, onClose }: ModalAddProps) => {
     const [videoGames, setVideoGames] = useState<Videogame[]>([]);
     const [videoGameToAdd, setVideoGameToAdd] = useState<Videogame>();
 
+    {/* Récupération des jeux à auditer */}
     useEffect(() => {
 
       const fetchData = async () => {
         try {
 
-            const videogameDao : IVideogameDao = new VideogameDao();
-            const games = await videogameDao.fetchVideoGames();
-            const auditedGames = await videogameDao.fetchAuditedVideoGames();
+            const videogameCtrl : videogameController = new videogameController();
+            const games = await videogameCtrl.getVideogames();
+            const auditedGames = await videogameCtrl.getAuditedVideogames();
             const availableGames = games.filter((game) => !auditedGames.some((auditedGame) => auditedGame.id === game.id));
             setVideoGames(availableGames);
 
@@ -42,6 +42,7 @@ const ModalAdd = ({ classId, isOpen, onClose }: ModalAddProps) => {
 
     }, []);
 
+    { /* Ajout du jeu à la liste des jeux à auditer */  }
     const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();
@@ -50,8 +51,8 @@ const ModalAdd = ({ classId, isOpen, onClose }: ModalAddProps) => {
 
             if (videoGameToAdd) {
                 
-                const videogameDao : IVideogameDao = new VideogameDao();
-                await videogameDao.addVideoGame(videoGameToAdd);
+                const videogameCtrl : videogameController = new videogameController();
+                await videogameCtrl.addVideogameToBeAudited(videoGameToAdd);
                 onClose();
                 showToast(`Le jeu ${videoGameToAdd.name} a bien été ajouté`, "success");
                 window.location.reload();

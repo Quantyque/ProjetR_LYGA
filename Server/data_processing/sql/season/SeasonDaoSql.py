@@ -26,7 +26,7 @@ class SeasonDaoSql(ISeasonDaoSql):
         """
         current_date = dt.datetime.today()
         unix_date = time.mktime(current_date.timetuple())
-        res = self.db.exec_request("""SELECT idSeason, number, startDate, endDate FROM seasons WHERE startDate <= ? AND endDate >= ?""", (unix_date, unix_date))
+        res = self.db.exec_request_multiple("""SELECT idSeason, number, startDate, endDate FROM seasons WHERE startDate <= ? AND endDate >= ?""", (unix_date, unix_date))
         if len(res) == 0:
             raise Exception("No current season")
         season : Season = Season()
@@ -52,7 +52,7 @@ class SeasonDaoSql(ISeasonDaoSql):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.db.exec_request("""INSERT INTO seasons VALUES (null, ?, ?, ?)""", (season.Number, season.StartDate, season.EndDate))
+        self.db.exec_request_one("""INSERT INTO seasons VALUES (null, ?, ?, ?)""", (season.Number, season.StartDate, season.EndDate))
 
     def remove_season(self, idSeason : int) -> None:
         """
@@ -67,7 +67,7 @@ class SeasonDaoSql(ISeasonDaoSql):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.db.exec_request("""DELETE FROM seasons WHERE idSeason = ?""", (idSeason,))
+        self.db.exec_request_one("""DELETE FROM seasons WHERE idSeason = ?""", (idSeason,))
 
     def update_season(self, season : Season) -> None:
         """
@@ -82,7 +82,7 @@ class SeasonDaoSql(ISeasonDaoSql):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.db.exec_request("""UPDATE seasons SET number = ?, startDate = ?, endDate = ? WHERE idSeason = ?""", (season.name, season.start_date, season.end_date, season.id_season))
+        self.db.exec_request_one("""UPDATE seasons SET number = ?, startDate = ?, endDate = ? WHERE idSeason = ?""", (season.name, season.start_date, season.end_date, season.id_season))
 
     def get_all_seasons(self) -> [Season]:
         """
@@ -97,7 +97,7 @@ class SeasonDaoSql(ISeasonDaoSql):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        res = self.db.exec_request("""SELECT idSeason, number, startDate, endDate FROM seasons""")
+        res = self.db.exec_request_multiple("""SELECT idSeason, number, startDate, endDate FROM seasons""")
         seasons = []
         for row in res:
             season : Season = Season()
@@ -124,7 +124,7 @@ class SeasonDaoSql(ISeasonDaoSql):
         Raises:
             HTTPError: Si la requête échoue ou qu'il n'y a pas de saison avec cet id.
         """
-        res = self.db.exec_request("""SELECT idSeason, number, startDate, endDate FROM seasons WHERE idSeason = ?""", (id,))
+        res = self.db.exec_request_multiple("""SELECT idSeason, number, startDate, endDate FROM seasons WHERE idSeason = ?""", (id,))
         if len(res) == 0:
             raise Exception("No season with this id")
         season : Season = Season()

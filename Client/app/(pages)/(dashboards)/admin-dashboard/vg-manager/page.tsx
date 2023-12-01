@@ -3,12 +3,11 @@ import React, {useState, useEffect, lazy, Suspense} from 'react'
 import { IoGameController } from "react-icons/io5";
 import { CiBoxList } from "react-icons/ci";
 import { IoIosAddCircle } from "react-icons/io";
-import { VideogameDao } from '@/model/data/videogame/VideogameDao'
 import { Videogame } from '@/model/logic/videogame';
-import IVideogameDao from '@/model/data/videogame/IVideogameDao';
 import { MdCancel } from "react-icons/md";
 import ModalAdd from '@/app/components/DashboardsComponents/AdminDashboard/VideoGamesManager/Modals/ModalAdd';
 import { ToastProvider } from '@/app/components/Providers/ToastProvider';
+import videogameController from '@/controller/videogameController';
 
 const TableElement = lazy(() =>
   import('@/app/components/DashboardsComponents/AdminDashboard/VideoGamesManager/TableElement')
@@ -16,7 +15,7 @@ const TableElement = lazy(() =>
 
 const VgManagerPage = () => {
 
-  const videogameDao : IVideogameDao = new VideogameDao();
+  const videogameCtrl : videogameController = new videogameController();
   const [videoGames, setVideoGame] = useState<Videogame[]>([]);
 
   const [isModalAddOpen, setModalAddOpen] = React.useState(false);
@@ -24,6 +23,7 @@ const VgManagerPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
+  { /* Gestion de la modal d'ajout */ }
   const closeOnEscape = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       closeAddModal();
@@ -54,11 +54,12 @@ const VgManagerPage = () => {
 
   };
 
+  {/* Recuperation des jeux audités */}
   useEffect(() => {
     const fetchData = async () => {
       try {
 
-        const games = await videogameDao.fetchAuditedVideoGames();
+        const games = await videogameCtrl.getAuditedVideogames();
         setVideoGame(games);
 
       } catch (error) {

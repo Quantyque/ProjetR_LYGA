@@ -2,8 +2,7 @@
 import React, { useRef } from 'react'
 import Link from 'next/link'
 import './register.css'
-import IUserDao from '@/model/data/user/IUserDao';
-import { UserDao } from '@/model/data/user/UserDao';
+import userController from '@/controller/userControllers'
 import User from '@/model/logic/user';
 import { signIn } from 'next-auth/react'
 
@@ -26,8 +25,8 @@ const Register = (props: Props) => {
 
         try {
 
-            const userDao: IUserDao = new UserDao();
-            await userDao.createUser(new User(undefined, username.current, undefined, undefined, undefined), password.current, confirmPassword.current);
+            const userCtrl: userController = new userController();
+            await userCtrl.createUser(new User(undefined, username.current, undefined, undefined, undefined), password.current, confirmPassword.current);
     
             await signIn('credentials', {
 

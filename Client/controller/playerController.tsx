@@ -3,7 +3,7 @@ import { PlayerDao } from "@/model/data/player/PlayerDao";
 import IPlayerDao from "@/model/data/player/IPlayerDao";
 
 /**
- * Controller de type Player
+ * Controller des joueurs
  * @author Antoine Richard
  */
 class playerController {
@@ -11,7 +11,7 @@ class playerController {
     /**
      * Player dao de player controller
      */
-    playerDao: IPlayerDao;
+    private playerDao: IPlayerDao;
  
     constructor()  {
         this.playerDao = new PlayerDao;

@@ -6,9 +6,8 @@ import { MdEdit } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import { FaUser, FaUserMinus, FaTrash } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
-import IUserDao from '@/model/data/user/IUserDao';
-import { UserDao } from '@/model/data/user/UserDao';
 import { useToast } from '@/app/components/Providers/ToastProvider';
+import userController from '@/controller/userControllers';
 
 interface ModalEditProps {
     user: User
@@ -23,6 +22,7 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
     const [editedUsername, setEditedUsername] = useState(user.username);
     const [editedRole, setEditedRole] = useState(user.role);
 
+    {/* Mise à jour de l'utilisateur */}
     useEffect(() => {
 
         setEditedUsername(user.username);
@@ -36,8 +36,8 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
 
         try {
 
-            const userDao: IUserDao = new UserDao();
-            await userDao.updateUser(new User(user.id, editedUsername, editedRole, user.userPP, undefined));
+            const userCtrl: userController = new userController();
+            await userCtrl.updateUser(new User(user.id, editedUsername, editedRole, user.userPP, undefined));
             onClose();
             showToast("L'utilisateur a été mis à jour", "success");
             window.location.reload();
@@ -51,6 +51,7 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
         
     };
 
+    {/* Suppression de l'utilisateur */}
     const handleDelete = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
@@ -59,8 +60,8 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
             
             if (user.id !== undefined) {
 
-                const userDao: IUserDao = new UserDao();
-                await userDao.deleteUser(new User(user.id, editedUsername, editedRole, user.userPP, undefined));
+                const userCtrl: userController = new userController();
+                await userCtrl.deleteUser(new User(user.id, editedUsername, editedRole, user.userPP, undefined));
                 onClose();
                 showToast("L'utilisateur a été supprimé", "success");
                 window.location.reload();

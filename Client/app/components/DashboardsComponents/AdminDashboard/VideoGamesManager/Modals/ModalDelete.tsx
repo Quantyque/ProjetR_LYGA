@@ -4,9 +4,8 @@ import { FaTrash } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 import { TiMinus } from "react-icons/ti";
 import { Videogame } from '@/model/logic/videogame';
-import IVideogameDao from '@/model/data/videogame/IVideogameDao';
-import { VideogameDao } from '@/model/data/videogame/VideogameDao';
 import { useToast } from '@/app/components/Providers/ToastProvider';
+import videogameController from '@/controller/videogameController';
 
 interface ModalDeleteProps {
     classId: string,
@@ -26,6 +25,7 @@ const ModalDelete = ({ classId, videoGame, isOpen, onClose }: ModalDeleteProps) 
 
     }, [videoGame]);
 
+    {/* Suppression du jeu de la liste des jeux à auditer */}
     const handleDelete = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
@@ -34,8 +34,8 @@ const ModalDelete = ({ classId, videoGame, isOpen, onClose }: ModalDeleteProps) 
             
             if (videoGame.id !== undefined) {
 
-                const videoGameDao: IVideogameDao = new VideogameDao();
-                await videoGameDao.deleteAuditedVideoGame(videoGame.id);
+                const videoGameCtrl: videogameController = new videogameController();
+                await videoGameCtrl.deleteAuditedVideogame(videoGame.id);
                 onClose();
                 showToast("Le jeu à été supprimé de la liste", "success");
                 window.location.reload();

@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Role from '@/model/logic/role'
 import { IoIosAddCircle } from "react-icons/io";
 import { FaUserPlus } from "react-icons/fa";import { CgClose } from "react-icons/cg";
-import IUserDao from '@/model/data/user/IUserDao';
-import { UserDao } from '@/model/data/user/UserDao';
 import User from '@/model/logic/user';
 import { useToast } from '@/app/components/Providers/ToastProvider';
+import userController from '@/controller/userControllers';
 
+/**
+ * Composant ModalAdd : Permet d'ajouter un utilisateur
+ * @param classId : Id de la modal
+ * @param isOpen : Etat de la modal
+ * @param onClose : Fonction de fermeture de la modal
+ */
 interface ModalAddProps {
     classId: string
     isOpen: boolean;
@@ -22,14 +27,15 @@ const ModalAdd = ({ classId, isOpen, onClose }: ModalAddProps) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     
+    {/* Ajout de l'utilisateur avec role (ADMIN) */}
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         
             e.preventDefault();
 
             try {
     
-                const userDao: IUserDao = new UserDao();
-                await userDao.createUserWithRole(new User(undefined, username, role, undefined, undefined), password, confirmPassword);
+                const userCtrl: userController = new userController();
+                await userCtrl.createUserWithRole(new User(undefined, username, role, undefined, undefined), password, confirmPassword);
                 onClose();
                 showToast("L'utilisateur a été ajouté", "success");
                 window.location.reload();

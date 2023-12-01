@@ -2,19 +2,15 @@
 import React, { useState } from 'react'
 import { IoAppsSharp } from "react-icons/io5";
 import { MdEdit } from "react-icons/md";
-import { SketchPicker } from "react-color";
-import styles from "./ColorPicker.module.css";
+import { ColorResult, RGBColor, SketchPicker } from "react-color";
+import styles from "./ColorPicker.module.css"; 
 
 const AppSettings = () => {
 
+    { /* Gestion color picker */}
     const [state, setState] = useState({
         displayColorPicker: false,
-        color: {
-          r: '241',
-          g: '112',
-          b: '19',
-          a: '1',
-        },
+        color: { r: 255, g: 0, b: 0, a: 1 } as RGBColor
     });
 
     const handleClick = () => {
@@ -25,8 +21,16 @@ const AppSettings = () => {
         setState({...state, displayColorPicker: false });
     };
 
-    const handleChange = (color) => {
-        setState({...state, color: color.rgb });
+    const handleChange = (color: ColorResult) => {
+        setState({
+            ...state,
+            color: {
+                r: color.rgb.r,
+                g: color.rgb.g,
+                b: color.rgb.b,
+                a: color.rgb.a
+            } as RGBColor
+        });
     };
     
 

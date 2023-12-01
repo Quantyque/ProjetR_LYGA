@@ -3,12 +3,21 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaf
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+/**
+ * Props of the LocationMarker component
+ * @param onMapClick : function to call when the user clicks on the map
+*/
 interface LocationMarkerProps {
     onMapClick: (lat: number, lng: number) => void;
 }
-  
+
+/**
+ * Shows a marker on the map when the user clicks on it and return the coordinates of the click
+ * @param onMapClick : function to call when the user clicks on the map
+ * @returns Marker on the map
+ */
 function LocationMarker({ onMapClick }: LocationMarkerProps) {
-    const [position, setPosition] = useState(null);
+    const [position, setPosition] = useState<L.LatLng | null>(null);
 
     const markerIcon = new L.Icon({
         iconSize: [25, 41],
@@ -32,15 +41,24 @@ function LocationMarker({ onMapClick }: LocationMarkerProps) {
 
     return position === null ? null : (
         <Marker position={position} icon={markerIcon}>
-        <Popup>You clicked here</Popup>
+            <Popup>You clicked here</Popup>
         </Marker>
     );
 }
 
+/**
+ * Props of the MapElement component
+ * @param onMapClick : function to call when the user clicks on the map
+*/
 interface MapElementProps {
     onMapClick: (lat: number, lng: number) => void;
 }
 
+/**
+ * Shows a map
+ * @param onMapClick : function to call when the user clicks on the map
+ * @returns Map
+ */
 const MapElement = ({ onMapClick }: MapElementProps) => {
 
   return (
