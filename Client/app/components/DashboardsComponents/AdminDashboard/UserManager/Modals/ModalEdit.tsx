@@ -22,6 +22,7 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
     const [editedUsername, setEditedUsername] = useState(user.username);
     const [editedRole, setEditedRole] = useState(user.role);
 
+    {/* Mise à jour de l'utilisateur */}
     useEffect(() => {
 
         setEditedUsername(user.username);
@@ -50,6 +51,7 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
         
     };
 
+    {/* Suppression de l'utilisateur */}
     const handleDelete = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();

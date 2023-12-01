@@ -7,6 +7,7 @@ import styles from "./ColorPicker.module.css";
 
 const AppSettings = () => {
 
+    { /* Gestion color picker */}
     const [state, setState] = useState({
         displayColorPicker: false,
         color: {

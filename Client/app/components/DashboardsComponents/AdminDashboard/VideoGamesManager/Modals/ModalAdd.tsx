@@ -19,6 +19,7 @@ const ModalAdd = ({ classId, isOpen, onClose }: ModalAddProps) => {
     const [videoGames, setVideoGames] = useState<Videogame[]>([]);
     const [videoGameToAdd, setVideoGameToAdd] = useState<Videogame>();
 
+    {/* Récupération des jeux à auditer */}
     useEffect(() => {
 
       const fetchData = async () => {
@@ -41,6 +42,7 @@ const ModalAdd = ({ classId, isOpen, onClose }: ModalAddProps) => {
 
     }, []);
 
+    { /* Ajout du jeu à la liste des jeux à auditer */  }
     const handleSave = async (event: React.FormEvent<HTMLFormElement>) => {
 
         event.preventDefault();

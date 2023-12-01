@@ -12,7 +12,8 @@ const AdminInformations = () => {
 
     const { data: session } = useSession();
 
-    const [isModalAddOpen, setModalAddOpen] = React.useState(false);
+    { /* Gestion de la modal d'édition */ }
+    const [isModalEditOpen, setModalEditOpen] = React.useState(false);
 
     const closeOnEscape = (e: KeyboardEvent) => {
 
@@ -26,7 +27,7 @@ const AdminInformations = () => {
 
     React.useEffect(() => {
 
-        if (isModalAddOpen) {
+        if (isModalEditOpen) {
 
             window.addEventListener('keydown', closeOnEscape);
 
@@ -38,17 +39,17 @@ const AdminInformations = () => {
 
         };
 
-    }, [isModalAddOpen]);
+    }, [isModalEditOpen]);
 
     const openAddModal = () => {
   
-      setModalAddOpen(true);
+        setModalEditOpen(true);
   
     };
   
     const closeAddModal = () => {
   
-      setModalAddOpen(false);
+        setModalEditOpen(false);
   
     };
 
@@ -86,7 +87,7 @@ const AdminInformations = () => {
                 </table>
                 <button className='btn btn-ghost bg-orange-500 hover:bg-orange-600 my-4 ml-4' onClick={ openAddModal }><MdEdit />Modifier</button>
                 <ToastProvider>
-                    <ModalEdit user={ new User(session?.user.id, session?.user.username ?? "N/A", session?.user.role, session?.user.userPP, undefined) } isOpen={isModalAddOpen} onClose={ closeAddModal } classId='add' />
+                    <ModalEdit user={ new User(session?.user.id, session?.user.username ?? "N/A", session?.user.role, session?.user.userPP, undefined) } isOpen={isModalEditOpen} onClose={ closeAddModal } classId='add' />
                 </ToastProvider>
             </div>
         </>

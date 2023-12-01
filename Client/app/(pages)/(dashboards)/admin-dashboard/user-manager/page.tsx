@@ -21,6 +21,7 @@ export default function UserManagerPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const [isModalAddOpen, setModalAddOpen] = React.useState(false);
 
+  {/* Gestion de la modal d'ajout */}
   const closeOnEscape = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       closeAddModal();

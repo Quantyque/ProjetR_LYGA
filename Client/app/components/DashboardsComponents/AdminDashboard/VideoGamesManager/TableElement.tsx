@@ -11,6 +11,7 @@ interface VideoGamesManagerTableElementProps {
 
 const VideoGamesManagerTableElement = ({ game }: VideoGamesManagerTableElementProps) => {
 
+  {/* Gestion de la modal de suppression */}
   const [isModalOpen, setModalOpen] = React.useState(false);
 
   const closeOnEscape = (e: KeyboardEvent) => {

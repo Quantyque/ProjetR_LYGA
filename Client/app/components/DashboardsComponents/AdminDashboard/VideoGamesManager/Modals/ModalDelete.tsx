@@ -25,6 +25,7 @@ const ModalDelete = ({ classId, videoGame, isOpen, onClose }: ModalDeleteProps) 
 
     }, [videoGame]);
 
+    {/* Suppression du jeu de la liste des jeux à auditer */}
     const handleDelete = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();

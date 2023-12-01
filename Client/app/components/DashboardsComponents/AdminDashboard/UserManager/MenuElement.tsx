@@ -11,6 +11,7 @@ interface MenuElementProps {
 
 const MenuElement = ({user}: MenuElementProps) => {
 
+    { /* Gestion de la modal d'édition */ }
     const [isModalOpen, setModalOpen] = React.useState(false);
 
     const closeOnEscape = (e: KeyboardEvent) => {

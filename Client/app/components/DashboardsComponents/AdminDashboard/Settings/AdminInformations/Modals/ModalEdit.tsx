@@ -29,6 +29,7 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
 
     }, [user]);
     
+    {/* Mise à jour de l'utilisateur */}
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();

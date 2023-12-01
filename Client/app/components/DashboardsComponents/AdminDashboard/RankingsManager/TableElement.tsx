@@ -19,6 +19,7 @@ const TableElement = ({ videoGame }: TableElementProps) => {
   const { showToast, toast, hideToast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
 
+  {/* Rechagement manuel */}
   const handleManualRefreshButtonClick = async () => {
 
     try {

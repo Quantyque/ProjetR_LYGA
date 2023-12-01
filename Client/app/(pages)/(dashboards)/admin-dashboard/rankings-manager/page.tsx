@@ -49,11 +49,21 @@ const RankingManagerPage = () => {
 
     })
     .sort((a, b) => {
+
+      var result;
+
       if (sortOrder === 'asc') {
-        return a.name.localeCompare(b.name);
+        
+        result = a.name.localeCompare(b.name);
+
       } else {
-        return b.name.localeCompare(a.name);
+
+        result = b.name.localeCompare(a.name);
+
       }
+
+      return result;
+
     });
 
   {/* Reinitialisation des filtres */}

@@ -23,6 +23,7 @@ const VgManagerPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
+  { /* Gestion de la modal d'ajout */ }
   const closeOnEscape = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       closeAddModal();
@@ -53,6 +54,7 @@ const VgManagerPage = () => {
 
   };
 
+  {/* Recuperation des jeux audités */}
   useEffect(() => {
     const fetchData = async () => {
       try {
