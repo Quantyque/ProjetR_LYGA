@@ -2,11 +2,11 @@
 import { useEffect, useState } from 'react'
 import videogameController from '@/controller/videogameController'
 import playerController from '@/controller/playerController'
-import { VideogameDao } from '@/model/data/videogame/VideogameDao'
-import { PlayerDao } from '@/model/data/player/PlayerDao'
+import seasonController from '@/controller/seasonController'
 import Rank from '@/app/components/Ranking/Rank'
 import { Player } from '@/model/logic/player'
 import { Videogame } from '@/model/logic/videogame'
+import { Season } from '@/model/logic/season'
 
 /**
  * Show the page of the ranking
@@ -17,36 +17,30 @@ export default function Ranking() {
 
   let placeOrder = 0;
   const [videogames, setVideogames] = useState<Videogame[]>([]);
+  const [seasons, setSeasons] = useState<Season[]>([]);
   const [players, setPlayers] = useState<Player[]>([]);
+  const [currentSeason, SetCurrentSeason] = useState<string>("1");
+  const [currentVideogame, SetCurrentVideogame] = useState<number>(1386);
 
-  /*
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedRole, setSelectedRole] = useState<number | null>(null);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [isModalAddOpen, setModalAddOpen] = React.useState(false);
-  
-  const openModal = () => {
-    setModalAddOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalAddOpen(false);
-  };
-
-  */
-
-  {/* Recuperation des utilisateurs */}
   useEffect(() => {
     const fetchData = async () => {
       try {
         const videogameCtrl: videogameController = new videogameController();
         const videogames = await videogameCtrl.getVideogames();
+        const seasonsCtrl: seasonController = new seasonController();
+        const seasons = await seasonsCtrl.getAllSeason();
         const playerCtrl: playerController = new playerController();
-        const players = await playerCtrl.getPlayersBySeasonIDVideogameID(1,1386);
+        const players = await playerCtrl.getPlayersBySeasonIDVideogameID(currentSeason,currentVideogame);
         setVideogames(
           videogames.map(
             (data) =>
               new Videogame(data.id, data.name, data.characters, data.image)
+          )
+        )
+        setSeasons(
+          seasons.map(
+            (data) =>
+              new Season(data.endDate, data.id, data.number, data.startDate)
           )
         )
         setPlayers(
@@ -71,14 +65,14 @@ export default function Ranking() {
       }
     };
     fetchData();
-  }, []);
+  }, [currentSeason, currentVideogame]);
 
   return (
     <main>
       <div>
         <div className='m-2 space-x-2'>
           <label>Game</label>
-          <select className='btn'>
+          <select className='btn' onChange={(e) => SetCurrentVideogame(parseInt(e.target.value))}>
             {videogames.map((videogame) => (
               <option key={videogame.id} value={videogame.id}>
                 {videogame.name}
@@ -86,8 +80,13 @@ export default function Ranking() {
             ))}
           </select>
           <label>Season</label>
-          <input type='number' defaultValue={1} className='input'></input>
-          <button type='button' className='btn'>Search</button>
+          <select className='btn' onChange={(e) => SetCurrentSeason(e.target.value)}>
+            {seasons.map((seasons) => (
+              <option key={seasons.id} value={seasons.id}>
+                {seasons.number}
+              </option>
+            ))}
+          </select>
         </div>
         <table className='table'>
           <thead>
@@ -102,7 +101,12 @@ export default function Ranking() {
             {
               players.map((player) => (
                 placeOrder = placeOrder + 1,
-              <Rank place={placeOrder} user_profile={player.images["profile"]} name={player.name} team={player.prefix} score={Math.round(player.elos[1386].score)} idPlayer={player.id} season_id={1}/>
+              <Rank place={placeOrder} 
+                    user_profile={player.images["profile"]} 
+                    name={player.name} team={player.prefix} 
+                    score={player.elos[currentVideogame] !== undefined ? (Math.round(player.elos[currentVideogame].score)) : (null)} 
+                    idPlayer={player.id} 
+                    season_id={currentSeason}/>
             ))}
           </tbody>
         </table>
