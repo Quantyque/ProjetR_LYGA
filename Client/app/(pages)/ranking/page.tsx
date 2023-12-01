@@ -7,6 +7,7 @@ import Rank from '@/app/components/Ranking/Rank'
 import { Player } from '@/model/logic/player'
 import { Videogame } from '@/model/logic/videogame'
 import { Season } from '@/model/logic/season'
+import './rankingsPage.css'
 
 /**
  * Show the page of the ranking
@@ -69,8 +70,8 @@ export default function Ranking() {
 
   return (
     <main>
-      <div>
-        <div className='m-2 space-x-2'>
+      <div id='RankingMainContainer'>
+        <div className='m-2 space-x-2' id='FilterSelectorContainer'>
           <label>Game</label>
           <select className='btn' onChange={(e) => SetCurrentVideogame(parseInt(e.target.value))}>
             {videogames.map((videogame) => (
@@ -88,13 +89,13 @@ export default function Ranking() {
             ))}
           </select>
         </div>
-        <table className='table'>
+        <table className='table' id='RankingTable'>
           <thead>
               <tr>
-                  <th className='text-center'>Place</th>
-                  <th>User Profile</th>
-                  <th>Team | Name</th>
-                  <th className='text-center'>Score</th>
+                  <th className='text-center tableHeader'>Place</th>
+                  <th className='text-center tableHeader'>User Profile</th>
+                  <th className='text-center tableHeader'>Team | Name</th>
+                  <th className='text-center tableHeader'>Score</th>
               </tr>
           </thead>
           <tbody>

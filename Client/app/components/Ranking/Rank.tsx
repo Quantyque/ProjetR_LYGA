@@ -64,11 +64,11 @@ export default function Rank(
     }
 
   return (
-    <tr className={`${placePodiumClasse}`} id={`${placePodiumID}`}>
+    <tr className={`test ${placePodiumClasse}`} id={`${placePodiumID}`}>
         <th className='text-7xl font-bold text-center'>{place}</th>
         <td>
             <div className="avatar">
-                <div className="w-20 rounded-full">
+                <div className="w-20 rounded-full ring ring-black ring-offset-base-100">
                     <img alt="" src={`${user_profile}`}/>
                 </div>
             </div>

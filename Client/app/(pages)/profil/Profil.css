@@ -118,14 +118,14 @@ tr:last-child td:last-child { border-bottom-right-radius: 10px; }
 tr:first-child td { border-top-style: solid; }
 tr td:first-child { border-left-style: solid; }
 
-th{
+.profilTH{
 color: white;
 font-size: 100%;
 font-weight: bold;
 text-decoration: underline 3px #FF6619; 
 }
 
-table{
+#Profiletable{
 text-align: center;
 width: 90%;
 margin-left: 5%;

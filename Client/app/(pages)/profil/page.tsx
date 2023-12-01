@@ -4,9 +4,6 @@ import "./Profil.css";
 import RankingChart from "@/app/(pages)/profil/rankingChart";
 import { Elo } from "@/model/logic/elo";
 import { useSearchParams } from 'next/navigation'
-import { PlayerDao } from "@/model/data/player/PlayerDao";
-import { SetDao } from "@/model/data/set/SetDao";
-import { EloDao } from "@/model/data/elo/EloDao";
 import { Player } from "@/model/logic/player";
 import { Set } from "@/model/logic/set";
 import eloController from "@/controller/eloController";
@@ -90,10 +87,10 @@ export default function Profil() {
                 <table>
                   <thead>
                   <tr>
-                        <th colSpan={1}>Games</th>
-                        <th colSpan={1}>Favorite Character</th>
-                        <th colSpan={1}>ELO</th>
-                        <th colSpan={1}>Rank</th>
+                        <th className="profilTH" colSpan={1}>Games</th>
+                        <th className="profilTH" colSpan={1}>Favorite Character</th>
+                        <th className="profilTH" colSpan={1}>ELO</th>
+                        <th className="profilTH" colSpan={1}>Rank</th>
                       </tr>
                   </thead>
                   <tbody id="test" className="custom-scrollbar custom-scrollbar-orange">
@@ -113,15 +110,15 @@ export default function Profil() {
           <div id="Match_History_container">
               <p id="Title"> LAST SETS</p>
               <div>
-                <table>
+                <table id="Profiletable">
                   <thead>
                     <tr>
-                      <th colSpan={1}>Dates</th>
-                      <th colSpan={1}>Games</th>
-                      <th colSpan={1}>Players</th>  
-                      <th colSpan={1}>Rounds</th>
-                      <th colSpan={1}>Opponents</th>
-                      <th colSpan={1}>Results</th>
+                      <th className="profilTH" colSpan={1}>Dates</th>
+                      <th className="profilTH" colSpan={1}>Games</th>
+                      <th className="profilTH" colSpan={1}>Players</th>  
+                      <th className="profilTH" colSpan={1}>Rounds</th>
+                      <th className="profilTH" colSpan={1}>Opponents</th>
+                      <th className="profilTH" colSpan={1}>Results</th>
                     </tr>
                   </thead>
                   <tbody>
