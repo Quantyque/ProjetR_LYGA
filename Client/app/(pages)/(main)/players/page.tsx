@@ -54,10 +54,10 @@ export default function Players(){
                     </div>
                 </div>
                 <div id="playersMainContainer">
-                    {filteredPlayers?.slice(0, 10).map((player, index) => (
-                        <div key={index} className="TESTPLAYER">
-                            <div className="avatar testAvatar">
-                                <div className="w-20 rounded-full">
+                    {filteredPlayers?.slice(0, 8).map((player, index) => (
+                        <div key={index} className="PLAYERS">
+                            <div className="avatar rounded-full ring ring-black ring-offset-base-100 testAvatar">
+                                <div className="w-28 rounded-full">
                                     <img src={player.images.profile} alt="" />
                                 </div>
                             </div>
