@@ -23,7 +23,7 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
         players = {}
 
         # Envoi de la requête
-        res = self.db.exec_request("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p natural join elos e join 
+        res = self.db.exec_request_multiple("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p natural join elos e join 
                 (SELECT
             idPlayer,
             MAX(date) AS date_max FROM
@@ -83,7 +83,7 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
             HTTPError: Si la requête échoue.
         """
         players = {}
-        res = self.db.exec_request("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p natural join elos e join 
+        res = self.db.exec_request_multiple("""Select p.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p natural join elos e join 
                 (SELECT
             idPlayer,
             MAX(date) AS date_max FROM
@@ -142,7 +142,7 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
         # Initialisation de la variable de retour
         players = {}
         # Envoi de la requête
-        res = self.db.exec_request("""Select e.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p 
+        res = self.db.exec_request_multiple("""Select e.idPlayer, name, profilPicture, score, idGame, nbTournaments, prefix, idSeason from players p 
                 natural join elos e 
                 join 
                 (SELECT
@@ -220,7 +220,7 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
 
         # Insertion des joueurs dans la base de données
         req_players = req_players[:-1]
-        self.db.exec_request(req_players, params_players)
+        self.db.exec_request_multiple(req_players, params_players)
 
     def remove_all_players(self) -> None:
         """
@@ -232,4 +232,4 @@ class PlayerDaoSql(IPlayerDaoSql, Dao):
         Raises:
             HTTPError: Si la requête échoue.
         """
-        self.db.exec_request("DELETE from players") 
+        self.db.exec_request_one("DELETE from players") 

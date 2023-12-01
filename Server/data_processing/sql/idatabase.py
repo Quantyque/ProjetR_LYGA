@@ -5,14 +5,29 @@ class IDatabase:
     Interface pour les bases de données
     """
 
-    def exec_request(self, req: str, params: Optional[tuple] = None, data_fetch_one: Optional[bool] = False) -> Optional[list]:
+    def exec_request_one(self, req: str, params: Optional[tuple] = None) -> object:
         """
-        Exécute une requête SQL.
+        Exécute une requête SQL en renvoyant un seul résultat.
 
         Args:
             req (str): La requête SQL.
             params (tuple, optional): Les paramètres de la requête. Defaults to None.
-            data_fetch_one (bool, optional): True si on veut récupérer un seul élément, False sinon. Defaults to False.
+
+        Returns:
+            object: Le résultat de la requête.
+
+        Raises:
+            Exception: Si la requête échoue.
+        """ 
+        pass
+
+    def exec_request_multiple(self, req: str, params: Optional[tuple] = None) -> Optional[list]:
+        """
+        Exécute une requête SQL en renvoyant plusieurs résultats.
+
+        Args:
+            req (str): La requête SQL.
+            params (tuple, optional): Les paramètres de la requête. Defaults to None.
 
         Returns:
             list, optional: La liste des résultats de la requête.
