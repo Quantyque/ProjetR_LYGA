@@ -2,38 +2,38 @@ import { Game } from "./game";
 import { Player } from "./player";
 
 /**
- * Set class
+ * Classe Set
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class Set {
 
     /**
-     * Id  of set
+     * Identifiant du set
      */
     private _id: number;
     /**
-     * Round  of set
+     * Round du set
      */
     private _round: number;
     /**
-     * Winner id of set
+     * Identifiant du gagnant du set
      */
     private _winner_id: number;
     /**
-     * Players  of set
+     * Joueurs du set
      */
     private _players: Player[];
     /**
-     * Event nb entrants of set
+     * Numéro d'entrants de l'évènement du set
      */
     private _event_nb_entrants: number;
     /**
-     * Date  of set
+     * Date du set
      */
     private _date: number;
     /**
-     * Game  of set
+     * Partie du set
      */
     private _game: Game;
 
@@ -48,64 +48,66 @@ export class Set {
     }
 
     /**
-     * Gets id set
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id set
+     * Changer l'identifiant
      */
     set id(value: number) {this._id = value}
 
     /**
-     * Gets round set
+     * Obtenir le round
      */
     get round():number {return this._round}
     /**
-     * Sets round set
+     * Changer le round
      */
     set round(value: number) {this._round = value}
 
     /**
-     * Gets players set
+     * Obtenir les joueurs
      */
     get players():Player[] {return this._players}
     /**
-     * Sets players set
+     * Changer les joueurs
      */
     set players(value : Player[]) {this._players = value}
 
     /**
-     * Gets winner id set
+     * Obtenir l'identifiant du gagnant
      */
     get winner_id():number {return this._winner_id}
     /**
-     * Sets winner id set
+     * Changer l'identifiant du gagnant
      */
     set winner_id(value: number) {this._winner_id = value}
 
     /**
-     * Gets event nb entrants set
+     * Obtenir le numéro d'entrants de l'évènement
      */
     get event_nb_entrants():number {return this._event_nb_entrants}
     /**
-     * Sets event nb entrants set
+     * Changer le numéro d'entrants de l'évènement
      */
     set event_nb_entrants(value: number) {this._event_nb_entrants = value}
 
     /**
-     * Gets date set
+     * Obtenir la date
      */
     get date():number {return this._date}
     /**
-     * Sets date set
+     * Changer la date
      */
     set date(value: number) {this._date = value}
 
     /**
-     * Gets game set
+     * Obtenir le jeu
      */
     get game():Game {return this._game}
-    
+    /**
+     * Changer le jeu
+     */
     set game(value : Game) {this._game = value}
 
 };

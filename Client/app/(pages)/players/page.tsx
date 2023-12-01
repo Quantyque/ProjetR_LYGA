@@ -4,6 +4,11 @@ import "./players.css";
 import { Player } from "@/model/logic/player";
 import playerController from "@/controller/playerController";
 
+/**
+ * Page de joueurs
+ * @returns HTML de la page des joueurs
+ * @author Youri Emmanuel
+ */
 export default function Players(){
 
     var PlayerController = new playerController();

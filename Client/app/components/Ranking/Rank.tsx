@@ -2,14 +2,13 @@ import Link from 'next/link';
 import './Ranking.css'
 
 /**
- * Component of "ranking/page.tsx"
- * Show the rank
- * @param place place of a players
- * @param user_profile image of the players
- * @param name name of players
- * @param score score of the players
- * @param idPlayer id of a player
- * @returns the rank of the players from a game and a season
+ * Composant de la page de classement
+ * @param place palce du joueur
+ * @param user_profile image du joueur
+ * @param name nom du joueur
+ * @param score score du joueur
+ * @param idPlayer identifiant du joueur
+ * @returns HTML du classement
  * @author Antoine Richard
  */
 export default function Rank(

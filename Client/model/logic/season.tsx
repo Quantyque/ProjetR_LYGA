@@ -1,23 +1,23 @@
 /**
- * Season class
+ * Classe Season
  * @author Antoine Richard
  */
 export class Season {
 
     /**
-     * End date of season
+     * Date de fin de la saison
      */
     private _endDate: number;
     /**
-     * Id  of season
+     * Identifiant de la saison
      */
     private _id: number;
     /**
-     * Number  of season
+     * Numéro de la saison
      */
     private _number: number;
     /**
-     * Start date of season
+     * Date de début de la saison
      */
     private _startDate: number;
 
@@ -29,38 +29,38 @@ export class Season {
     }
 
     /**
-     * Gets end date
+     * Obtenir la date de fin
      */
     get endDate():number {return this._endDate}
     /**
-     * Sets end date
+     * Changer la date de fin
      */
     set endDate(value : number) {this._endDate = value}
 
     /**
-     * Gets id
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id
+     * Changer l'identifiant
      */
     set id(value : number) {this._id = value}
 
     /**
-     * Gets number
+     * Obtenir le numéro
      */
     get number():number {return this._number}
     /**
-     * Sets number
+     * Changer le numéro
      */
     set number(value : number) {this._number = value}
 
     /**
-     * Gets start date
+     * Obtenir la date de début
      */
     get startDate():number {return this._startDate}
     /**
-     * Sets start date
+     * Changer la date de début
      */
     set startDate(value : number) {this._startDate = value}
 }

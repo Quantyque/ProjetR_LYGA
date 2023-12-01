@@ -13,6 +13,11 @@ import eloController from "@/controller/eloController";
 import playerController from "@/controller/playerController";
 import setController from "@/controller/setController";
 
+/**
+ * Page de profil
+ * @returns HTML de la page de profil
+ * @author Youri Emmanuel
+ */
 export default function Profil() {
   
   const searchParams = useSearchParams()

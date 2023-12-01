@@ -1,6 +1,11 @@
 "use client"
 import { signIn, signOut, useSession } from "next-auth/react"
 
+/**
+ * Barre de navigation utilisateur
+ * @returns HTML de la barre de navigation utilisateur
+ * @author Youri Emmanuel
+ */
 function UserNavMenu() {
 
     const { data: session } = useSession()

@@ -3,13 +3,13 @@ import { EloDao } from "@/model/data/elo/EloDao";
 import IEloDao from "@/model/data/elo/IEloDao";
 
 /**
- * Controller of type Elo
+ * Controller de type Elo
  * @author Antoine Richard
  */
 class eloController {
 
     /**
-     * Elo dao of elo controller
+     * Elo dao de elo controller
      */
     eloDao: IEloDao;
  
@@ -18,9 +18,9 @@ class eloController {
     }
 
     /**
-     * Use the eloDAO to get the datas
-     * @param id id of the player
-     * @returns the elo of the id player
+     * Utilise eloDAO pour obtenir les données
+     * @param id identifiant du joueur
+     * @returns l'elo du joueur
      */
     async getEloHistoryByPlayerID(id: any): Promise<Elo | null> {
         return await this.eloDao.fetchEloHistoryByPlayerID(id)

@@ -22,6 +22,12 @@ ChartJS.register(
   Legend
 );
 
+/**
+ * Graphique pour la page de profil
+ * @param props 
+ * @returns HTML du graphique pour la page de profil
+ * @author Youri Emmanuel
+ */
 export default function RankingChart(props: any) {
   const { eloData } = props;
   const labels = ['Before Last Game', 'Last Game', 'Current'];

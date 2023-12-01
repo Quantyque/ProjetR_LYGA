@@ -1,12 +1,12 @@
 import { API_HOST } from "../constants/constants";
 
 /**
- * Use to send informations to Database
+ * Utilisé pour envoyer des informations à la base de données
  */
 class Sender {
 
     /**
-     * Api host of sender
+     * Hôte API du sender
      */
     private _apiHost: string;
 
@@ -15,9 +15,9 @@ class Sender {
     }
 
     /**
-     * GET query
-     * @param route path where the query is done
-     * @returns JSON format response
+     * Requête GET
+     * @param route passage de la requête où elle est faite 
+     * @returns Réponse sous format JSON
      */
     public async GET(route: string): Promise<any> {
         const apiEndpoint = this._apiHost + route;
@@ -43,10 +43,10 @@ class Sender {
     }
 
     /**
-     * POST query
-     * @param route path where the query is done
-     * @param data data changed
-     * @returns JSON format response
+     * Requête POST
+     * @param route passage de la requête où elle est faite 
+     * @param data Données changées
+     * @returns Réponse sous format JSON
      */
     public async POST(route: string, data: any): Promise<any> {
         const apiEndpoint = this._apiHost + route;
@@ -73,10 +73,10 @@ class Sender {
     }
 
     /**
-     * UPDATE query
-     * @param route path where the query is done
-     * @param data data changed
-     * @returns JSON format response
+     * Requête UPDATE
+     * @param route passage de la requête où elle est faite 
+     * @param data Données changées
+     * @returns Réponse sous format JSON
      */
     public async UPDATE(route: string, data: any): Promise<any> {
         const apiEndpoint = this._apiHost + route;
@@ -103,9 +103,9 @@ class Sender {
     }
 
     /**
-     * DELETE query
-     * @param route path where the query is done
-     * @returns JSON format response
+     * Requête DELETE
+     * @param route passage de la requête où elle est faite 
+     * @returns Réponse sous format JSON
      */
     public async DELETE(route: string): Promise<any> {
         const apiEndpoint = this._apiHost + route;

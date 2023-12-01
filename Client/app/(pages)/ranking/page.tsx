@@ -9,8 +9,8 @@ import { Videogame } from '@/model/logic/videogame'
 import { Season } from '@/model/logic/season'
 
 /**
- * Show the page of the ranking
- * @returns an HTML page of the rank
+ * Page de classement
+ * @returns HTML de la page de classement
  * @author Antoine Richard
  */
 export default function Ranking() {
@@ -22,6 +22,7 @@ export default function Ranking() {
   const [currentSeason, SetCurrentSeason] = useState<string>("1");
   const [currentVideogame, SetCurrentVideogame] = useState<number>(1386);
 
+  //Donnée prises ici
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -71,7 +72,7 @@ export default function Ranking() {
     <main>
       <div>
         <div className='m-2 space-x-2'>
-          <label>Game</label>
+          <label>Jeu</label>
           <select className='btn' onChange={(e) => SetCurrentVideogame(parseInt(e.target.value))}>
             {videogames.map((videogame) => (
               <option key={videogame.id} value={videogame.id}>
@@ -79,7 +80,7 @@ export default function Ranking() {
               </option>
             ))}
           </select>
-          <label>Season</label>
+          <label>Saison</label>
           <select className='btn' onChange={(e) => SetCurrentSeason(e.target.value)}>
             {seasons.map((seasons) => (
               <option key={seasons.id} value={seasons.id}>
@@ -88,28 +89,33 @@ export default function Ranking() {
             ))}
           </select>
         </div>
-        <table className='table'>
-          <thead>
-              <tr>
-                  <th className='text-center'>Place</th>
-                  <th>User Profile</th>
-                  <th>Team | Name</th>
-                  <th className='text-center'>Score</th>
-              </tr>
-          </thead>
-          <tbody>
-            {
-              players.map((player) => (
-                placeOrder = placeOrder + 1,
-              <Rank place={placeOrder} 
-                    user_profile={player.images["profile"]} 
-                    name={player.name} team={player.prefix} 
-                    score={player.elos[currentVideogame] !== undefined ? (Math.round(player.elos[currentVideogame].score)) : (null)} 
-                    idPlayer={player.id} 
-                    season_id={currentSeason}/>
-            ))}
-          </tbody>
-        </table>
+        {(players.length != 0) &&
+          <table className='table'>
+            <thead>
+                <tr>
+                    <th className='text-center'>Place</th>
+                    <th>Profil</th>
+                    <th>Équipe(s) | Nom</th>
+                    <th className='text-center'>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+              {
+                players.map((player) => (
+                  placeOrder = placeOrder + 1,
+                <Rank place={placeOrder} 
+                      user_profile={player.images["profile"]} 
+                      name={player.name} team={player.prefix} 
+                      score={player.elos[currentVideogame] !== undefined ? (Math.round(player.elos[currentVideogame].score)) : (null)} 
+                      idPlayer={player.id} 
+                      season_id={currentSeason}/>
+              ))}
+            </tbody>
+          </table>
+        }
+        {(players.length == 0) &&
+          <div className='text-5xl text-orange-600 text-center mt-24 font-bold'> Aucun joueur trouvés pour le jeu ou la saison sélectionnées</div>
+        }
       </div>
     </main>
   )

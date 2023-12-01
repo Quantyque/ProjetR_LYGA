@@ -2,7 +2,11 @@ import './Navbar.css';
 import { BsChevronDown } from 'react-icons/bs';
 import UserNavMenu from "./UserNavMenu"
 
-
+/**
+ * Barre de navigation
+ * @returns HTML dela barre de navigation
+ * @author Youri Emmanuel
+ */
 export default function Navbar() {
 
     return (

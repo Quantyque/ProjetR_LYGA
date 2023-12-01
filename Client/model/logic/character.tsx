@@ -1,16 +1,16 @@
 /**
- * Character class
+ * Classe Character
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class Character {
 
     /**
-     * Id  of character
+     * Identifiant du personnage
      */
     private _id: number;
     /**
-     * Name  of character
+     * Nom du personnage
      */
     private _name: string;
 
@@ -20,20 +20,20 @@ export class Character {
     }
 
     /**
-     * Gets id
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id
+     * Changer l'identifiant
      */
     set id(value: number) {this._id = value}
 
     /**
-     * Gets name
+     * Obtenir le nom
      */
     get name():string {return this._name}
     /**
-     * Sets name
+     * Changer le nom
      */
     set name(value: string) {this._name = value}
 };

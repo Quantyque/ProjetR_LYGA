@@ -3,13 +3,13 @@ import { SeasonDao } from "@/model/data/season/SeasonDao";
 import ISeasonDao from "@/model/data/season/ISeasonDao";
 
 /**
- * Controller of type Season
+ * Controller de type Season
  * @author Antoine Richard
  */
 class seasonController {
 
     /**
-     * Season dao of season controller
+     * Season dao de season controller
      */
     seasonDao: ISeasonDao;
  
@@ -18,8 +18,8 @@ class seasonController {
     }
 
     /**
-     * Use the seasonDAO to get the datas
-     * @returns the all seasons
+     * Utilise seasonDAO pour obtenir les saisons
+     * @returns toutes les saisons
      */
     async getAllSeason(): Promise<Season[]> {
         return await this.seasonDao.fetchAllSeason();

@@ -3,13 +3,13 @@ import { SetDao } from "@/model/data/set/SetDao";
 import ISetDao from "@/model/data/set/ISetDao";
 
 /**
- * Controller of type Set
+ * Controller de type Set
  * @author Antoine Richard
  */
 class setController {
 
     /**
-     * Set dao of set controller
+     * Set dao de set controller
      */
     setDao: ISetDao;
  
@@ -18,9 +18,9 @@ class setController {
     }
 
     /**
-     * Use the setDao to get set by id of player
-     * @param id id of the player
-     * @returns a set by id player
+     * Utilse setDao pour obtenir un set par l'identifiant d'un joueur
+     * @param id identifiant du joueur
+     * @returns un set par joueur
      */
     async getSetByID(id: any, page:any): Promise<Set | null>{
         return await this.setDao.fetchSetsByIdPlayer(id,page)

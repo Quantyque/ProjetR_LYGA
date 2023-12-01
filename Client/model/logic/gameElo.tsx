@@ -1,24 +1,24 @@
 /**
- * Game Elo class
+ * Classe GameElo
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class GameElo {
 
     /**
-     * Label  of game elo
+     * Label de l'Élo du jeu
      */
     private _label: string;
     /**
-     * Data  of game elo
+     * Données de l'Élo du jeu
      */
     private _data: number[];
     /**
-     * Border color of game elo
+     * Couleur de la bordure de l'Élo du jeu
      */
     private _borderColor: string;
     /**
-     * Background color of game elo
+     * Couleur de l'arrière-plan de l'Élo du jeu
      */
     private _backgroundColor: string;
 
@@ -30,38 +30,38 @@ export class GameElo {
     }
 
     /**
-     * Gets label
+     * Obtenir le label
      */
     get label():string {return this._label}
     /**
-     * Sets label
+     * Changer le label
      */
     set label(value : string) {this._label = value}
 
     /**
-     * Gets data
+     * Obtenir les données
      */
     get data():number[] {return this._data}
     /**
-     * Sets data
+     * Changer les données
      */
     set data(value: number[]) {this._data = value}
 
     /**
-     * Gets border color
+     * Obtenir la couleur de la bordure
      */
     get borderColor():string {return this._borderColor}
     /**
-     * Sets border color
+     * Changer la couleur de la bordure
      */
     set borderColor(value: string) {this._borderColor = value}
 
     /**
-     * Gets background color
+     * Obtenir la couleur de l'arrière-plan
      */
     get backgroundColor():string {return this._backgroundColor}
     /**
-     * Sets background color
+     * Changer la couleur de l'arrière-plan
      */
     set backgroundColor(value: string) {this._backgroundColor = value}
 };

@@ -2,6 +2,10 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
+/**
+ * Next authentification options
+ * @author Youri Emmanuel
+ */
 const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({

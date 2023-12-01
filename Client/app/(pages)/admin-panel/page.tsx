@@ -1,3 +1,8 @@
+/**
+ * Page admin
+ * @returns HTML de la page admin
+ * @author Youri Emmanuel
+ */
 export default function Home() {
   return (
     <>
