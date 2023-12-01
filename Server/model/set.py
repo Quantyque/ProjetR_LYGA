@@ -192,14 +192,16 @@ class Set(Entity):
         if "slots" in data:
             for slot in data["slots"]:
                 if slot["entrant"] != None:
-                    isDisqualified = slot["entrant"]["isDisqualified"]
-                    dataplayer = slot["entrant"]["standing"]["player"]
-                    dataplayer["isDisqualified"] = isDisqualified
-                    if (slot["entrant"]["id"] == data["winnerId"]):
-                        self.WinnerId = dataplayer["id"]
-                    player = Player()
-                    player.hydrate(dataplayer)
-                    self.Players.append(player)
+                    if slot["entrant"]["standing"] != None:
+                        if slot["entrant"]["standing"]["player"] != None:
+                            isDisqualified = slot["entrant"]["isDisqualified"]
+                            dataplayer = slot["entrant"]["standing"]["player"]
+                            dataplayer["isDisqualified"] = isDisqualified
+                            if (slot["entrant"]["id"] == data["winnerId"]):
+                                self.WinnerId = dataplayer["id"]
+                            player = Player()
+                            player.hydrate(dataplayer)
+                            self.Players.append(player)
         if "completedAt" in data:
             self.Date = data["completedAt"]
         if "games" in data:

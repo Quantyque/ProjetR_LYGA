@@ -101,7 +101,9 @@ class SetDaoApi(ISetDaoApi, Api):
             for data_set in response['data']['player']['sets']['nodes']:
                 set = Set()
                 set.hydrate(data_set)
-                sets.append(set)
+                # Vérification que le set est terminé
+                if set.WinnerId is not None:
+                    sets.append(set)
         return sets
     
     # endregion
