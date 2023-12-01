@@ -1,38 +1,38 @@
 import { Event } from "./event";
 
 /**
- * Tournament class
+ * Classe Tournament
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class Tournament {
 
     /**
-     * Id  of tournament
+     * Identifiant du tournois
      */
     private _id: number;
     /**
-     * Name  of tournament
+     * Nom du tournois
      */
     private _name: string;
     /**
-     * Winner id of tournament
+     * Identifiant du gagant du tournois
      */
     private _winner_id: number;
     /**
-     * Owner  of tournament
+     * Propriétaire du tournois
      */
     private _owner: string;
     /**
-     * Lat  of tournament
+     * Lat du tournois
      */
     private _lat: number;
     /**
-     * Lng  of tournament
+     * Lng du tournois
      */
     private _lng: number;
     /**
-     * Events  of tournament
+     * Évènements du tournois
      */
     private _events: Event[];
 
@@ -47,65 +47,65 @@ export class Tournament {
     }
 
     /**
-     * Gets id tournament
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id tournament
+     * Changer l'identifiant
      */
     set id(value : number) {this._id = value}
 
     /**
-     * Gets name tournament
+     * Obtenir le nom
      */
     get name(): string {return this._name}
     /**
-     * Sets name tournament
+     * Changer le nom
      */
     set name(value : string) {this._name = value}
 
     /**
-     * Gets winner id tournament
+     * Obtenir l'identifant du gagnant
      */
     get winner_id(): number {return this._winner_id}
     /**
-     * Sets winner id tournament
+     * Changer l'identifant du gagnant
      */
     set winner_id(value : number) {this._winner_id = value}
 
     /**
-     * Gets owner tournament
+     * Obtenir le propriétaire
      */
     get owner(): string {return this._owner}
     /**
-     * Sets owner tournament
+     * Changer le propriétaire
      */
     set owner(value : string) {this._owner = value}
 
     /**
-     * Gets lat tournament
+     * Obtenir le lat
      */
     get lat():number {return this._lat}
     /**
-     * Sets lat tournament
+     * Changer le lat
      */
     set lat(value : number) {this._lat = value}
 
     /**
-     * Gets lng tournament
+     * Obtenir le lng
      */
     get lng():number {return this._lng}
     /**
-     * Sets lng tournament
+     * Changer le lng
      */
     set lng(value : number) {this._lng = value}
 
     /**
-     * Gets events tournament
+     * Obtenir les évènements
      */
     get events():Event[] {return this._events}
     /**
-     * Sets events tournament
+     * Changer les évènements
      */
     set events(value : Event[]) {this._events = value}
 

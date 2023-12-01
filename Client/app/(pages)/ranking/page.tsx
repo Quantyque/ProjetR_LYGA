@@ -10,8 +10,8 @@ import { Season } from '@/model/logic/season'
 import './rankingsPage.css'
 
 /**
- * Show the page of the ranking
- * @returns an HTML page of the rank
+ * Page de classement
+ * @returns HTML de la page de classement
  * @author Antoine Richard
  */
 export default function Ranking() {
@@ -23,6 +23,7 @@ export default function Ranking() {
   const [currentSeason, SetCurrentSeason] = useState<string>("1");
   const [currentVideogame, SetCurrentVideogame] = useState<number>(1386);
 
+  //Donnée prises ici
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -72,7 +73,7 @@ export default function Ranking() {
     <main>
       <div id='RankingMainContainer'>
         <div className='m-2 space-x-2' id='FilterSelectorContainer'>
-          <label>Game</label>
+          <label>Jeu</label>
           <select className='btn' onChange={(e) => SetCurrentVideogame(parseInt(e.target.value))}>
             {videogames.map((videogame) => (
               <option key={videogame.id} value={videogame.id}>
@@ -80,7 +81,7 @@ export default function Ranking() {
               </option>
             ))}
           </select>
-          <label>Season</label>
+          <label>Saison</label>
           <select className='btn' onChange={(e) => SetCurrentSeason(e.target.value)}>
             {seasons.map((seasons) => (
               <option key={seasons.id} value={seasons.id}>
@@ -89,12 +90,13 @@ export default function Ranking() {
             ))}
           </select>
         </div>
+        {(players.length != 0) &&
         <table className='table' id='RankingTable'>
           <thead>
               <tr>
                   <th className='text-center tableHeader'>Place</th>
-                  <th className='text-center tableHeader'>User Profile</th>
-                  <th className='text-center tableHeader'>Team | Name</th>
+                  <th className='text-center tableHeader'>Profil</th>
+                  <th className='text-center tableHeader'>Équipe(s) | Nom</th>
                   <th className='text-center tableHeader'>Score</th>
               </tr>
           </thead>
@@ -111,6 +113,10 @@ export default function Ranking() {
             ))}
           </tbody>
         </table>
+        }
+        {(players.length == 0) &&
+          <div className='text-5xl text-orange-600 text-center mt-24 font-bold'> Aucun joueur trouvés pour le jeu ou la saison sélectionnées</div>
+        }
       </div>
     </main>
   )

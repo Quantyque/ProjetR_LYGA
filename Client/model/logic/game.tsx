@@ -1,22 +1,22 @@
 import { Player } from "./player";
 
 /**
- * Game class
+ * Classe Game
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class Game {
 
     /**
-     * Id  of game
+     * Identifiant de la partie
      */
     private _id: number;
     /**
-     * Players  of game
+     * Joueurs de la partie
      */
     private _players: Player[];
     /**
-     * Winner id of game
+     * Identifiant du gagnant de la partie
      */
     private _winner_id: number;
 
@@ -27,29 +27,29 @@ export class Game {
     }
 
     /**
-     * Gets id game
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id game
+     * Changer l'identifiant
      */
     set id(value: number) {this._id = value}
 
     /**
-     * Gets players game
+     * Obtenir les joueurs
      */
     get players(): Player[] {return this._players}
     /**
-     * Sets players game
+     * Changer les joueurs
      */
     set players(value : Player[]) {this._players = value}
 
     /**
-     * Gets winner id game
+     * Obtenir l'identifiant du gagnant
      */
     get winner_id():number {return this._winner_id}
     /**
-     * Sets winner id game
+     * Changer l'identifiant du gagnant
      */
     set winner_id(value: number) {this._winner_id = value}
 

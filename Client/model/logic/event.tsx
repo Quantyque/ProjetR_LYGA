@@ -2,30 +2,30 @@ import { Set } from "./set";
 import { Videogame } from "./videogame";
 
 /**
- * Event class
+ * Classe Event
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class Event {
 
     /**
-     * Id  of event
+     * Identifiant d'un évènement
      */
     private _id: number;
     /**
-     * Name  of event
+     * Nom d'un évènement
      */
     private _name: string;
     /**
-     * Num entrants of event
+     * Numéro d'entrants d'un évènement
      */
     private _num_entrants: number;
     /**
-     * Sets  of event
+     * Changer d'un évènement
      */
     private _sets: Set[];
     /**
-     * Videogame  of event
+     * Jeu-vidéo d'un évènement
      */
     private _videogame: Videogame;
 
@@ -38,47 +38,47 @@ export class Event {
     }
 
     /**
-     * Gets id
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id
+     * Changer l'identifiant
      */
     set id(value: number) {this._id = value}
 
     /**
-     * Gets name
+     * Obtenir le nom
      */
     get name():string {return this._name}
     /**
-     * Sets name
+     * Changer le nom
      */
     set name(value : string) {this._name = value}
 
     /**
-     * Gets num entrants
+     * Obtenir le numéro d'enrants
      */
     get num_entrants():number {return this._num_entrants}
     /**
-     * Sets num entrants
+     * Changer le numéro d'enrants
      */
     set num_entrants(value : number) {this._num_entrants = value}
 
     /**
-     * Gets sets
+     * Obtenir les sets
      */
     get sets():Set[] {return this._sets}
     /**
-     * Sets sets
+     * Changer les sets
      */
     set sets(value : Set[]) {this._sets = value}
 
     /**
-     * Gets videogame
+     * Obtenir le jeu-vidéo
      */
     get videogame():Videogame {return this._videogame}
     /**
-     * Sets videogame
+     * Changer le jeu-vidéo
      */
     set videogame(value : Videogame) {this._videogame = value}
 

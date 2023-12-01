@@ -2,50 +2,50 @@ import { Character } from "./character";
 import { Elo } from "./elo";
 
 /**
- * Player class
+ * Classe Player
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class Player {
 
     /**
-     * Id  of player
+     * Identifiant du joueur
      */
     private _id: number;
     /**
-     * Name  of player
+     * Nom du joueur
      */
     private _name: string;
     /**
-     * Date  of player
+     * Date du joueur
      */
     private _date: string;
     /**
-     * Prefix  of player
+     * Préfix du joueur
      */
     private _prefix: string;
     /**
-     * Characters  of player
+     * Personnages du joueur
      */
     private _characters: Character[];
     /**
-     * Elos  of player
+     * Élos du joueur
      */
     private _elos: {[key: number]: Elo};
     /**
-     * Images  of player
+     * Images du joueur
      */
     private _images: {[key: string]: string}
     /**
-     * Externals urls of player
+     * URL externes du joueur
      */
     private _externals_urls: {[key: string]: string}
     /**
-     * Determines whether disqualified is
+     * Détermine si le joueur est disqualifié
      */
     private _isDisqualified: boolean;
     /**
-     * Bio  of player
+     * Biographie du joueur
      */
     private _bio: string;
 
@@ -73,92 +73,92 @@ export class Player {
             }
 
     /**
-     * Gets id player
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id player
+     * Changer l'identifiant
      */
     set id(value : number) {this._id = value}
 
     /**
-     * Gets name player
+     * Obtenir le nom
      */
     get name():string {return this._name}
     /**
-     * Sets name player
+     * Changer le nom
      */
     set name(value :  string) {this._name = value}
 
     /**
-     * Gets date player
+     * Obtenir la date
      */
     get date(): string {return this._date}
     /**
-     * Sets date player
+     * Changer la date
      */
     set date(value : string) {this._date = value}
 
     /**
-     * Gets prefix player
+     * Obtenir préfix
      */
     get prefix():string {return this._prefix}
     /**
-     * Sets prefix player
+     * Changer préfix
      */
     set prefix(value : string) {this._prefix = value}
 
     /**
-     * Gets characters player
+     * Obtenir les joueurs
      */
     get characters():Character[] {return this._characters}
     /**
-     * Sets characters player
+     * Changer les joueurs
      */
     set characters(value : Character[]) {this._characters = value}
 
     /**
-     * Gets elo player
+     * Obtenir l'élo
      */
     get elos():{[key: number]: Elo} {return this._elos}
     /**
-     * Sets elo player
+     * Changer l'élo
      */
     set elos(value : {[key: number]: Elo}) {this._elos = value}
 
     /**
-     * Gets images player
+     * Obtenir les images
      */
     get images(): {[key: string]: string} {return this._images}
     /**
-     * Sets images player
+     * Changer les images
      */
     set images(value : {[key: string]: string}) {this._images = value}
 
     /**
-     * Gets externals urls player
+     * Obtenir les URL externes
      */
     get externals_urls(): {[key: string]: string} {return this._externals_urls}
     /**
-     * Sets externals urls player
+     * Changer les URL externes
      */
     set externals_urls(value : {[key: string]: string}) {this._externals_urls = value}
 
     /**
-     * Gets whether is disqualified player
+     * Obtenir la disqualification
      */
     get isDisqualified(): boolean {return this._isDisqualified}
     /**
-     * Sets whether is disqualified player
+     * Changer la disqualification
      */
     set isDisqualified(value : boolean) {this._isDisqualified = value}
 
     /**
-     * Gets bio player
+     * Obtenir la biographie
      */
     get bio():string {return this._bio}
     /**
-     * Sets bio player
+     * Changer la biographie
      */
     set bio(value : string) {this._bio = value}
 

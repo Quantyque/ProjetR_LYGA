@@ -3,13 +3,13 @@ import { PlayerDao } from "@/model/data/player/PlayerDao";
 import IPlayerDao from "@/model/data/player/IPlayerDao";
 
 /**
- * Controller of type Player
+ * Controller de type Player
  * @author Antoine Richard
  */
 class playerController {
 
     /**
-     * Player dao of player controller
+     * Player dao de player controller
      */
     playerDao: IPlayerDao;
  
@@ -18,19 +18,19 @@ class playerController {
     }
 
     /**
-     * Use the playerDao to get player by id
-     * @param id id of the player
-     * @returns a player by his id
+     * Utilise playerDao pour avoir un joueur par son identifiant
+     * @param id identifiant du joueur
+     * @returns un joueur par son identifiant
      */
     async getPlayerByID(id: any): Promise<Player | null>{
         return await this.playerDao.fetchPlayerByID(id)
     }
 
     /**
-     * Use the playerDao to get players by season and videogame
-     * @param season_id id of the season
-     * @param videogame_id id of the videogame
-     * @returns players by season and videogame
+     * Utilise playerDao pour avoir des joueurs par saison et pas jeu-vidéo
+     * @param season_id identifiant de la saison
+     * @param videogame_id identifiant du jeu-vidéo
+     * @returns les joueurs par saison et par jeu-vidéo
      */
     async getPlayersBySeasonIDVideogameID(season_id: any, videogame_id: any): Promise<Player[]>{
         
@@ -38,8 +38,8 @@ class playerController {
     }
 
     /**
-     * Use the playerDao to get all players
-     * @returns all players
+     * Utilise playerDao pour avoir tout les joueurs
+     * @returns tout les joueurs
      */
     async getAllPlayers(): Promise<Player[]>{
         return await this.playerDao.fetchAllPlayers()

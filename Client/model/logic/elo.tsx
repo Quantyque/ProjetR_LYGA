@@ -1,22 +1,22 @@
 import { Videogame } from "./videogame";
 
 /**
- * Elo class
+ * Classe Elo
  * @author Youri Emmanuel
  * @author Antoine Richard
  */
 export class Elo {
 
     /**
-     * Id  of elo
+     * Identifiant de l'Élo
      */
     private _id: number;
     /**
-     * Score  of elo
+     * Score de l'Élo
      */
     private _score: number;
     /**
-     * Videogame  of elo
+     * Jeu-vidéo de l'Élo
      */
     private _videogame: Videogame;
 
@@ -27,29 +27,29 @@ export class Elo {
     }
 
     /**
-     * Gets id
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id
+     * Changer l'identifiant
      */
     set id(value: number) {this._id = value}
 
     /**
-     * Gets score
+     * Obtenir le score
      */
     get score():number {return this._score}
     /**
-     * Sets score
+     * Changer le score
      */
     set score(value: number) {this._score = value}
 
     /**
-     * Gets videogame
+     * Obtenir le jeu-vidéo
      */
     get videogame():Videogame {return this._videogame}
     /**
-     * Sets videogame
+     * Changerle jeu-vidéo
      */
     set videogame(value : Videogame) {this._videogame = value}
 

@@ -3,13 +3,13 @@ import { VideogameDao } from "@/model/data/videogame/VideogameDao";
 import IVideogameDao from "@/model/data/videogame/IVideogameDao";
 
 /**
- * Controller of type Videogame
+ * Controller de type Videogame
  * @author Antoine Richard
  */
 class videogameController {
 
     /**
-     * Videogame dao of videogame controller
+     * Videogame dao de videogame controller
      */
     videogameDao: IVideogameDao;
  
@@ -18,8 +18,8 @@ class videogameController {
     }
 
     /**
-     * Use the videogameDao to get videogames
-     * @returns all videogames
+     * Utilse videogameDao pour obtenir touts les jeux-vidéos
+     * @returns touts les juex-vidéos
      */
     async getVideogames(): Promise<Videogame []>{
         return await this.videogameDao.fetchVideoGames()

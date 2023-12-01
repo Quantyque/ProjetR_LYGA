@@ -1,26 +1,26 @@
 import { Character } from "./character";
 
 /**
- * Videogame class
+ * Classe Videogame
  * @author Youri Emmanuel
  * @author Antoine Ricahrd
  */
 export class Videogame {
 
     /**
-     * Id  of videogame
+     * Identifiant du jeu-vidéo
      */
     private _id: number;
     /**
-     * Name  of videogame
+     * Nom du jeu-vidéo
      */
     private _name: string;
     /**
-     * Characters  of videogame
+     * Personnages du jeu-vidéo
      */
     private _characters: Character[];
     /**
-     * Image  of videogame
+     * Image du jeu-vidéo
      */
     private _image: string;
 
@@ -32,38 +32,38 @@ export class Videogame {
     }
 
     /**
-     * Gets id
+     * Obtenir l'identifiant
      */
     get id():number {return this._id}
     /**
-     * Sets id
+     * Changer l'identifiant
      */
     set id(value: number) {this._id = value}
 
     /**
-     * Gets name
+     * Obtenir le nom
      */
     get name():string {return this._name}
     /**
-     * Sets name
+     * Changer le nom
      */
     set name(value: string) {this._name = value}
 
     /**
-     * Gets characters
+     * Obtenir les joueurs
      */
     get characters():Character[] {return this._characters}
     /**
-     * Sets characters
+     * Changer les joueurs
      */
     set characters(value: Character[]) {this._characters = value}
 
     /**
-     * Gets image
+     * Obtenir l'image
      */
     get image():string {return this._image}
     /**
-     * Sets image
+     * Changer l'image
      */
     set image(value: string) {this._image = value}
 };
