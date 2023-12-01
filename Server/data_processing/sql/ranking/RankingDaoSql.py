@@ -5,8 +5,6 @@ from data_processing.api.startgg.event.IEventDaoApi import IEventDaoApi
 from data_processing.api.startgg.event.EventDaoApi import EventDaoApi
 from data_processing.api.startgg.video_game.IVideoGameDaoApi import IVideoGameDaoApi
 from data_processing.api.startgg.video_game.VideoGameDaoApi import VideoGameDaoApi
-from data_processing.sql.video_game.IVideoGameDaoSql import IVideoGameDaoSql
-from data_processing.sql.video_game.VideoGameSql import VideoGameDaoSql
 from data_processing.sql.player.IPlayerDaoSql import IPlayerDaoSql
 from data_processing.sql.player.PlayerDaoSql import PlayerDaoSql
 from data_processing.sql.elo.IEloDaoSql import IEloDaoSql
@@ -27,7 +25,6 @@ class RankingDaoSql(IRankingDaoSql, Dao):
         # Initialise les DAO
         self.__tournament_dao_api: ITournamentDaoApi = TournamentDaoApi()
         self.__videogame_dao_api: IVideoGameDaoApi = VideoGameDaoApi()
-        self.__videogame_dao_sql: IVideoGameDaoSql = VideoGameDaoSql()
         self.__season_dao_sql: ISeasonDaoSql = SeasonDaoSql()
         self.__player_dao_sql: IPlayerDaoSql = PlayerDaoSql()
         self.__elo_dao_sql: IEloDaoSql = EloDaoSql()
@@ -38,8 +35,8 @@ class RankingDaoSql(IRankingDaoSql, Dao):
         Met à jour le classement
 
         Args:
-            afterDate (int): date depuis laquelle on veut récupérer les tournois
-            beforeDate (int): date jusqu'à laquelle on veut récupérer les tournois
+            afterDate (int): La date unix a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date unix jusqu'à laquelle rechercher les tournois.
             videogame_id (int): id du jeu vidéo à mettre à jour
             coordonnees (str): coordonnees de la localisation des tournois à récupérer
             distance (str): distance de la localisation des tournois à récupérer
@@ -66,7 +63,7 @@ class RankingDaoSql(IRankingDaoSql, Dao):
         sets, complete_events = self.__get_sets_and_complete_events(events)
 
         # Met à jour le classement
-        players = self.__player_dao_sql.get_all_players()
+        players = self.__player_dao_sql.get_all_players_by_season(current_season.Id)
         ranking = Ranking(players.values())
         ranking.update_ranking(sets, videogame, current_season) 
 
@@ -86,10 +83,6 @@ class RankingDaoSql(IRankingDaoSql, Dao):
 
         # Elos        
         self.__elo_dao_sql.add_elos(player_ranking, videogame_id, beforeDate)
-
-        # Video games
-        self.__videogame_dao_sql.delete_audited_game(videogame)
-        self.__videogame_dao_sql.add_audited_game(videogame)
 
         return player_ranking
     

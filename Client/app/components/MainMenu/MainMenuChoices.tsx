@@ -3,6 +3,14 @@
 import { useEffect, useState } from 'react';
 import './MainMenuChoices.css';
 
+/**
+ * Composant du menu principal
+ * @param number nombre de bloques
+ * @param title titre des bloques
+ * @param page références des liens de pages
+ * @returns HTML du composant du menu principal
+ * @author Youri Emmanuel
+ */
 export default function MainMenuChoices({ number, title, page }: { number: any; title: any; page:any }) {  
   
   

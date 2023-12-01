@@ -1,14 +1,25 @@
 import Link from 'next/link';
-import '../(pages)/(main)/Ranking/Ranking.css'
+import './Ranking.css'
 
+/**
+ * Composant de la page de classement
+ * @param place palce du joueur
+ * @param user_profile image du joueur
+ * @param name nom du joueur
+ * @param score score du joueur
+ * @param idPlayer identifiant du joueur
+ * @returns HTML du classement
+ * @author Antoine Richard
+ */
 export default function Rank(
-    { 
+    {
         place, 
         user_profile,
         name, 
         team,  
         score,
-        idPlayer
+        idPlayer,
+        season_id
     }: 
     {
         place: any; 
@@ -17,6 +28,7 @@ export default function Rank(
         team: any;
         score: any;
         idPlayer:any;
+        season_id:any;
     }) 
 {
 
@@ -51,19 +63,19 @@ export default function Rank(
     }
 
   return (
-    <tr className={`${placePodiumClasse}`} id={`${placePodiumID}`}>
-        <th className='placeRank text-3xl sm:text-6xl'>{place}</th>
+    <tr className={`test ${placePodiumClasse}`} id={`${placePodiumID}`}>
+        <th className='text-7xl font-bold text-center'>{place}</th>
         <td>
             <div className="avatar">
-                <div className="w-16 rounded-full">
+                <div className="w-20 rounded-full ring ring-black ring-offset-base-100">
                     <img alt="" src={`${user_profile}`}/>
                 </div>
             </div>
         </td>
-        <td className='text-xs sm:text-5xl' id='team_Name'>
+        <td className="text-6xl font-bold">
             {currentTeam}<Link href={{pathname:'/profil',query:{playerId : idPlayer},}}> {name} </Link>
         </td>
-        <td className='score text-xs sm:text-5xl'>{score}</td>
+        <td className="text-6xl font-bold text-center">{score}</td>
     </tr>
   )
 }

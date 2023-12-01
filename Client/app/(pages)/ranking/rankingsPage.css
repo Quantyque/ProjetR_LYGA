@@ -1,0 +1,17 @@
+#RankingMainContainer{
+    position: relative;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+#FilterSelectorContainer{
+    padding-bottom: 2%;
+}
+
+.tableHeader{
+    font-size: large;
+    color: white;
+}

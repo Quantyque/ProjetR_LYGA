@@ -1,12 +1,24 @@
 import { API_HOST } from "../constants/constants";
 
+/**
+ * Utilisé pour envoyer des informations à la base de données
+ */
 class Sender {
+
+    /**
+     * Hôte API du sender
+     */
     private _apiHost: string;
 
     public constructor() {
         this._apiHost = API_HOST;
     }
 
+    /**
+     * Requête GET
+     * @param route passage de la requête où elle est faite 
+     * @returns Réponse sous format JSON
+     */
     public async GET(route: string): Promise<any> {
         
         const apiEndpoint = this._apiHost + route;
@@ -31,6 +43,12 @@ class Sender {
         }
     }
 
+    /**
+     * Requête POST
+     * @param route passage de la requête où elle est faite 
+     * @param data Données changées
+     * @returns Réponse sous format JSON
+     */
     public async POST(route: string, data: any): Promise<any> {
         const apiEndpoint = this._apiHost + route;
 
@@ -55,6 +73,12 @@ class Sender {
         }
     }
 
+    /**
+     * Requête UPDATE
+     * @param route passage de la requête où elle est faite 
+     * @param data Données changées
+     * @returns Réponse sous format JSON
+     */
     public async UPDATE(route: string, data: any): Promise<any> {
         const apiEndpoint = this._apiHost + route;
 

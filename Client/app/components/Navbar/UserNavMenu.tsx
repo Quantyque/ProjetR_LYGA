@@ -3,6 +3,11 @@ import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react"
 import Link from "next/link"
 
+/**
+ * Barre de navigation utilisateur
+ * @returns HTML de la barre de navigation utilisateur
+ * @author Youri Emmanuel
+ */
 function UserNavMenu() {
 
     const { data: session } = useSession()

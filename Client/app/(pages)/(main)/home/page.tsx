@@ -1,6 +1,10 @@
 import MainMenuChoices from '@/app/components/MainMenu/MainMenuChoices';
 
-
+/**
+ * Page d'acceuil
+ * @returns HTML de la page d'accueil
+ * @author Youri Emmanuel
+ */
 export default function Home() {
   return (
     <>

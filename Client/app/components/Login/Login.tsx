@@ -3,12 +3,22 @@ import React, { useRef, useState } from 'react'
 import './login.css'
 import { signIn } from 'next-auth/react'
 
+/**
+ * Type Props
+ * @author Youri Emmanuel
+ */
 type Props = {
     className?: string
     searchParams?: { [key: string]: string | string[] | undefined}
     error?: string
 }
 
+/**
+ * Se connecter à un compte
+ * @param props
+ * @returns composant HTML se connecter
+ * @author Youri Emmanuel
+ */
 const Login = (props: Props) => {
 
     const username = useRef("")

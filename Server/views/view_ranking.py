@@ -84,7 +84,8 @@ class ViewRanking(FlaskView):
         Met à jour le classement des joueurs en fonction des tournois passés depuis une date donnée manuellement
 
         Args (Requested POST JSON)):
-            date (datetime) : Date à partir de laquelle mettre à jour le classement
+            afterDate (int): La date unix a partir de laquelle rechercher les tournois.
+            beforeDate (int): La date unix jusqu'à laquelle rechercher les tournois.
             videogameId (int) : Id du jeu vidéo pour lequel mettre à jour le classement
             coordonnees (str) : Coordonnées du lieu du tournoi
             distance (str) : Distance autour du lieu du tournoi pour chercher les joueurs
