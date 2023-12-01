@@ -3,7 +3,7 @@ import { SeasonDao } from "@/model/data/season/SeasonDao";
 import ISeasonDao from "@/model/data/season/ISeasonDao";
 
 /**
- * Controller de type Season
+ * Controller des saisons
  * @author Antoine Richard
  */
 class seasonController {
@@ -11,7 +11,7 @@ class seasonController {
     /**
      * Season dao de season controller
      */
-    seasonDao: ISeasonDao;
+    private seasonDao: ISeasonDao;
  
     constructor()  {
         this.seasonDao = new SeasonDao;

@@ -4,11 +4,10 @@ import { MdEdit } from "react-icons/md";
 import { FaSave } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
-import IUserDao from '@/model/data/user/IUserDao';
-import { UserDao } from '@/model/data/user/UserDao';
 import Role from '@/model/logic/role';
 import { useToast } from '@/app/components/Providers/ToastProvider';
 import { signOut } from 'next-auth/react';
+import userController from '@/controller/userControllers';
 
 interface ModalEditProps {
     user: User
@@ -36,8 +35,8 @@ const ModalEdit = ({ user, classId, isOpen, onClose }: ModalEditProps) => {
 
         try {
 
-            const userDao: IUserDao = new UserDao();
-            await userDao.updateUser(new User(user.id, editedUsername, editedRole, user.userPP, undefined));
+            const userCtrl: userController = new userController();
+            await userCtrl.updateUser(new User(user.id, editedUsername, editedRole, user.userPP, undefined));
             onClose();
             showToast("L'utilisateur a été mis à jour", "success");
             signOut({

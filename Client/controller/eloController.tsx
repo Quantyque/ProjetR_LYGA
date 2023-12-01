@@ -3,7 +3,7 @@ import { EloDao } from "@/model/data/elo/EloDao";
 import IEloDao from "@/model/data/elo/IEloDao";
 
 /**
- * Controller de type Elo
+ * Controller des elo
  * @author Antoine Richard
  */
 class eloController {
@@ -11,7 +11,7 @@ class eloController {
     /**
      * Elo dao de elo controller
      */
-    eloDao: IEloDao;
+    private eloDao: IEloDao;
  
     constructor()  {
         this.eloDao = new EloDao;

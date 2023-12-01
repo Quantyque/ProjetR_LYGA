@@ -20,7 +20,7 @@ interface IVideogameDao {
      * @param videogame jeu video à ajouter
      * @returns un message de confirmation d'ajout du jeu video
     */
-    addVideoGame(videogame: Videogame): Promise<string>;
+    addVideogameToBeAudited(videogame: Videogame): Promise<string>;
 
     /**
      * Supprime un jeu video audités

@@ -2,13 +2,12 @@
 import React, { useEffect, useState, Suspense, lazy  } from 'react'
 import { BsPersonFillLock } from 'react-icons/bs';
 import ModalAdd from '@/app/components/DashboardsComponents/AdminDashboard/UserManager/Modals/ModalAdd';
-import IUserDao from '@/model/data/user/IUserDao';
-import { UserDao } from '@/model/data/user/UserDao';
 import User from '@/model/logic/user';
 import Role from '@/model/logic/role';
 import { MdCancel } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
 import { ToastProvider } from '@/app/components/Providers/ToastProvider';
+import userController from '@/controller/userControllers';
 
 const MenuElement = lazy(() =>
   import('@/app/components/DashboardsComponents/AdminDashboard/UserManager/MenuElement')
@@ -58,8 +57,8 @@ export default function UserManagerPage() {
     const fetchData = async () => {
       try {
 
-        const userDao: IUserDao = new UserDao();
-        const response = await userDao.fetchUsers();
+        const userCtrl: userController = new userController();
+        const response = await userCtrl.getUsers();
         setUsers(response.map((data) => new User(data.id, data.username, data.role, data.userPP, undefined)));
 
       } catch (error) {

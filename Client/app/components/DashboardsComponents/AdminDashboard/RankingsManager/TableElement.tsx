@@ -3,10 +3,9 @@ import React, { useState } from 'react';
 import { FiRefreshCw } from "react-icons/fi";
 import { Videogame } from '@/model/logic/videogame';
 import { FaMapMarkedAlt } from "react-icons/fa";
-import IRankingDao from '@/model/data/ranking/IRankingDao';
-import { SetDao } from '@/model/data/ranking/RankingDao';
 import MapElement from './MapElement';
 import { useToast } from '@/app/components/Providers/ToastProvider';
+import rankingController from '@/controller/rankingControlle';
 
 interface TableElementProps {
   videoGame: Videogame,
@@ -39,8 +38,8 @@ const TableElement = ({ videoGame }: TableElementProps) => {
           const coordinatesToSend: [number, number] = [coordinates[0], coordinates[1]];
           const distance = parseFloat(distanceInput);
   
-          const rankingDao: IRankingDao = new SetDao();
-          await rankingDao.manualRefresh(new Date(startDate), new Date(endDate), videoGame.id, coordinatesToSend, distance);
+          const rankingCtrl: rankingController = new rankingController();
+          await rankingCtrl.manualRefresh(new Date(startDate), new Date(endDate), videoGame.id, coordinatesToSend, distance);
 
           showToast("Le classement a été mis à jour", "success");
   

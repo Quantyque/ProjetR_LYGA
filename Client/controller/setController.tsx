@@ -3,7 +3,7 @@ import { SetDao } from "@/model/data/set/SetDao";
 import ISetDao from "@/model/data/set/ISetDao";
 
 /**
- * Controller de type Set
+ * Controller des sets
  * @author Antoine Richard
  */
 class setController {
@@ -11,7 +11,7 @@ class setController {
     /**
      * Set dao de set controller
      */
-    setDao: ISetDao;
+    private setDao: ISetDao;
  
     constructor()  {
         this.setDao = new SetDao;
