@@ -28,7 +28,7 @@ class UserDaoSql(IUserDaoSql, Dao):
             DuplicateUser: Si l'utilisateur existe déjà.
         """
 
-        user_infos = self.db.exec_request_multiple("SELECT * FROM Users WHERE username = ?", (username,), True)
+        user_infos = self.db.exec_request_one("SELECT * FROM Users WHERE username = ?", (username,))
 
         if user_infos is not None:
             raise DataDuplicate("Username already taken.")
@@ -53,7 +53,7 @@ class UserDaoSql(IUserDaoSql, Dao):
             DuplicateUser: Si l'utilisateur existe déjà.
         """
 
-        user_infos = self.db.exec_request_multiple("SELECT * FROM Users WHERE username = ?", (username,), True)
+        user_infos = self.db.exec_request_one("SELECT * FROM Users WHERE username = ?", (username,))
 
         if user_infos is not None:
             raise DataDuplicate("Username already taken.")
@@ -80,7 +80,7 @@ class UserDaoSql(IUserDaoSql, Dao):
 
         result: str = ""
 
-        user_infos = self.db.exec_request_multiple("SELECT * FROM Users WHERE username = ?", (username,), True)
+        user_infos = self.db.exec_request_one("SELECT * FROM Users WHERE username = ?", (username,))
 
         if user_infos is not None:
             user = User(user_infos[0], user_infos[1], user_infos[3], None, user_infos[4])
@@ -141,7 +141,7 @@ class UserDaoSql(IUserDaoSql, Dao):
             UserNotFound: Si l'utilisateur n'existe pas.
         """
 
-        data = self.db.exec_request_multiple("SELECT * FROM Users WHERE id = ?", (id,))
+        data = self.db.exec_request_one("SELECT * FROM Users WHERE id = ?", (id,))
 
         if data:
             user = data[0]
@@ -167,12 +167,12 @@ class UserDaoSql(IUserDaoSql, Dao):
             UserNotFound: Si l'utilisateur n'existe pas.
         """
 
-        user_infos = self.db.exec_request_multiple("SELECT * FROM Users WHERE id = ?", (user.Id,), True)
+        user_infos = self.db.exec_request_one("SELECT * FROM Users WHERE id = ?", (user.Id,))
 
         if user_infos is None:
             raise UserNotFound("User not found.")
         
-        users = self.db.exec_request_multiple("SELECT * FROM Users WHERE username = ?", (user.Username,), True)
+        users = self.db.exec_request_one("SELECT * FROM Users WHERE username = ?", (user.Username,))
 
         if users is not None:
             if users[0] != user.Id:
@@ -206,7 +206,7 @@ class UserDaoSql(IUserDaoSql, Dao):
             UserNotFound: Si l'utilisateur n'existe pas.
         """
         
-        user_infos = self.db.exec_request_multiple("SELECT * FROM Users WHERE id = ?", (id,), True)
+        user_infos = self.db.exec_request_one("SELECT * FROM Users WHERE id = ?", (id,))
 
         if user_infos is None:
             raise UserNotFound("User not found.")
