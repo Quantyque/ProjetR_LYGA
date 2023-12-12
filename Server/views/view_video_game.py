@@ -10,168 +10,202 @@ from controls.technical import TechnicalControls
 from model.role import Role
 
 class ViewVideoGames(FlaskView):
+    """
+    Controller permettant de gérer les jeux vidéos
+    """
 
     def __init__(self):
         self.__video_game_manager = VideoGameManager()
         self.__video_game = Videogame()
 
     @route('/all', methods=['GET'])
-    def all_video_games(self) -> str():
+    # @TechnicalControls.is_role([Role.ADMIN])
+    def all_video_games(self) -> (str, int):
         """
-        Get all video games available on Smash.gg
+        Recupere tous les jeux disponibles sur Start.gg
 
         Return: 
-            str: List of all video games available on Smash.gg
+            str: Liste de tous les jeux disponibles sur Start.gg
+            int: Code HTTP
         """
         try:
+            # Envoi de la requête
             result = self.__video_game_manager.get_all_video_game()
 
+            # Récupération du résultat sous forme de JSON
             json = []
             for game in result:
                 json.append(game.toJSON())
 
-            return json, 200
+            res = json, 200
 
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+
+        finally:
+            return res
     
     @route('/add-audited', methods=['POST'])
-    # @TechnicalControls.is_role([Role.ADMIN])
-    def add_audited_game(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])
+    def add_audited_game(self) -> (str, int):
         """
-        Add a game to the list of audited games
+        Ajout d'un jeu à la liste des jeux audités
 
         Args:
-            id (int): Id of the game to add
-            name (str): Name of the game to add
+            id (int): Id du jeu à ajouter
+            name (str): Nom du jeu à ajouter
         
         Return:
-            str: Message of success or error
+            str: Message de succès ou d'erreur
+            int: Code HTTP
         """
         try:
-            
+            # Initialisation des variables
             id: int = int(request.get_json().get('id'))
             name: str = request.get_json().get('name')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(id, name)
             FunctionalControls.check_forbidden_chars(name)
 
             self.__video_game.Id = id
             self.__video_game.Name = name
 
+            # Envoi de la requête
             result = self.__video_game_manager.add_audited_game(self.__video_game)
-            return result, 200
+            
+            res = result, 201
         
         except InvalidInput as e:
             log_info((e))
-            return str(e), 400
+            res = str(e), 400
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except DuplicateGame as e :
             log_info(str(e))
-            return str(e), 409
+            res = str(e), 409
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+
+        finally:
+            return res
     
     @route('/audited', methods=['GET'])
-    def get_audited_game(self) -> str():
+    def get_audited_game(self) -> (str, int):
         """
-        Get all audited games
+        Réupère la liste des jeux audités
 
         Return:
-            str: List of all audited games
+            str: Liste des jeux audités
+            int: Code HTTP
         """
         try:
-            return self.__video_game_manager.list_audited_game(), 200
+            res = self.__video_game_manager.list_audited_game(), 200
 
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+
+        finally:
+            return res
 
     @route('/update-audited', methods=['PUT'])
-    # @TechnicalControls.is_role([Role.ADMIN])    
-    def update_audited_game(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])    
+    def update_audited_game(self) -> (str, int):
         """
-        Update a game in the list of audited games
+        Modifie un jeu dans la liste des jeux audités
 
         Args:
-            id (int): Id of the game to update
-            name (str): New name of the game to update
+            id (int): Id du jeu à modifier
+            name (str): Nouveau nom du jeu à modifier
         
         Return:
-            str: Message of success or error
+            str: Message de succès ou d'erreur
+            int: Code HTTP
         """
         try:
+            # Initialisation des variables
             id: int = int(request.get_json().get('id'))
             name: str = request.get_json().get('name')
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(id, name)
             FunctionalControls.check_forbidden_chars(name)
 
             self.__video_game.Id = id
             self.__video_game.Name = name
 
-            return self.__video_game_manager.update_audited_game(self.__video_game), 200
+            res = self.__video_game_manager.update_audited_game(self.__video_game), 200
         
         except InvalidInput as e:
             log_info((e))
-            return str(e), 400
+            res = str(e), 400
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400    
         
         except GameNotAudited as e :
             log_info(str(e))
-            return str(e), 404
+            res = str(e), 404
+
+        except DuplicateGame as e :
+            log_info(str(e))
+            res = str(e), 409
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+
+        finally:
+            return res
 
     @route('/delete-audited', methods=['DELETE'])
-    # @TechnicalControls.is_role([Role.ADMIN])    
-    def delete_audited_game(self) -> str():
+    @TechnicalControls.is_role([Role.ADMIN])    
+    def delete_audited_game(self) -> (str, int):
         """
-        Delete a game from the list of audited games
+        Supprime un jeu de la liste des jeux audités
 
         Args:
-            id (int): Id of the game to delete
+            id (int): Id du jeu à supprimer
         
         Return:
-            str: Message of success or error
+            str: Message de succès ou d'erreur
+            int: Code HTTP
         """
         try:
+            # Initialisation des variables
             id: int = int(request.get_json().get('id'))
 
-            # Controls
+            # Verification des variables
             FunctionalControls.check_json_arguments_not_null(id)
 
             self.__video_game.Id = id
             self.__video_game.Name = None
 
-            return self.__video_game_manager.delete_audited_game(self.__video_game), 200
+            res = self.__video_game_manager.delete_audited_game(self.__video_game), 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e:
             log_info((e))
-            return str(e), 400
+            res = str(e), 400
         
         except GameNotAudited as e :
             log_info(str(e))
-            return str(e), 404
+            res = str(e), 404
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+
+        finally:
+            return res

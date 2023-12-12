@@ -1,0 +1,45 @@
+#firstPlace{
+    background: linear-gradient(-45deg, #996d2c, #f7e589);
+    color: #121212;
+}
+#secondPlace{
+    background: linear-gradient(-45deg, #363636, #DCDCDC);
+    color: #121212;
+}
+#thirdPlace{
+    background: linear-gradient(-45deg, #662E00, #D47800);
+        color: #121212;
+}
+.defaultPlace{
+    background: linear-gradient(-45deg, #121212, #414141);
+    color: white;
+}
+
+
+tr:first-child th:first-child { border-top-left-radius: 10px; }
+tr:first-child td:last-child { border-top-right-radius: 10px; }
+
+tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+
+tr:first-child td { border-top-style: solid; }
+tr td:first-child { border-left-style: solid; }
+
+th{
+font-size: 100%;
+font-weight: bold;
+}
+
+#RankingTable{
+text-align: center;
+border-collapse: separate;
+border-spacing: 0 15px;
+}
+
+thead {
+border-bottom: 20px solid #191919; 
+}
+
+tr{
+height: 60px;
+}

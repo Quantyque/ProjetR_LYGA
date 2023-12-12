@@ -6,55 +6,70 @@ from manager.tournament_manager import TournamentManager
 from manager.video_game_manager import VideoGameManager
 from flask_classful import FlaskView, route
 from controls.functional import FunctionalControls
-from controls.technical import TechnicalControls
-from model.role import Role
 
 class ViewTournament(FlaskView):
+    """
+    Controller permettant de gérer les tournois
+    """
 
     def __init__(self) -> None:
         self.__tournament_manager = TournamentManager()
 
-    @route('/location/', methods=['POST'])
-    def tournament_by_location(self) -> dict:
+    @route('/location', methods=['POST'])
+    def tournament_by_location(self) -> (str, int):
         """
-        Returns a list of tournaments by date, game and location
+        Renvoi une liste de tournois par date, jeu et lieu
+
+        Args:
+            afterDate (str): date de début de recherche
+            beforeDate (str): date de fin de recherche
+            videogameId (int): id du jeu vidéo
+            coordonnees (dict): coordonnées GPS
+            distance (int): distance de recherche
 
         Returns:
-            dict: list of tournaments
+            str: tournois
+            int: code HTTP
         """
         try:
-            # Variable initialization
-            date = request.get_json().get('date')
+            # Initialisation des variables
+            afterDate = request.get_json().get('afterDate')
+            beforeDate = request.get_json().get('beforeDate')
             videogameId = request.get_json().get('videogameId')
             coordonnees = request.get_json().get('coordonnees')
             distance = request.get_json().get('distance')
 
-            FunctionalControls.check_json_arguments_not_null(date, videogameId, coordonnees, distance)
+            # Verification des variables
+            FunctionalControls.check_json_arguments_not_null(afterDate, beforeDate, videogameId, coordonnees, distance)
 
-            # Retrieving the selected video game
+            # Récupération du jeu vidéo selectionné
             videogame = VideoGameManager().get_video_game_by_id(videogameId)
 
-            # Sending the request
-            result = self.__tournament_manager.get_tournaments_by_location(date, videogame, coordonnees, distance)
+            # Envoi de la requête
+            result = self.__tournament_manager.get_tournaments_by_location(afterDate, beforeDate, videogame, coordonnees, distance)
 
+            # Récupération du résultat sous forme de JSON
             json = []
             for tournament in result:
                 json.append(tournament.toJSON())
 
-            return json, 200
+            res = json, 200
         
         except ValueError as e :
             log_info(str(e))
-            return str(e), 400
-        
-        except BadRequestException as e :
-            log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
         
         except InvalidInput as e :
             log_info(str(e))
-            return str(e), 400
+            res = str(e), 400
+        
+        except BadRequestException as e :
+            log_info(str(e))
+            res = str(e), 400
         
         except Exception as e :
             log_error(str(e))
-            return INTERNAL_ERROR, 500
+            res = INTERNAL_ERROR, 500
+        
+        finally:
+            return res

@@ -1,8 +1,8 @@
 import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Navbar from './components/Navbar/Navbar'
 import Providers from './components/Providers/Providers'
+import { ToastProvider } from './components/Providers/ToastProvider'
 
 export const metadata: Metadata = {
   title: 'ProjetR'
@@ -17,12 +17,9 @@ export default function RootLayout({
 }) {
   return (
       <html lang="en">
-        <body className={inter.className}>
           <Providers>
-            <Navbar/>
             {children}
           </Providers>
-        </body>
       </html>
   )
 }

@@ -4,38 +4,23 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from controls.technical import TechnicalControls
 from model.role import Role
-
-# Tournaments
 from views.view_tournaments import ViewTournament
-
-# Videos games
 from views.view_video_game import ViewVideoGames
-
-# Ranking
 from views.view_ranking import ViewRanking
-
-# Players
 from views.view_player import ViewPlayer
-
-#Sets
 from views.view_set import ViewSet
-
-# Users
 from views.view_user import ViewUser
-
-# Tests
 from views.view_api_tests import ViewApiTests
-
-#Elos
 from views.view_elo import ViewElo
+from views.view_season import ViewSeason
 
-# App init
+# Initialisation de l'application Flask
 app = Flask(__name__)
 
 # CORS definition
 CORS(app, resources={r"/*": {"origins": ["*"]}})
 
-# Request limiter
+# Limiteur de requêtes
 limiter = Limiter(
     get_remote_address,
     app=app,
@@ -43,7 +28,7 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 
-# Views init
+# Initialisation des vues
 ViewVideoGames.register(app, route_base='/videogames', trailing_slash=False)
 ViewPlayer.register(app, route_base='/player', trailing_slash=False)
 ViewRanking.register(app, route_base='/rankings', trailing_slash=False)
@@ -52,7 +37,8 @@ ViewUser.register(app, route_base='/user', trailing_slash=False)
 ViewSet.register(app, route_base='/sets', trailing_slash=False)
 ViewElo.register(app, route_base='/elo', trailing_slash=False)
 ViewApiTests.register(app, route_base='/tests', trailing_slash=False)
+ViewSeason.register(app, route_base='/season', trailing_slash=False)
 
-# Launch app
+# Lancement de l'application
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

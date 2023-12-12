@@ -23,8 +23,14 @@ logger.addHandler(file_handler)
 
 # Save info
 def log_info(message):
+    """
+    Sauvegarde une information dans le fichier de log.
+    """
     logger.info(message, exc_info=True)
 
 # Save error
 def log_error(message):
+    """
+    Sauvegarde une erreur dans le fichier de log.
+    """
     logger.error(message, exc_info=True)

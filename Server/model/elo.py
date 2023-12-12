@@ -1,5 +1,6 @@
 from model.entity import Entity
 from model.videogame import Videogame
+from model.season import Season
 
 class Elo(Entity):
     """
@@ -11,52 +12,79 @@ class Elo(Entity):
         self.__score : int = None
         self.__videogame : Videogame = None
         self.__date : int = None
+        self.__season : Season = None
 
     # region Properties
 
     @property
     def Id(self) -> int:
         """
-        Id de l'elo
+        Getter de l'id de l'elo
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id de l'elo
+        """
         self.__id = id
 
     @property
     def Score(self) -> int:
         """
-        Score de l'élo
+        Getter du score de l'élo
         """
         return self.__score
     
     @Score.setter
     def Score(self, score : int) -> None:
+        """
+        Setter du score de l'élo
+        """
         self.__score = score
 
     @property
     def Videogame(self):
         """
-        Jeu vidéo lié à l'élo
+        Getter du jeu vidéo lié à l'élo
         """
         return self.__videogame
     
     @Videogame.setter
     def Videogame(self, videogame) -> None:
+        """
+        Setter du jeu vidéo lié à l'élo
+        """
         self.__videogame = videogame
 
     @property
     def Date(self):
         """
-        Date de l'élo
+        Getter de la date de l'élo
         """
         return self.__date
     
     @Date.setter
     def Date(self, date) -> None:
+        """
+        Setter de la date de l'élo
+        """
         self.__date = date
+
+    @property
+    def Season(self):
+        """
+        Getter de la saison de l'élo
+        """
+        return self.__season
+    
+    @Season.setter
+    def Season(self, season) -> None:
+        """
+        Setter de la saison de l'élo
+        """
+        self.__season = season
 
     # endregion
 
@@ -73,13 +101,18 @@ class Elo(Entity):
             self.Videogame = videogame
         if "date" in data:
             self.Date = data["date"]
+        if "season" in data:
+            season = Season()
+            season.hydrate(data["season"])
+            self.Season = season
 
     def toJSON(self):
         json = {
             "id": self.Id,
             "score": self.Score,
             "videogame": self.Videogame.toJSON() if self.Videogame is not None else "",
-            "date" : self.Date
+            "date" : self.Date,
+            "season" : self.Season.toJSON() if self.Season is not None else ""
         }
         return json
 

@@ -20,67 +20,118 @@ class Event(Entity):
     @property
     def Id(self) -> int:
         """
-        Id de l'événement
+        Getter de l'id de l'événement
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id de l'événement
+
+        Args:
+            id (int): Nouvel id de l'événement
+        """
         self.__id = id
 
     @property
     def Name(self) -> str:
         """
-        Nom de l'événement
+        Getter du nom de l'événement
+
+        Returns:
+            str: Nom de l'événement
         """
         return self.__name
     
     @Name.setter
     def Name(self, name : str) -> None:
+        """
+        Setter du nom de l'événement
+
+        Args:
+            name (str): Nouveau nom de l'événement
+        """
         self.__name = name
 
     @property
     def NumEntrants(self) -> int:
         """
-        Nombre d'entrants à l'événement
+        Getter du nombre d'entrants à l'événement
+
+        Returns:
+            int: Nombre d'entrants à l'événement
         """
         return self.__num_entrants
     
     @NumEntrants.setter
     def NumEntrants(self, num_entrants : int) -> None:
+        """
+        Setter du nombre d'entrants à l'événement
+
+        Args:
+            num_entrants (int): Nouveau nombre d'entrants à l'événement
+        """
         self.__num_entrants = num_entrants
 
     @property
     def Sets(self) -> [Set]:
         """
-        Liste des sets de l'événement
+        Getter de la liste des sets de l'événement
+
+        Returns:
+            [Set]: Liste des sets de l'événement
         """
         return self.__sets
     
     @Sets.setter
     def Sets(self, sets : [Set]) -> None:
+        """
+        Setter de la liste des sets de l'événement
+
+        Args:
+            sets ([Set]): Nouvelle liste des sets de l'événement
+        """
         self.__sets = sets
 
     @property
     def Videogame(self):
         """
-        Jeu vidéo lié à l'événement
+        Getter du jeu vidéo lié à l'événement
+
+        Returns:
+            Videogame: Jeu vidéo lié à l'événement
         """
         return self.__videogame
     
     @Videogame.setter
     def Videogame(self, videogame):
+        """
+        Setter du jeu vidéo lié à l'événement
+
+        Args:
+            videogame (Videogame): Nouveau jeu vidéo lié à l'événement
+        """
         self.__videogame = videogame
 
     @property
     def Players(self) -> [Player]:
         """
-        Liste des joueurs de l'événement
+        Getter de la liste des joueurs de l'événement
+
+        Returns:
+            [Player]: Liste des joueurs de l'événement
         """
         return self.__players
     
     @Players.setter
     def Players(self, players : [Player]) -> None:
+        """
+        Setter de la liste des joueurs de l'événement
+
+        Args:
+            players ([Player]): Nouvelle liste des joueurs de l'événement
+        """
         self.__players = players
 
     # endregion

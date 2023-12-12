@@ -15,34 +15,43 @@ class Character(Entity):
     @property
     def Id(self) -> int:
         """
-        Id du personnage
+        Getter de l'id du personnage
         """
         return self.__id
     
     @Id.setter
     def Id(self, id : int) -> None:
+        """
+        Setter de l'id du personnage
+        """
         self.__id = id
 
     @property
     def Name(self) -> str:
         """
-        Nom du personnage
+        Getter du nom du personnage
         """
         return self.__name
     
     @Name.setter
     def Name(self, name : str) -> None:
+        """
+        Setter du nom du personnage
+        """
         self.__name = name
 
     @property
     def Images(self) -> [str]:
         """
-        Images du personnage
+        Getter des images du personnage
         """
         return self.__images
     
     @Images.setter
     def Images(self, images : [str]) -> None:
+        """
+        Setter des images du personnage
+        """
         self.__images = images
 
     # endregion

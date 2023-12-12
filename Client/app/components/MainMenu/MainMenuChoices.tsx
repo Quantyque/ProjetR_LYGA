@@ -3,6 +3,14 @@
 import { useEffect, useState } from 'react';
 import './MainMenuChoices.css';
 
+/**
+ * Composant du menu principal
+ * @param number nombre de bloques
+ * @param title titre des bloques
+ * @param page références des liens de pages
+ * @returns HTML du composant du menu principal
+ * @author Youri Emmanuel
+ */
 export default function MainMenuChoices({ number, title, page }: { number: any; title: any; page:any }) {  
   
   
@@ -64,9 +72,47 @@ export default function MainMenuChoices({ number, title, page }: { number: any; 
     }
   }, [currentGame, currentIndex]);
   
+  
+  const handleHover = (imgId: string) => {
+    const div = document.getElementById('MainMenuCircle');
+    if (div) {
+      div.style.border = "4px solid";
+
+      // Définir la couleur en fonction de l'ID de l'image
+      switch (imgId) {
+        case 'img1':
+          div.style.borderColor = 'red';
+          break;
+        case 'img2':
+          div.style.borderColor = 'blue';
+          break;
+        case 'img3':
+          div.style.borderColor = 'yellow';
+          break;
+        case 'img4':
+          div.style.borderColor = 'green';
+          break;
+        case 'img5':
+          div.style.borderColor = 'purple';
+          break;
+        default:
+          div.style.borderColor = '#191919';
+      }
+    }
+  };
+
+  const handleMouseOut = () => {
+    const div = document.getElementById('MainMenuCircle');
+    if (div) {
+      div.style.border = "4px solid"
+      div.style.borderColor = '#191919'; 
+    }
+  };
+
   return (
       <>
-        <a href= {`./${page}`} className="vertical-div" id={`img${number}`}>
+        <a href= {`./${page}`} className="vertical-div" id={`img${number}`} onMouseOver={() => handleHover(`img${number}`)}
+        onMouseOut={handleMouseOut}>
           <div className="vertical-div-container" id={`colorContainer${number}`}>
             <div className="text-container">
               {title}

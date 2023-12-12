@@ -1,17 +1,38 @@
+from typing import Optional
+
 class IDatabase:
     """
     Interface pour les bases de données
     """
 
-    def exec_request(self, req : str, params : tuple = None):
+    def exec_request_one(self, req: str, params: Optional[tuple] = None) -> object:
         """
-        Exécute une requête sur la base de données
+        Exécute une requête SQL en renvoyant un seul résultat.
 
         Args:
-            req (str): La requête à exécuter
-            params (tuple, optional): Les paramètres de la requête.
+            req (str): La requête SQL.
+            params (tuple, optional): Les paramètres de la requête. Defaults to None.
 
         Returns:
-            list: Liste des résultats de la requête
+            object: Le résultat de la requête.
+
+        Raises:
+            Exception: Si la requête échoue.
+        """ 
+        pass
+
+    def exec_request_multiple(self, req: str, params: Optional[tuple] = None) -> Optional[list]:
+        """
+        Exécute une requête SQL en renvoyant plusieurs résultats.
+
+        Args:
+            req (str): La requête SQL.
+            params (tuple, optional): Les paramètres de la requête. Defaults to None.
+
+        Returns:
+            list, optional: La liste des résultats de la requête.
+
+        Raises:
+            Exception: Si la requête échoue.
         """ 
         pass

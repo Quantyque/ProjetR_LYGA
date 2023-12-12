@@ -8,7 +8,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -23,5 +23,22 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "typedocOptions":{
+    "entryPoints": [
+      "model/**/*.tsx", 
+      "model/**/*.ts", 
+      "app/**/*.tsx", 
+      "app/**/*.ts", 
+      "controller/**/*.tsx", 
+      "controller/**/*.ts", 
+      "cypress/e2e/**/*.tsx", 
+      "cypress/e2e/**/*.ts",
+      "types/**/*.tsx",
+      "types/**/*.ts",
+      "middleware/**/*.tsx",
+      "middleware/**/*.ts"
+    ],
+    "out": "docs",
+  },
   "exclude": ["node_modules"]
 }

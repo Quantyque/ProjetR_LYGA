@@ -8,6 +8,10 @@ Scripts/
 pyvenv.cfg
 share/
 .next/
+*.env
+*.env.*
+Include/
+*.vpp.bak*
 
 # User-specific files
 *.rsuser
@@ -400,3 +404,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+.env
+Conception/.SAE_S5.vpp.lck

@@ -9,6 +9,9 @@ Ce projet est la partie back-end du projet R qui est un outil permettant d’ét
 ## Installation
 
 L'application possède une architécture client/serveur.
+Nous vous invitons à regarder les "README.md" des répertoires "Client" et "Server" pour plus d'informations.
+En effet, pour que l'application soit complète, il faut lançer le serveur et le client.
+
 Pour installer le projet, il faut cloner le projet sur votre machine. 
 Ensuite, il faut installer les dépendances du projet avec la commande suivante : 
 
@@ -24,8 +27,13 @@ Le fichier doit contenir la ligne suivante :
 STARTGG_KEY = <clé_api>
 ```
 
-Ce fichier foit également contenir les informations pour obtenir le hachable du mot de passe.
-Pour cela, contacter un membre du projet afin de l'obtenir.
+Ce fichier doit également contenir les informations pour définir les tokens d'identification utilisés pour sécuriser l'API et authentifier les utilisateurs.
+Pour cela, contacter un membre du projet afin de l'obtenir ou utilisez un générateur de chaîne de caractère (doit être longue) avec des caractères complexes.
+
+```bash
+JWT_SECRET = <secret>
+JWT_ALGO = HS256
+```
 
 Vous pouvez ensuite lancer le projet avec la commande suivante : 
 
@@ -40,6 +48,12 @@ npm run dev
 ```
 
 Ensuite, selon l'adresse du serveur que vous avez choisie, il vous suffiras de cliquer sur le lien.
+
+Si ça ne fonctionne pas, vous pouvez utiliser la commande ci-dessous pour mettre à jour les dépendances du projet :
+
+```bash
+npm i
+```
 
 ## Utilisation
 
@@ -62,19 +76,11 @@ Avec la méthode POST et le body suivant :
 
 ## Structure du projet
 
-Le projet est composé de plusieurs dossiers :
+Le projet est composé de trois dossier principaux :
 
-- **constants** : contient les constantes du projet
-- **controls** : contient les contrôles qui permettent de vérifier les données envoyées par l’utilisateur
-- **data_processing** : contient les classes de la base de données
-- **exceptions** : contient les exceptions du projet
-- **logs** : contient les logs du projet où sont stockées les erreurs
-- **manager** : contient les managers qui permettent de gérer les objets de la base de données et de l'api start.gg
-- **model** : contient les modèles qui permettent de représenter les objets de la base de données et de l'api start.gg
-- **unit_tests** : contient les tests unitaires du projet
-- **utils** : contient les fonctions utilitaires du projet
-- **views** : contient les controllers du projet qui font le lien entre les routes et les managers
-- **main.py** : contient les routes du projet
+- **Client** : contient la partie cliente de l'application
+- **Server** : contient la partie serveur de l'application
+- **Conception** :  contient le fichier de conception du projet
 
 ## Auteurs
 

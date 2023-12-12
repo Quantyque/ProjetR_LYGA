@@ -1,81 +1,134 @@
-from manager.manager import Manager
 from model.user import User
-from exceptions import InvalidCredentials
-from datetime import timedelta, datetime
-from model.role import Role
-import jwt, bcrypt, os, json, bcrypt, pyotp
+from data_processing.sql.user.UserDaoSql import UserDaoSql
+from data_processing.sql.user.IUserDaoSql import IUserDaoSql
+import bcrypt, pyotp
 
-class UserManager(Manager): 
+class UserManager(): 
+    """
+    Classe permettant de gérer les utilisateurs
+    """
 
     def __init__(self):
-        super().__init__()
+        self.__db: IUserDaoSql = UserDaoSql()
 
     # region Operations
 
     def register(self, username: str, password: str) -> None:
-            
-        try:
+        """
+        Inscrit un utilisateur.
 
-            user_infos = self.Database.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
+        Args:
+            username (str): Le nom d'utilisateur.
+            password (str): Le mot de passe.
 
-            if user_infos is not None:
-                raise InvalidCredentials("Username already taken.")
+        Raises:
+            DuplicateUser: Si l'utilisateur existe déjà.
+        """
+        return self.__db.register(username, password)
+    
+    def admin_register(self, username: str, password: str, role: int) -> None:
+        """
+        Inscrit un utilisateur avec un role (ADMIN).
 
-            password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-            user = User(None, username, Role.USER.value, password, None)
-            self.Database.exec_request("INSERT INTO Users(username, password, role) VALUES (?, ?, ?)", (user.Username, user.Password, user.Role))
-            print("ok")
+        Args:
+            username (str): Le nom d'utilisateur.
+            password (str): Le mot de passe.
+            role (int): Le rôle de l'utilisateur.
 
-        finally:
-            pass
+        Raises:
+            DuplicateUser: Si l'utilisateur existe déjà.
+        """
+        return self.__db.admin_register(username, password, role)
 
     def login(self, username: str, password: str) -> list(str()):
+        """
+        Connecte un utilisateur.
 
-        try:
+        Args:
+            username (str): Le nom d'utilisateur.
+            password (str): Le mot de passe.
 
-            result: str = ""
+        Returns:
+            list(str()): Le token et le secret.
+    
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+            InvalidPassword: Si le mot de passe est incorrect.
+        """
+        return self.__db.login(username, password)
 
-            user_infos = self.Database.exec_request("SELECT * FROM Users WHERE username = ?", (username,), True)
+    def get_all_users(self) -> [User]:
+        """
+        Retourne tous les utilisateurs
 
-            if user_infos is not None:
-                user = User(user_infos[0], user_infos[1], user_infos[3], None, user_infos[4])
-                user_password = user_infos[2]
-            else:
-                raise InvalidCredentials("Invalid credentials.")
+        Returns:
+            list(User): La liste des utilisateurs
 
-            if bcrypt.checkpw(password.encode('utf-8'), user_password.encode('utf-8')):
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
 
-                exp = datetime.now() + timedelta(hours=8) 
-                payload = user.toJSON()
-                payload["exp"] = exp.timestamp()   
-                jwt_encoded = jwt.encode(payload, os.getenv('JWT_SECRET'), algorithm=os.getenv('JWT_ALGO'))
-                result = json.dumps({"id" : user.Id, "username" : user.Username, "role": user.Role, "userPP": user.UserPP, "accessToken": jwt_encoded})
+        return self.__db.get_all_users()
 
-            else:
-                raise InvalidCredentials("Invalid credentials.")
-            
-            return result
-            
-        finally:
-            pass
+    def get_user_by_id(self, id: int) -> User:
+        """
+        Retourne un utilisateur en fonction de son id
 
+        Args:
+            user (User): L'utilisateur à récupérer
 
-    def get_all_users(self):
-        self.Database.exec_request("SELECT * FROM User")
-        pass
+        Returns:
+            User: L'utilisateur correspondant à l'id
 
-    def get_user_by_id(self, user: User):
-        self.Database.exec_request("SELECT * FROM User WHERE id = ?", (user.Id,))
-        pass
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+        
+        return self.__db.get_user_by_id(id)
 
-    def add_user(self, user: User):
-        self.Database.exec_request("INSERT INTO User(id, username, password, role) VALUES (?, ?, ?)", (user.Id, user.Username, user.Password, user.Role))
-        pass
+    def update_user(self, user: User) -> None:
+        """
+        Met à jour un utilisateur.
 
-    def update_user(self, user: User):
-        pass
+        Args:
+            user (User): L'utilisateur à mettre à jour.
 
-    def delete_user(self, id: int):
-        pass
+        Returns:
+            None
+
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+        """
+        
+        return self.__db.update_user(user)
+
+    def delete_user(self, id: int) -> None:
+        """
+        Supprime un utilisateur.
+
+        Args:
+            id (int): L'id de l'utilisateur à supprimer.
+
+        Returns:
+            None
+
+        Raises:
+            UserNotFound: Si l'utilisateur n'existe pas.
+        """
+        
+        return self.__db.delete_user(id)
+    
+    def get_roles(self) -> list(str()):
+        """
+        Retourne les rôles
+
+        Returns:
+            list(str()): La liste des rôles
+
+        Raises:
+            HTTPError: Si la requête échoue.
+        """
+
+        return self.__db.get_roles()
 
     # endregion

@@ -1,6 +1,7 @@
 from model.player import Player
 from model.set import Set
 from model.elo import Elo
+from model.season import Season
 import functools
 from constants import LOSER_RUN_FACTOR
 from model.videogame import Videogame
@@ -22,19 +23,28 @@ class Ranking():
     @property
     def Players(self) -> [Player]:
         """
-        Liste des joueurs avec en clé leur id
+        Getter de la liste des joueurs avec en clé leur id
+
+        Returns:
+            [Player]: Liste des joueurs avec en clé leur id
         """
         return self.__players
     
     @Players.setter
     def Players(self, players : [Player]) -> None:
+        """
+        Setter de la liste des joueurs avec en clé leur id
+
+        Args:
+            players ([Player]): Nouvelle liste des joueurs avec en clé leur id
+        """
         self.__players = players
 
     # endregion
 
     # region Operations
 
-    def init_players(self, player : Player, videogame : Videogame) -> Player:
+    def init_players(self, player : Player, videogame : Videogame, season : Season) -> Player:
         """
         Initialise les joueurs
 
@@ -47,14 +57,17 @@ class Ranking():
         Returns:
             Player: Joueur initialisé
         """
+        #Création du joueur s'il n'est pas encore dans le dictionnaire des joueurs
         if player.Id not in self.Players:
             default_elo = self.__elo_manager.get_default_elo(player.Id, videogame.Id)
             data_elo = {"score" : default_elo}
             elo = Elo()
             elo.hydrate(data_elo)
             elo.Videogame = videogame
+            elo.Season = season
             player.Elos[videogame.Id] = elo
             self.Players[player.Id] = player
+        #Récupération du joueur s'il est déjà dans le dictionnaire des joueurs
         else:
             player = self.Players[player.Id]
         return player
@@ -86,15 +99,17 @@ class Ranking():
         Returns:
             (float, float): Nouvel elo du gagnant puis du perdant
         """
+        #Initialisation des variables pour le calcul de l'élo
         expected_a = self.get_expected_score(winner, looser, videogameId)
         expected_b = self.get_expected_score(looser, winner, videogameId)
         facteur_round = 1
         facteur_k = set.EventNbEntrants
         if set.Round <0:
             facteur_round = LOSER_RUN_FACTOR
+        #Calcul de l'élo
         return winner.Elos[videogameId].Score + (facteur_k * (1 - expected_a))*facteur_round, looser.Elos[videogameId].Score + (facteur_k * (0 - expected_b))*facteur_round
 
-    def update_ranking(self, sets : [Set], videogame : Videogame) -> None:
+    def update_ranking(self, sets : [Set], videogame : Videogame, season : Season) -> None:
         """
         Met à jour le classement des joueurs
 
@@ -104,22 +119,24 @@ class Ranking():
         """
         reverse_sets = sets[::-1]
         for set in reverse_sets:
-            #Verification qu'aucun des joueurs n'est disqualifié
-            if (set.Players[0].IsDisqualified == None and set.Players[1].IsDisqualified == None):
-                #Initialisation de l'élo des joueurs si ils n'ont pas encore joué
-                player_a = set.Players[0]
-                player_b = set.Players[1]
-                player_a = self.init_players(player_a, videogame)
-                player_b = self.init_players(player_b, videogame)
+            #Verification qu'il existe des joueurs dans le set
+            if (len(set.Players) != 0):
+                #Verification qu'aucun des joueurs n'est disqualifié
+                if (set.Players[0].IsDisqualified == None and set.Players[1].IsDisqualified == None):
+                    #Initialisation de l'élo des joueurs si ils n'ont pas encore joué
+                    player_a = set.Players[0]
+                    player_b = set.Players[1]
+                    player_a = self.init_players(player_a, videogame, season)
+                    player_b = self.init_players(player_b, videogame, season)
 
-                winner, looser = set.get_winner_looser(player_a, player_b)
+                    winner, looser = set.get_winner_looser(player_a, player_b)
 
-                #Calcul de l'élo
-                winner.Elos[videogame.Id].Score, looser.Elos[videogame.Id].Score = self.get_new_elo(winner, looser, set, videogame.Id)
+                    #Calcul de l'élo
+                    winner.Elos[videogame.Id].Score, looser.Elos[videogame.Id].Score = self.get_new_elo(winner, looser, set, videogame.Id)
 
-                #Ajout des joueurs dans le dictionnaire
-                self.Players[winner.Id] = winner
-                self.Players[looser.Id] = looser
+                    #Ajout des joueurs dans le dictionnaire
+                    self.Players[winner.Id] = winner
+                    self.Players[looser.Id] = looser
 
         #Tri des joueurs en fonction de leur élo
         custom_sort = functools.partial(lambda item, param: item[1].Elos[param].Score, param=videogame.Id)
